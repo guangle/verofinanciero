@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Tema 2: Contabilidad General</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-question.correct .selected {
+            background-color: #22c55e; /* green-500 */
+            color: white;
+        }
+        .quiz-question.incorrect .selected {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+        /* Highlight correct answer always */
+        .quiz-question .correct-answer {
+             background-color: #d9f99d; /* lime-200 */
+             border: 1px solid #a3e635; /* lime-400 */
+             font-weight: 600; /* Slightly bolder */
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         .quiz-option:hover {
+            background-color: #f0f0f0; /* gray-100 */
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* Style for the correct answer when the user answered incorrectly */
+        .quiz-question.incorrect .quiz-option[data-correct="true"] {
+             background-color: #a3e635 !important; /* lime-400 */
+             color: #1a2e05; /* Darker text for contrast */
+             border: 1px solid #4d7c0f;
+        }
+
+        /* Style for the incorrectly selected answer */
+        .quiz-question.incorrect .quiz-option.selected {
+            background-color: #ef4444 !important; /* red-500 */
+            color: white !important;
+            border: 1px solid #b91c1c;
+        }
+
+        /* Style for the correctly selected answer */
+         .quiz-question.correct .quiz-option.selected {
+            background-color: #22c55e !important; /* green-500 */
+            color: white !important;
+            border: 1px solid #15803d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-md">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">Tema 2: Contabilidad General</h1>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Introducción a la Contabilidad</h2>
+            <p class="mb-4">
+                La contabilidad es un sistema de información que permite <strong>medir, registrar, clasificar, resumir e interpretar la actividad económica y financiera</strong> de una entidad (empresa, organización, etc.). Su objetivo principal es proporcionar información útil para la toma de decisiones por parte de usuarios internos (dirección, empleados) y externos (inversores, acreedores, administraciones públicas). La normativa fundamental en España es el <strong>Plan General de Contabilidad (PGC)</strong>, aprobado por el Real Decreto 1514/2007 (y su versión para PYMES, RD 1515/2007), adaptado a las Normas Internacionales de Información Financiera (NIIF/IFRS).
+            </p>
+             <img src="https://placehold.co/600x300/d1fae5/065f46?text=Imagen+Libros+Contables" alt="[Imagen de Libros Contables]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/d1fae5/065f46?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Principios Contables</h2>
+            <p class="mb-4">Son las directrices básicas que rigen la elaboración de la información contable para que esta refleje la <strong>imagen fiel</strong> del patrimonio, de la situación financiera y de los resultados de la empresa. Los principios contables obligatorios según el PGC son:</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Empresa en funcionamiento:</strong> Se presume que la gestión de la empresa continuará en un futuro previsible. Si no es así, los criterios de valoración cambian (valor liquidativo).</li>
+                <li><strong>Devengo:</strong> Las transacciones se registran <strong>cuando ocurren</strong> los hechos económicos que las originan (flujo real de bienes y servicios), independientemente de cuándo se produzca el cobro o el pago (flujo monetario). <strong>¡Fundamental!</strong></li>
+                <li><strong>Uniformidad:</strong> Un criterio adoptado debe mantenerse en el tiempo y aplicarse de manera uniforme para transacciones similares, mientras no cambien las circunstancias. Si cambia, debe justificarse y anotarse en la Memoria.</li>
+                <li><strong>Prudencia:</strong> Se debe ser prudente en las estimaciones y valoraciones en condiciones de incertidumbre. Implica contabilizar los beneficios <strong>solo cuando se realicen</strong> y los riesgos y pérdidas <strong>tan pronto como sean conocidos</strong> (incluso si son potenciales). No implica crear provisiones "colchón".</li>
+                <li><strong>No compensación:</strong> <strong>No se pueden compensar</strong> las partidas de activo y pasivo, ni las de gastos e ingresos. Deben valorarse separadamente.</li>
+                <li><strong>Importancia relativa:</strong> Se admite la no aplicación estricta de algún principio si la incidencia cuantitativa o cualitativa es <strong>escasamente significativa</strong> (no altera la imagen fiel).</li>
+            </ul>
+            <p class="mb-4">En caso de conflicto entre principios, <strong>prevalece el que mejor conduzca a la imagen fiel</strong>. La prudencia no puede prevalecer sobre el resto si afecta a la imagen fiel.</p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">El Patrimonio y el Balance de Situación</h2>
+            <p class="mb-4">El <strong>Patrimonio</strong> de una empresa es el conjunto de <strong>Bienes, Derechos y Obligaciones</strong> que posee en un momento determinado, susceptibles de valoración económica.</p>
+            <p class="mb-4">La <strong>Ecuación Fundamental del Patrimonio</strong> es: </p>
+            <p class="text-center font-mono text-lg bg-emerald-50 p-3 rounded my-3"><strong>Activo = Pasivo + Patrimonio Neto</strong></p>
+            <p class="mb-4">Donde:</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Activo:</strong> Conjunto de <strong>Bienes y Derechos</strong> de cobro que posee la empresa (lo que tiene y lo que le deben). Representa la estructura económica o el destino de los fondos. Se ordena de <strong>menor a mayor liquidez</strong>.</li>
+                <li><strong>Pasivo (o Pasivo Exigible):</strong> Conjunto de <strong>Obligaciones</strong> de pago actuales de la empresa frente a terceros (lo que debe a otros). Representa las fuentes de financiación ajenas. Se ordena de <strong>menor a mayor exigibilidad</strong>.</li>
+                <li><strong>Patrimonio Neto (o Neto Patrimonial / Fondos Propios):</strong> Es la <strong>parte residual</strong> de los activos de la empresa, una vez deducidos todos sus pasivos. Representa la financiación propia (aportaciones de socios, reservas, resultados acumulados). <strong>Patrimonio Neto = Activo - Pasivo</strong>.</li>
+            </ul>
+            <p class="mb-4">El <strong>Balance de Situación</strong> es el estado contable que refleja la <strong>situación patrimonial</strong> de la empresa en una fecha concreta, mostrando ordenadamente el Activo, el Pasivo y el Patrimonio Neto. Es como una <strong>fotografía</strong> del patrimonio en un momento dado.</p>
+            <p class="mb-4"><strong>Estructura básica del Balance (según PGC):</strong></p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-blue-50 p-4 rounded border border-blue-200">
+                    <h3 class="font-bold text-blue-700 mb-2">ACTIVO</h3>
+                    <ul class="list-disc list-inside pl-4 space-y-1">
+                        <li><strong>A) ACTIVO NO CORRIENTE</strong> (Inmovilizado > 1 año)
+                            <ul class="list-circle list-inside pl-6">
+                                <li>Inmovilizado Intangible (patentes, marcas...)</li>
+                                <li>Inmovilizado Material (edificios, maquinaria...)</li>
+                                <li>Inversiones Inmobiliarias</li>
+                                <li>Inversiones Financieras a Largo Plazo</li>
+                            </ul>
+                        </li>
+                        <li><strong>B) ACTIVO CORRIENTE</strong> (Circulante < 1 año)
+                            <ul class="list-circle list-inside pl-6">
+                                <li>Existencias (mercaderías...)</li>
+                                <li>Deudores Comerciales y Otras Cuentas a Cobrar</li>
+                                <li>Inversiones Financieras a Corto Plazo</li>
+                                <li>Periodificaciones a Corto Plazo (Gastos anticipados)</li>
+                                <li>Efectivo y Otros Activos Líquidos Equivalentes (Bancos, Caja)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                 <div class="bg-red-50 p-4 rounded border border-red-200">
+                    <h3 class="font-bold text-red-700 mb-2">PATRIMONIO NETO Y PASIVO</h3>
+                     <ul class="list-disc list-inside pl-4 space-y-1">
+                        <li><strong>A) PATRIMONIO NETO</strong> (Fondos Propios)
+                            <ul class="list-circle list-inside pl-6">
+                                <li>Capital / Fondos sociales</li>
+                                <li>Reservas (Legal, estatutarias, voluntarias...)</li>
+                                <li>Resultados de ejercicios anteriores</li>
+                                <li>Resultado del Ejercicio (Beneficio o Pérdida)</li>
+                                <li>Subvenciones, donaciones y legados</li>
+                            </ul>
+                        </li>
+                        <li><strong>B) PASIVO NO CORRIENTE</strong> (Exigible a Largo Plazo > 1 año)
+                             <ul class="list-circle list-inside pl-6">
+                                <li>Provisiones a Largo Plazo</li>
+                                <li>Deudas a Largo Plazo (préstamos...)</li>
+                                <li>Deudas con Empresas Grupo/Asociadas L/P</li>
+                                <li>Periodificaciones a Largo Plazo (Ingresos anticipados)</li>
+                            </ul>
+                        </li>
+                         <li><strong>C) PASIVO CORRIENTE</strong> (Exigible a Corto Plazo < 1 año)
+                            <ul class="list-circle list-inside pl-6">
+                                <li>Provisiones a Corto Plazo</li>
+                                <li>Deudas a Corto Plazo</li>
+                                <li>Deudas con Empresas Grupo/Asociadas C/P</li>
+                                <li>Acreedores Comerciales y Otras Cuentas a Pagar (Proveedores...)</li>
+                                <li>Periodificaciones a Corto Plazo (Ingresos anticipados)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-4 text-center font-bold"><strong>TOTAL ACTIVO = TOTAL PATRIMONIO NETO Y PASIVO</strong></p>
+             <img src="https://placehold.co/600x300/e0e7ff/4338ca?text=Imagen+Balance+de+Situacion" alt="[Imagen de Balance de Situación]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/e0e7ff/4338ca?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">El Resultado del Ejercicio y la Cuenta de Pérdidas y Ganancias</h2>
+            <p class="mb-4">El <strong>Resultado del Ejercicio</strong> es la diferencia entre los <strong>Ingresos</strong> y los <strong>Gastos</strong> generados por la empresa durante un periodo contable (normalmente un año).</p>
+            <p class="text-center font-mono text-lg bg-emerald-50 p-3 rounded my-3"><strong>Resultado = Ingresos - Gastos</strong></p>
+            <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+                <li>Si <strong>Ingresos > Gastos => Beneficio</strong> (aumenta el Patrimonio Neto).</li>
+                <li>Si <strong>Ingresos < Gastos => Pérdida</strong> (disminuye el Patrimonio Neto).</li>
+            </ul>
+            <p class="mb-4">La <strong>Cuenta de Pérdidas y Ganancias (PyG)</strong>, también llamada Cuenta de Resultados, es el estado contable que detalla los ingresos y gastos del ejercicio, mostrando cómo se ha formado el resultado. Es una <strong>película</strong> de la actividad económica durante el periodo.</p>
+             <p class="mb-4"><strong>Estructura simplificada de la PyG (modelo PGC):</strong></p>
+             <ol class="list-decimal list-inside space-y-2 mb-4 pl-4 bg-gray-50 p-4 rounded border">
+                <li><strong>Importe Neto de la Cifra de Negocios</strong> (Ventas, Prestación de servicios)</li>
+                <li>+ Otros ingresos de explotación (subvenciones, excesos provisiones...)</li>
+                <li>- Gastos de personal (sueldos, S.S.)</li>
+                <li>- Otros gastos de explotación (suministros, alquileres, tributos...)</li>
+                <li>- Amortización del inmovilizado</li>
+                <li>+/- Deterioro y resultado por enajenaciones del inmovilizado</li>
+                <li><strong>= A) RESULTADO DE EXPLOTACIÓN</strong></li>
+                <li>+ Ingresos financieros (intereses de c/c, dividendos recibidos...)</li>
+                <li>- Gastos financieros (intereses de préstamos...)</li>
+                <li>+/- Diferencias de cambio</li>
+                <li>+/- Deterioro y resultado por enajenaciones de instrumentos financieros</li>
+                <li><strong>= B) RESULTADO FINANCIERO</strong></li>
+                <li><strong>= C) RESULTADO ANTES DE IMPUESTOS (A + B)</strong></li>
+                <li>- Impuesto sobre Beneficios</li>
+                <li><strong>= D) RESULTADO DEL EJERCICIO (PROCEDENTE DE OPERACIONES CONTINUADAS)</strong></li>
+                <li>+/- Resultado operaciones interrumpidas neto de impuestos</li>
+                <li><strong>= E) RESULTADO CONSOLIDADO DEL EJERCICIO</strong></li>
+             </ol>
+             <img src="https://placehold.co/600x300/fef3c7/b45309?text=Imagen+Cuenta+de+Resultados" alt="[Imagen de Cuenta de Resultados]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/fef3c7/b45309?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Estudio de las Cuentas</h2>
+            <p class="mb-4">La <strong>Cuenta</strong> es el instrumento de representación y medida de cada elemento patrimonial (activo, pasivo, neto) y de gestión (gasto, ingreso). Cada cuenta tiene un <strong>título</strong> (nombre) y un <strong>código numérico</strong> asignado por el PGC.</p>
+            <p class="mb-4">Las cuentas se representan gráficamente en forma de <strong>"T"</strong>:</p>
+            <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+                <li><strong>Debe (D):</strong> Lado izquierdo. Anotar en el Debe = Cargar, Adeudar.</li>
+                <li><strong>Haber (H):</strong> Lado derecho. Anotar en el Haber = Abonar, Acreditar.</li>
+                <li><strong>Saldo:</strong> Diferencia entre la suma del Debe y la suma del Haber.
+                    <ul>
+                        <li>Saldo Deudor (SD): Suma Debe > Suma Haber.</li>
+                        <li>Saldo Acreedor (SA): Suma Haber > Suma Debe.</li>
+                        <li>Saldo Cero (Cuenta saldada): Suma Debe = Suma Haber.</li>
+                    </ul>
+                </li>
+            </ul>
+             <p class="mb-4"><strong>Convenio de funcionamiento (Regla de Cargo y Abono - ¡Muy importante!):</strong></p>
+             <table class="w-full border-collapse border border-gray-300 mb-4">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border border-gray-300 p-2">Tipo de Cuenta</th>
+                        <th class="border border-gray-300 p-2">Aumentan por el...</th>
+                        <th class="border border-gray-300 p-2">Disminuyen por el...</th>
+                        <th class="border border-gray-300 p-2">Saldo Normal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-gray-300 p-2"><strong>Activo</strong></td>
+                        <td class="border border-gray-300 p-2 text-center"><strong>Debe</strong></td>
+                        <td class="border border-gray-300 p-2 text-center">Haber</td>
+                        <td class="border border-gray-300 p-2 text-center">Deudor</td>
+                    </tr>
+                     <tr>
+                        <td class="border border-gray-300 p-2"><strong>Gasto</strong> (Grupo 6 PGC)</td>
+                        <td class="border border-gray-300 p-2 text-center"><strong>Debe</strong></td>
+                        <td class="border border-gray-300 p-2 text-center">Haber (raro, al regularizar)</td>
+                        <td class="border border-gray-300 p-2 text-center">Deudor</td>
+                    </tr>
+                     <tr class="bg-gray-50">
+                        <td class="border border-gray-300 p-2"><strong>Pasivo</strong></td>
+                        <td class="border border-gray-300 p-2 text-center">Debe</td>
+                        <td class="border border-gray-300 p-2 text-center"><strong>Haber</strong></td>
+                        <td class="border border-gray-300 p-2 text-center">Acreedor</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="border border-gray-300 p-2"><strong>Patrimonio Neto</strong></td>
+                        <td class="border border-gray-300 p-2 text-center">Debe</td>
+                        <td class="border border-gray-300 p-2 text-center"><strong>Haber</strong></td>
+                        <td class="border border-gray-300 p-2 text-center">Acreedor</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="border border-gray-300 p-2"><strong>Ingreso</strong> (Grupo 7 PGC)</td>
+                         <td class="border border-gray-300 p-2 text-center">Debe (raro, al regularizar)</td>
+                        <td class="border border-gray-300 p-2 text-center"><strong>Haber</strong></td>
+                        <td class="border border-gray-300 p-2 text-center">Acreedor</td>
+                    </tr>
+                </tbody>
+             </table>
+             <p class="mb-4">El <strong>Plan General de Contabilidad (PGC)</strong> estructura las cuentas en <strong>Grupos (1 dígito), Subgrupos (2 dígitos), Cuentas (3 dígitos) y Subcuentas (4 o más dígitos)</strong>. Los grupos principales son:</p>
+             <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+                <li>Grupo 1: Financiación Básica (Neto y Pasivo No Corriente)</li>
+                <li>Grupo 2: Activo No Corriente</li>
+                <li>Grupo 3: Existencias</li>
+                <li>Grupo 4: Acreedores y Deudores por operaciones comerciales (Activo y Pasivo Corriente)</li>
+                <li>Grupo 5: Cuentas Financieras (Activo y Pasivo Corriente)</li>
+                <li>Grupo 6: Compras y Gastos</li>
+                <li>Grupo 7: Ventas e Ingresos</li>
+                <li>Grupo 8: Gastos imputados al patrimonio neto</li>
+                <li>Grupo 9: Ingresos imputados al patrimonio neto</li>
+             </ul>
+             <p>(Los grupos 8 y 9 tienen un uso más específico relacionado con ajustes de patrimonio neto).</p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">El Ciclo Contable</h2>
+            <p class="mb-4">Es el conjunto de operaciones que realiza una empresa de forma sistemática y cronológica durante un ejercicio económico (normalmente un año) para registrar su actividad y culminar con la elaboración de las Cuentas Anuales.</p>
+            <p class="mb-4"><strong>Fases del Ciclo Contable:</strong></p>
+            <ol class="list-decimal list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Apertura de la contabilidad:</strong> Se realiza el <strong>asiento de apertura</strong> al inicio del ejercicio, cargando las cuentas de Activo y abonando las de Pasivo y Neto según el Balance final del ejercicio anterior (o el inventario inicial si es el primer año).</li>
+                <li><strong>Registro de operaciones del ejercicio:</strong> Se anotan cronológicamente todas las operaciones en el <strong>Libro Diario</strong> mediante asientos contables (principio de partida doble: Suma Debe = Suma Haber).</li>
+                <li><strong>Traspaso al Libro Mayor:</strong> La información del Diario se traspasa al <strong>Libro Mayor</strong>, que recoge los movimientos y saldos de cada cuenta individualmente (las "T").</li>
+                <li><strong>Balance de Comprobación de Sumas y Saldos (antes del cierre):</strong> Periódicamente (al menos trimestral), se elabora este balance para verificar que la suma de saldos deudores coincide con la suma de saldos acreedores. Ayuda a detectar errores aritméticos.</li>
+                <li><strong>Operaciones de regularización y cierre:</strong> Al final del ejercicio (<strong>31 de diciembre</strong> si coincide con año natural), se realizan ajustes para aplicar correctamente los principios contables (devengo, prudencia, etc.):
+                    <ul class="list-disc list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Periodificación:</strong> Ajustar gastos e ingresos para imputarlos al ejercicio que les corresponde (gastos anticipados, ingresos anticipados).</li>
+                        <li><strong>Amortizaciones:</strong> Registrar la depreciación sistemática del inmovilizado por su uso, paso del tiempo u obsolescencia.</li>
+                        <li><strong>Deterioros de valor:</strong> Registrar pérdidas reversibles por disminución del valor de activos (existencias, clientes, inmovilizado, inversiones...).</li>
+                        <li><strong>Regularización de existencias:</strong> Ajustar el saldo de las cuentas de existencias al inventario físico real (Variación de Existencias contra PyG).</li>
+                        <li><strong>Cálculo y contabilización del Impuesto sobre Beneficios.</strong></li>
+                    </ul>
+                </li>
+                 <li><strong>Cálculo del Resultado del Ejercicio (Regularización de Ingresos y Gastos):</strong> Se saldan todas las cuentas de Gastos (Grupo 6) y de Ingresos (Grupo 7) abonándolas y cargándolas, respectivamente, contra la cuenta <strong>(129) Resultado del Ejercicio</strong>. El saldo de esta cuenta (acreedor si hay beneficio, deudor si hay pérdida) refleja el resultado final.</li>
+                 <li><strong>Asiento de Cierre:</strong> Se saldan todas las cuentas patrimoniales (Activo, Pasivo y Neto) que aún tengan saldo, realizando un asiento inverso al de apertura: abonando las cuentas de Activo y cargando las de Pasivo y Neto. Con esto, todas las cuentas quedan con saldo cero.</li>
+                 <li><strong>Elaboración de las Cuentas Anuales:</strong> Con la información final, se formulan el Balance de Situación, la Cuenta de Pérdidas y Ganancias, el Estado de Cambios en el Patrimonio Neto, el Estado de Flujos de Efectivo (si procede) y la Memoria. <strong>Plazo: 3 meses</strong> desde el cierre.</li>
+            </ol>
+             <img src="https://placehold.co/600x300/ecfdf5/10b981?text=Imagen+Ciclo+Contable" alt="[Imagen de Ciclo Contable]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/ecfdf5/10b981?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Normativa Contable</h2>
+            <p class="mb-4">La principal fuente normativa en España es:</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Código de Comercio:</strong> Establece obligaciones contables generales para los empresarios (llevar libros obligatorios, formular cuentas anuales).</li>
+                <li><strong>Ley de Sociedades de Capital:</strong> Regula aspectos contables específicos de las sociedades (formulación, auditoría, aprobación y depósito de cuentas).</li>
+                <li><strong>Plan General de Contabilidad (PGC 2007):</strong> Aprobado por RD 1514/2007. Desarrolla los principios y normas de registro y valoración. Es de <strong>aplicación obligatoria</strong> para todas las empresas españolas, salvo excepciones.
+                     <ul class="list-circle list-inside pl-6">
+                        <li><strong>Estructura del PGC:</strong>
+                            <ol class="list-decimal list-inside pl-8">
+                                <li>Marco Conceptual (Principios, elementos CC.AA., criterios registro y valoración).</li>
+                                <li>Normas de Registro y Valoración (Desarrollo específico para distintas operaciones).</li>
+                                <li>Cuentas Anuales (Modelos Normal y Abreviado de Balance, PyG, ECPN, EFE y contenido Memoria).</li>
+                                <li>Cuadro de Cuentas (Relación codificada de cuentas, <strong>no obligatorio</strong> en su codificación pero sí en su contenido).</li>
+                                <li>Definiciones y Relaciones Contables (Descripción y operativa de las cuentas, <strong>no obligatorio</strong>).</li>
+                            </ol>
+                        </li>
+                     </ul>
+                </li>
+                <li><strong>PGC de PYMES:</strong> Aprobado por RD 1515/2007. Versión simplificada para empresas que cumplan ciertos límites (activo, cifra negocios, empleados).</li>
+                <li><strong>Adaptaciones sectoriales del PGC:</strong> Para entidades específicas (aseguradoras, constructoras, entidades sin fines lucrativos...).</li>
+                <li><strong>Resoluciones del Instituto de Contabilidad y Auditoría de Cuentas (ICAC):</strong> Interpretan y desarrollan aspectos concretos del PGC. Son vinculantes.</li>
+                <li><strong>Normas Internacionales de Información Financiera (NIIF/IFRS):</strong> Adoptadas por la UE. Obligatorias para las cuentas consolidadas de grupos cotizados. El PGC está armonizado con ellas.</li>
+            </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Tratamiento Contable de Operaciones Específicas</h2>
+
+            <h3 class="text-xl font-bold text-emerald-500 mb-3">Existencias e Ingresos por Ventas</h3>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Existencias (Grupo 3):</strong> Bienes poseídos para ser vendidos en el curso normal de la explotación, en proceso de producción o para ser consumidos en la producción o prestación de servicios (mercaderías, materias primas, productos terminados...).
+                    <ul>
+                        <li><strong>Valoración inicial:</strong> Por su <strong>coste</strong> (precio de adquisición o coste de producción).</li>
+                        <li><strong>Precio de adquisición:</strong> Importe facturado por el vendedor + gastos adicionales hasta la puesta en almacén (transportes, seguros, aranceles...) - descuentos incluidos en factura.</li>
+                        <li><strong>Coste de producción:</strong> Precio adquisición materias primas + costes directos + parte razonable costes indirectos imputables.</li>
+                        <li><strong>Valoración posterior:</strong> Al cierre, se valoran al <strong>coste o al valor neto realizable (VNR), el menor</strong>. VNR = Precio venta estimado - costes estimados para terminar producción - costes necesarios para la venta. Si VNR < Coste => <strong>Deterioro de valor</strong> (Gasto a PyG).</li>
+                        <li><strong>Métodos de asignación de valor (control inventario):</strong> PMP (Precio Medio Ponderado) o FIFO (First-In, First-Out). <strong>El LIFO no está permitido por el PGC.</strong></li>
+                        <li><strong>Registro contable:</strong> Se usan cuentas del Grupo 6 (Compras) y Grupo 7 (Ventas). Al cierre, se regularizan mediante las cuentas de <strong>Variación de Existencias (61X, 71X)</strong> contra las cuentas de Existencias (Grupo 3) para ajustar el saldo al inventario final y llevar el consumo a PyG.</li>
+                    </ul>
+                </li>
+                <li><strong>Ingresos por Ventas y Prestación de Servicios (Grupo 7):</strong> Se reconocen cuando se produce la <strong>transferencia sustancial de riesgos y beneficios</strong> inherentes a la propiedad de los bienes o se ha prestado el servicio, siempre que el importe pueda valorarse con fiabilidad y sea probable recibir los beneficios económicos. Se valoran por el <strong>valor razonable</strong> de la contraprestación recibida o por recibir (neto de descuentos e impuestos como el IVA repercutido).</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-emerald-500 mb-3">Gastos e Ingresos</h3>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Gastos (Grupo 6):</strong> Decrementos en el patrimonio neto durante el ejercicio, ya sea en forma de salidas o disminuciones de valor de activos, o de reconocimiento de pasivos, que no tengan origen en distribuciones a los socios. Se registran por el <strong>principio de devengo</strong>.</li>
+                <li><strong>Ingresos (Grupo 7):</strong> Incrementos en el patrimonio neto durante el ejercicio, ya sea en forma de entradas o aumentos de valor de activos, o de disminución de pasivos, que no tengan origen en aportaciones de los socios. Se registran por el <strong>principio de devengo</strong>.</li>
+             </ul>
+
+            <h3 class="text-xl font-bold text-emerald-500 mb-3">Derechos de Cobro (Clientes y Deudores)</h3>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li>Son activos financieros originados en la venta de bienes o prestación de servicios por operaciones de tráfico (Clientes (430), Deudores (440)).</li>
+                <li><strong>Valoración inicial:</strong> Por su <strong>valor razonable</strong>, que generalmente es el valor de la transacción (precio de venta).</li>
+                <li><strong>Valoración posterior:</strong> Por su <strong>coste amortizado</strong>. Los intereses incorporados al nominal se registran como ingreso financiero a lo largo del plazo.</li>
+                <li><strong>Deterioro de valor:</strong> Al cierre, si existe evidencia objetiva de que no se cobrará todo el importe (riesgo de insolvencia), se registra una <strong>pérdida por deterioro</strong> (Gasto a PyG, cuenta 694) con abono a una cuenta correctora de activo (490. Deterioro de valor de créditos por operaciones comerciales). Se analiza individualmente o de forma colectiva para saldos de características similares.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-emerald-500 mb-3">Periodificación Contable</h3>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li>Aplicación del <strong>principio de devengo</strong> para imputar gastos e ingresos al ejercicio que realmente les corresponde, independientemente del momento del pago o cobro.</li>
+                <li><strong>Gastos Anticipados (480):</strong> Gastos pagados en el ejercicio actual pero que corresponden a ejercicios futuros (ej: prima de seguro anual pagada en octubre). Se contabiliza el gasto total al pagar, y al cierre se lleva la parte no devengada (del ejercicio siguiente) a la cuenta (480) con abono a la cuenta de gasto original. La (480) es una cuenta de <strong>Activo Corriente</strong>. Al inicio del año siguiente, se hace el asiento inverso.</li>
+                <li><strong>Ingresos Anticipados (485):</strong> Ingresos cobrados en el ejercicio actual pero que corresponden a ejercicios futuros (ej: alquiler anual cobrado por adelantado en noviembre). Se contabiliza el ingreso total al cobrar, y al cierre se lleva la parte no devengada a la cuenta (485) con cargo a la cuenta de ingreso original. La (485) es una cuenta de <strong>Pasivo Corriente</strong>. Al inicio del año siguiente, se hace el asiento inverso.</li>
+                 <li>También existen las cuentas (567) Intereses pagados por anticipado y (568) Intereses cobrados por anticipado, que funcionan de forma similar.</li>
+            </ul>
+
+             <h3 class="text-xl font-bold text-emerald-500 mb-3">El Inmovilizado (Activo No Corriente - Grupo 2)</h3>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li>Activos destinados a servir de forma duradera (<strong>más de un año</strong>) en la actividad de la empresa, no destinados a la venta. Incluye Inmovilizado Intangible, Material e Inversiones Inmobiliarias.</li>
+                <li><strong>Valoración inicial:</strong> Por su <strong>coste</strong> (precio de adquisición o coste de producción).
+                    <ul>
+                        <li><strong>Precio de adquisición:</strong> Importe facturado + gastos necesarios para puesta en funcionamiento (transporte, instalación, honorarios técnicos...) - descuentos. Los impuestos indirectos recuperables (IVA soportado) no forman parte del coste.</li>
+                        <li><strong>Coste de producción:</strong> Similar a existencias, incluye costes directos e indirectos imputables.</li>
+                    </ul>
+                </li>
+                 <li><strong>Valoración posterior:</strong> Coste - Amortización Acumulada - Deterioro Acumulado.</li>
+                 <li><strong>Amortización (Gasto - Cuenta 68X):</strong> Es la expresión contable de la <strong>depreciación sistemática e irreversible</strong> del inmovilizado por su uso, obsolescencia o paso del tiempo. Se calcula distribuyendo el coste menos el valor residual a lo largo de su <strong>vida útil</strong> estimada. Métodos comunes: lineal, números dígitos, unidad de producción. Se abona a cuentas de <strong>Amortización Acumulada (28X)</strong>, que son cuentas correctoras de activo (minoran el valor del bien en el Balance).</li>
+                 <li><strong>Deterioro de valor (Gasto - Cuenta 69X):</strong> Pérdida <strong>reversible</strong> que se produce cuando el <strong>valor contable</strong> del inmovilizado es superior a su <strong>importe recuperable</strong>. Importe recuperable = el <strong>mayor</strong> entre el Valor Razonable menos Costes de Venta y el Valor en Uso. Se abona a cuentas de <strong>Deterioro de Valor (29X)</strong>, también correctoras de activo. Si las causas del deterioro desaparecen, la pérdida se revierte (Ingreso - Cuenta 79X).</li>
+                 <li><strong>Baja en cuentas:</strong> Cuando el inmovilizado se vende, se retira o se pierde. Se da de baja el coste original (abonando la cuenta del inmovilizado) y su amortización y deterioro acumulados (cargando las cuentas 28X y 29X). La diferencia entre el precio de venta (si lo hay) y el valor contable neto (Coste - Amort. Acum. - Deterioro Acum.) es el <strong>resultado de la enajenación</strong> (Beneficio (77X) o Pérdida (67X)).</li>
+             </ul>
+        </section>
+
+         <section class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">Contabilidad Financiera y de Sociedades</h2>
+            <p class="mb-4">
+                La <strong>Contabilidad Financiera</strong> (o General) es la que hemos estado describiendo: se enfoca en registrar las transacciones económicas para elaborar las Cuentas Anuales destinadas a usuarios externos, siguiendo la normativa (PGC).
+            </p>
+             <p class="mb-4">
+                La <strong>Contabilidad de Sociedades</strong> es una parte especializada de la contabilidad financiera que se centra en las operaciones específicas de las sociedades mercantiles, especialmente las de capital (S.A. y S.L.). Cubre aspectos como:
+            </p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Constitución de la sociedad:</strong> Registro de la suscripción y desembolso del capital social (Cuentas 100, 103, 190, 558...).</li>
+                <li><strong>Ampliaciones y reducciones de capital:</strong> Contabilización de las distintas modalidades (con cargo a reservas, nuevas aportaciones, compensación de créditos, condonación de deudas...).</li>
+                <li><strong>Aplicación del resultado:</strong> Distribución del beneficio (dividendos, reservas...) o compensación de pérdidas (Cuentas 129, 120, 121, 11X, 526...).</li>
+                <li><strong>Operaciones con acciones/participaciones propias.</strong></li>
+                <li><strong>Disolución y liquidación de la sociedad.</strong></li>
+                <li><strong>Combinaciones de negocios (fusiones, escisiones).</strong></li>
+                <li><strong>Elaboración de Cuentas Anuales Consolidadas</strong> (para grupos de sociedades).</li>
+             </ul>
+             <p>Estas operaciones se rigen por las Normas de Registro y Valoración específicas del PGC y la Ley de Sociedades de Capital.</p>
+        </section>
+
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-lime-700 mb-4">Trucos Nemotécnicos Contables</h2>
+            <ul class="list-disc list-inside space-y-3 pl-4 bg-lime-50 p-4 rounded-lg border border-lime-200">
+                <li>
+                    <strong>Regla Cargo/Abono (Debe/Haber):</strong> Piensa en la ecuación <strong>Activo = Pasivo + Neto</strong>.
+                    <ul>
+                        <li>Lo que está a la <strong>izquierda</strong> (Activo) aumenta por la izquierda (Debe) y disminuye por la derecha (Haber).</li>
+                        <li>Lo que está a la <strong>derecha</strong> (Pasivo, Neto) aumenta por la derecha (Haber) y disminuye por la izquierda (Debe).</li>
+                        <li>Los <strong>Gastos</strong> "funcionan como" el Activo (Aumentan por Debe).</li>
+                        <li>Los <strong>Ingresos</strong> "funcionan como" el Pasivo/Neto (Aumentan por Haber).</li>
+                        <li>Mnemotecnia simple: <strong>"AGA"</strong> (Activo y Gasto Aumentan por el Debe) y <strong>"PIN"</strong> (Pasivo, Ingreso y Neto aumentan por el Haber).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Principio de Devengo:</strong> Piensa "Lo real manda sobre el dinero". Se registra cuando <strong>ocurre</strong> (se entrega bien, se presta servicio, se consume gasto), no cuando se cobra o paga.</li>
+                <li>
+                    <strong>Principio de Prudencia:</strong> "Ponte en lo peor". Contabiliza gastos y riesgos en cuanto los conozcas, pero ingresos y beneficios solo cuando sean seguros (realizados).</li>
+                 <li>
+                    <strong>Valoración Existencias (Cierre):</strong> El <strong>menor</strong> entre Coste y VNR (Valor Neto Realizable). Piensa "El valor más bajo, por si acaso" (prudencia).</li>
+                <li>
+                    <strong>Métodos Inventario NO permitido:</strong> <strong>LIFO</strong> (Last-In, First-Out). Piensa "LIFO está 'Fuera'" (no permitido). Sí se permiten PMP y FIFO.</li>
+                 <li>
+                    <strong>Amortización vs. Deterioro:</strong>
+                    <ul>
+                        <li><strong>Amortización:</strong> Pérdida <strong>Sistemática e Irreversible</strong> (desgaste normal). Siempre se calcula.</li>
+                        <li><strong>Deterioro:</strong> Pérdida <strong>Puntual y Reversible</strong> (caída de valor en mercado, daño...). Solo si hay indicios.</li>
+                    </ul>
+                </li>
+                 <li>
+                    <strong>Periodificación:</strong>
+                    <ul>
+                        <li><strong>Gasto Anticipado (480):</strong> Pago hoy, gasto mañana -> Es un <strong>Derecho</strong> -> <strong>Activo</strong>.</li>
+                        <li><strong>Ingreso Anticipado (485):</strong> Cobro hoy, ingreso mañana -> Es una <strong>Obligación</strong> -> <strong>Pasivo</strong>.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Cuentas Correctoras de Activo (28X, 29X, 490):</strong> Aunque son del Grupo 2 o 4 (Activo), funcionan "al revés": aumentan por el Haber y tienen saldo Acreedor, porque <strong>restan</strong> valor al activo principal.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-purple-700 mb-4">Test de Autoevaluación (25 Preguntas)</h2>
+            <p class="mb-4">Selecciona la respuesta que consideres correcta. Se indicará si has acertado o fallado y cuál era la opción correcta.</p>
+            <div id="quiz-container" class="space-y-6">
+                </div>
+             <div id="quiz-results" class="mt-6 text-lg font-semibold"></div>
+        </section>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "1. ¿Qué principio contable establece que las transacciones se registran cuando ocurren, independientemente del cobro o pago?",
+                options: ["Prudencia", "Empresa en funcionamiento", "Devengo", "Uniformidad"],
+                answer: "Devengo"
+            },
+            {
+                question: "2. La ecuación fundamental del patrimonio es:",
+                options: ["Activo = Pasivo - Patrimonio Neto", "Activo + Pasivo = Patrimonio Neto", "Activo = Pasivo + Patrimonio Neto", "Activo + Patrimonio Neto = Pasivo"],
+                answer: "Activo = Pasivo + Patrimonio Neto"
+            },
+            {
+                question: "3. ¿Qué estado contable muestra la situación patrimonial de la empresa en una fecha concreta?",
+                options: ["Cuenta de Pérdidas y Ganancias", "Balance de Situación", "Estado de Flujos de Efectivo", "Memoria"],
+                answer: "Balance de Situación"
+            },
+            {
+                question: "4. Las cuentas de Activo, por norma general, aumentan por el:",
+                options: ["Haber", "Debe", "Abono", "Pasivo"],
+                answer: "Debe"
+            },
+            {
+                question: "5. Las cuentas de Ingresos (Grupo 7 del PGC) tienen normalmente saldo:",
+                options: ["Deudor", "Acreedor", "Cero", "Variable"],
+                answer: "Acreedor"
+            },
+            {
+                question: "6. ¿Qué principio obliga a contabilizar las pérdidas tan pronto como sean conocidas?",
+                options: ["Devengo", "Uniformidad", "No compensación", "Prudencia"],
+                answer: "Prudencia"
+            },
+            {
+                question: "7. ¿En qué libro contable se registran las operaciones cronológicamente mediante asientos?",
+                options: ["Libro Mayor", "Libro de Inventarios y Cuentas Anuales", "Libro Diario", "Libro de Actas"],
+                answer: "Libro Diario"
+            },
+            {
+                question: "8. La regularización de existencias al final del ejercicio implica ajustar el inventario físico utilizando cuentas de:",
+                options: ["Amortización", "Variación de Existencias", "Deterioro", "Periodificación"],
+                answer: "Variación de Existencias"
+            },
+            {
+                question: "9. ¿Cuál es el plazo máximo para formular las Cuentas Anuales desde la fecha de cierre del ejercicio?",
+                options: ["1 mes", "3 meses", "6 meses", "12 meses"],
+                answer: "3 meses"
+            },
+            {
+                question: "10. ¿Qué método de valoración de existencias NO está permitido por el PGC español?",
+                options: ["FIFO", "PMP", "LIFO", "Coste o VNR, el menor"],
+                answer: "LIFO"
+            },
+            {
+                question: "11. La cuenta (480) Gastos Anticipados es una cuenta de:",
+                options: ["Activo", "Pasivo", "Patrimonio Neto", "Gasto"],
+                answer: "Activo"
+            },
+            {
+                question: "12. La amortización acumulada (Cuentas 28X) es una cuenta:",
+                options: ["De Gasto", "De Activo con saldo deudor", "Correctora de Activo con saldo acreedor", "De Pasivo"],
+                answer: "Correctora de Activo con saldo acreedor"
+            },
+            {
+                question: "13. ¿Qué representa la Cuenta de Pérdidas y Ganancias?",
+                options: ["La foto del patrimonio en un momento", "Los cobros y pagos del año", "El resultado obtenido (Ingresos - Gastos) durante el ejercicio", "Las deudas de la empresa"],
+                answer: "El resultado obtenido (Ingresos - Gastos) durante el ejercicio"
+            },
+             {
+                question: "14. El Patrimonio Neto de una empresa representa:",
+                options: ["Las deudas a corto plazo", "Los bienes que posee", "La financiación ajena", "La financiación propia (aportaciones socios, reservas, resultados)"],
+                answer: "La financiación propia (aportaciones socios, reservas, resultados)"
+            },
+            {
+                question: "15. ¿Qué significa 'cargar' una cuenta?",
+                options: ["Anotar en el Haber", "Anotar en el Debe", "Saldar la cuenta", "Disminuir su saldo"],
+                answer: "Anotar en el Debe"
+            },
+            {
+                question: "16. ¿Qué grupo del PGC recoge las cuentas de Compras y Gastos?",
+                options: ["Grupo 7", "Grupo 2", "Grupo 6", "Grupo 1"],
+                answer: "Grupo 6"
+            },
+            {
+                question: "17. El deterioro de valor de un cliente (Cuenta 490) se registra cuando:",
+                options: ["El cliente paga su deuda", "Hay evidencia objetiva de riesgo de impago", "Se realiza la venta", "Se amortiza el crédito"],
+                answer: "Hay evidencia objetiva de riesgo de impago"
+            },
+             {
+                question: "18. ¿Cuál de las siguientes NO es una Cuenta Anual obligatoria según el PGC (modelo normal)?",
+                options: ["Balance de Situación", "Cuenta de Pérdidas y Ganancias", "Memoria", "Balance de Sumas y Saldos"],
+                answer: "Balance de Sumas y Saldos"
+            },
+            {
+                question: "19. La amortización contable refleja una pérdida de valor:",
+                options: ["Puntual y reversible", "Sistemática e irreversible", "Solo por obsolescencia", "Financiera"],
+                answer: "Sistemática e irreversible"
+            },
+            {
+                question: "20. Si una empresa cobra por adelantado el alquiler de un local para los próximos 12 meses, al cierre del ejercicio deberá registrar:",
+                options: ["Un Gasto Anticipado", "Un Ingreso Anticipado", "Un Deterioro", "Una Amortización"],
+                answer: "Un Ingreso Anticipado"
+            },
+            {
+                question: "21. El coste de producción de un bien fabricado por la empresa incluye:",
+                options: ["Solo materias primas", "Materias primas y costes directos", "Materias primas, costes directos y parte de indirectos", "Solo costes indirectos"],
+                answer: "Materias primas, costes directos y parte de indirectos"
+            },
+             {
+                question: "22. ¿Qué principio impide compensar una deuda con un cliente con una deuda a un proveedor en el Balance?",
+                options: ["Prudencia", "Devengo", "No compensación", "Importancia relativa"],
+                answer: "No compensación"
+            },
+            {
+                question: "23. El asiento de cierre consiste en:",
+                options: ["Registrar las operaciones del día", "Calcular el resultado", "Saldar las cuentas de Ingresos y Gastos", "Saldar todas las cuentas patrimoniales (Activo, Pasivo y Neto)"],
+                answer: "Saldar todas las cuentas patrimoniales (Activo, Pasivo y Neto)"
+            },
+             {
+                question: "24. La cuenta (129) Resultado del Ejercicio tendrá saldo deudor si:",
+                options: ["Hay beneficio", "Hay pérdida", "Ingresos = Gastos", "Se cierra el ejercicio"],
+                answer: "Hay pérdida"
+            },
+             {
+                question: "25. ¿Qué organismo en España interpreta y desarrolla el PGC mediante Resoluciones?",
+                options: ["Banco de España", "Ministerio de Hacienda", "AEAT (Agencia Tributaria)", "ICAC (Instituto de Contabilidad y Auditoría de Cuentas)"],
+                answer: "ICAC (Instituto de Contabilidad y Auditoría de Cuentas)"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('quiz-results');
+        let score = 0;
+        let answeredCount = 0;
+
+        function buildQuiz() {
+            quizData.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('quiz-question', 'p-4', 'border', 'border-gray-200', 'rounded-lg', 'bg-white', 'shadow-sm');
+                questionDiv.setAttribute('data-question-index', index);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('mb-3', 'font-semibold', 'text-gray-700');
+                questionText.textContent = item.question;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('space-y-2');
+
+                // Shuffle options for variety (optional)
+                 // const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+
+                item.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.classList.add('quiz-option', 'block', 'w-full', 'text-left', 'p-3', 'border', 'border-gray-300', 'rounded-md', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-emerald-300');
+                    optionButton.textContent = option;
+                    // Store correct answer info directly on the button
+                    optionButton.setAttribute('data-correct', option === item.answer);
+                    optionButton.onclick = (event) => selectAnswer(event, index);
+                    optionsDiv.appendChild(optionButton);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+             updateResults(); // Initial result display
+        }
+
+        function selectAnswer(event, questionIndex) {
+            const selectedButton = event.target;
+            const questionDiv = selectedButton.closest('.quiz-question');
+
+             // Prevent re-answering
+             if (questionDiv.classList.contains('answered')) {
+                 return;
+             }
+             questionDiv.classList.add('answered');
+             answeredCount++;
+
+
+            const isCorrect = selectedButton.getAttribute('data-correct') === 'true';
+            const questionData = quizData[questionIndex];
+
+            // Disable all options for this question and show correct answer
+            const options = questionDiv.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null; // Remove click listener
+
+                 // Always highlight the correct answer slightly after selection
+                 if (opt.getAttribute('data-correct') === 'true') {
+                     opt.classList.add('correct-answer'); // Style to show the correct one clearly
+                 }
+            });
+
+            selectedButton.classList.add('selected'); // Mark the selected button
+
+            if (isCorrect) {
+                questionDiv.classList.add('correct');
+                score++;
+            } else {
+                questionDiv.classList.add('incorrect');
+                 // Make the correct answer stand out more if incorrect
+                 const correctButton = questionDiv.querySelector('.quiz-option[data-correct="true"]');
+                 // The CSS rule `.quiz-question.incorrect .quiz-option[data-correct="true"]` handles the specific styling
+            }
+
+            updateResults();
+        }
+
+         function updateResults() {
+            resultsContainer.textContent = `Progreso: ${answeredCount} de ${quizData.length} preguntas respondidas. Aciertos: ${score}.`;
+             if (answeredCount === quizData.length) {
+                 resultsContainer.textContent += ` ¡Test completado! Puntuación final: ${score} de ${quizData.length}.`;
+                 resultsContainer.classList.add('text-emerald-700', 'font-bold'); // Highlight completion
+             }
+        }
+
+
+        // Build the quiz when the page loads
+        buildQuiz();
+
+    </script>
+
+</body>
+</html>

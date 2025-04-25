@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Tema 1: Sociedades Mercantiles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-question.correct .selected {
+            background-color: #22c55e; /* green-500 */
+            color: white;
+        }
+        .quiz-question.incorrect .selected {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+        .quiz-question .correct-answer {
+            background-color: #a3e635; /* lime-400 */
+            border: 2px solid #4d7c0f; /* lime-700 */
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         .quiz-option:hover {
+            background-color: #f0f0f0; /* gray-100 */
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* Estilo para resaltar la respuesta correcta cuando se falla */
+        .quiz-question.incorrect .quiz-option[data-correct="true"] {
+             background-color: #a3e635 !important; /* lime-400 */
+             color: #1a2e05; /* Darker text for contrast */
+             border: 1px solid #4d7c0f;
+        }
+
+        /* Estilo para la respuesta seleccionada incorrecta */
+        .quiz-question.incorrect .quiz-option.selected {
+            background-color: #ef4444 !important; /* red-500 */
+            color: white !important;
+            border: 1px solid #b91c1c;
+        }
+
+        /* Estilo para la respuesta seleccionada correcta */
+         .quiz-question.correct .quiz-option.selected {
+            background-color: #22c55e !important; /* green-500 */
+            color: white !important;
+            border: 1px solid #15803d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-md">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2">Tema 1: Ley General de Sociedades Mercantiles</h1>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Introducción</h2>
+            <p class="mb-4">
+                Las sociedades mercantiles son entidades creadas por una o más personas (socios) que, mediante un contrato, se obligan a poner en común bienes, industria o alguna de estas cosas con ánimo de lucro y con la intención de participar en las ganancias. Su regulación principal se encuentra en el Código de Comercio y en la Ley de Sociedades de Capital (Real Decreto Legislativo 1/2010).
+            </p>
+            <img src="https://placehold.co/600x300/e2e8f0/64748b?text=Imagen+Edificio+Empresarial" alt="[Imagen de Edificio Empresarial]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/e2e8f0/64748b?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Clases de Sociedades Mercantiles</h2>
+            <p class="mb-4">Existen diversas formas jurídicas, cada una con sus características propias en cuanto a responsabilidad, capital mínimo, número de socios y órganos de gestión. Las más comunes son:</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Sociedad Colectiva:</strong> Sociedad personalista donde los socios responden <strong>ilimitada y solidariamente</strong> de las deudas sociales. Todos los socios participan en la gestión, salvo pacto contrario.</li>
+                <li><strong>Sociedad Comanditaria Simple:</strong> Coexisten socios colectivos (responden ilimitadamente) y socios comanditarios (responden <strong>limitadamente</strong> a su aportación). La gestión corresponde a los socios colectivos.</li>
+                <li><strong>Sociedad Comanditaria por Acciones:</strong> Similar a la simple, pero el capital de los socios comanditarios está dividido en <strong>acciones</strong>. Requiere un <strong>capital mínimo de 60.000 €</strong> (como la S.A.).</li>
+                <li><strong>Sociedad de Responsabilidad Limitada (S.R.L. o S.L.):</strong> Sociedad capitalista donde el capital está dividido en <strong>participaciones sociales</strong>. La responsabilidad de los socios está <strong>limitada al capital aportado</strong>. <strong>Capital mínimo: 1 €</strong> (tras la Ley 18/2022, antes 3.000 €). Es la forma más común para PYMES.</li>
+                <li><strong>Sociedad Anónima (S.A.):</strong> Sociedad capitalista por excelencia. El capital está dividido en <strong>acciones</strong>. La responsabilidad de los socios (accionistas) está <strong>limitada al capital aportado</strong>. <strong>Capital mínimo: 60.000 €</strong>, desembolsado al menos en un <strong>25%</strong> en el momento de la constitución. Pensada para grandes empresas.</li>
+                <li><strong>Sociedad Cooperativa:</strong> Régimen especial. Los socios se unen para satisfacer necesidades económicas y sociales comunes. Principios democráticos (un socio, un voto).</li>
+            </ul>
+             <img src="https://placehold.co/600x300/e0f2fe/0ea5e9?text=Imagen+Tipos+de+Sociedad" alt="[Imagen de Tipos de Sociedad]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/e0f2fe/0ea5e9?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">El Registro Mercantil</h2>
+            <p class="mb-4">
+                Es una <strong>institución administrativa</strong> dependiente del Ministerio de Justicia, cuya finalidad es la <strong>publicidad oficial</strong> de las situaciones jurídicas de los empresarios individuales y sociales inscritos en él, así como de otros actos y circunstancias que determina la ley.
+            </p>
+            <p class="mb-4"><strong>Funciones principales:</strong></p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Inscripción</strong> de empresarios y sociedades mercantiles, así como los actos relativos a ellos (constitución, modificaciones estatutarias, nombramientos y ceses de administradores, cuentas anuales, disolución, etc.).</li>
+                <li><strong>Legalización de los libros</strong> de los empresarios (libro de inventarios y cuentas anuales, libro diario).</li>
+                <li>Nombramiento de <strong>expertos independientes y auditores</strong> de cuentas.</li>
+                <li>Depósito y publicidad de las <strong>cuentas anuales</strong>.</li>
+                <li>Centralización y publicación de la información registral en el <strong>Boletín Oficial del Registro Mercantil (BORME)</strong>.</li>
+            </ul>
+            <p class="mb-4">
+                La inscripción en el Registro Mercantil es, por regla general, <strong>obligatoria</strong> para las sociedades mercantiles y tiene efectos jurídicos importantes, como la <strong>oponibilidad frente a terceros de buena fe</strong> (lo inscrito se presume exacto y válido; lo no inscrito no perjudica a terceros de buena fe). <strong>El plazo general para solicitar la inscripción de la escritura de constitución es de un mes</strong> desde su otorgamiento.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">La Sociedad Anónima (S.A.)</h2>
+
+            <h3 class="text-xl font-bold text-blue-500 mb-3">Rasgos Fundamentales</h3>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Carácter capitalista:</strong> Lo relevante es la aportación de capital, no las características personales del socio.</li>
+                <li><strong>Capital mínimo: 60.000 €</strong>. Debe estar totalmente suscrito y desembolsado al menos en un <strong>25% del valor nominal</strong> de cada acción en el momento de la constitución.</li>
+                <li><strong>Capital dividido en acciones:</strong> Son partes alícuotas del capital social, transmisibles y que confieren la condición de socio. Pueden ser nominativas o al portador (aunque estas últimas tienen restricciones).</li>
+                <li><strong>Responsabilidad limitada:</strong> Los accionistas <strong>no responden personalmente</strong> de las deudas sociales, solo arriesgan el capital aportado.</li>
+                <li><strong>Sociedad abierta:</strong> Pensada para la captación de capital de múltiples inversores, facilitando la entrada y salida de socios mediante la transmisión de acciones (especialmente si cotiza en bolsa).</li>
+                <li><strong>Régimen jurídico estricto:</strong> Normativa detallada para proteger a los accionistas minoritarios y a los acreedores.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-blue-500 mb-3">Escritura Social y Estatutos</h3>
+            <p class="mb-4">La S.A. se constituye mediante <strong>escritura pública</strong> otorgada ante notario, que debe inscribirse en el Registro Mercantil. La escritura contiene los <strong>Estatutos Sociales</strong>, que son la norma interna fundamental de la sociedad.</p>
+            <p class="mb-4"><strong>Contenido mínimo de los Estatutos (elementos a memorizar):</strong></p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Denominación social:</strong> Debe incluir "Sociedad Anónima" o "S.A.". No puede ser idéntica a otra ya existente.</li>
+                <li><strong>Objeto social:</strong> Actividades a las que se dedicará la sociedad. Deben ser lícitas, posibles y determinadas.</li>
+                <li><strong>Domicilio social:</strong> Debe estar en España, en el lugar donde se halle el centro de su efectiva administración y dirección, o donde radique su principal establecimiento o explotación.</li>
+                <li><strong>Capital social:</strong> Cifra, número de acciones en que se divide, valor nominal, clase y serie. Debe indicarse la parte no desembolsada y la forma y plazo para los desembolsos pendientes (dividendos pasivos).</li>
+                <li><strong>Modo de organizar la administración:</strong> Administrador único, varios administradores solidarios o mancomunados, o Consejo de Administración.</li>
+                <li><strong>Modo de deliberar y adoptar acuerdos</strong> por los órganos colegiados (Junta General y Consejo de Administración).</li>
+                <li><strong>Fecha de cierre del ejercicio social:</strong> Si no se dice nada, es el <strong>31 de diciembre</strong>.</li>
+                <li>Restricciones a la libre transmisibilidad de acciones (si existen).</li>
+                <li>Prestaciones accesorias (si existen).</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-blue-500 mb-3">Órganos Sociales</h3>
+             <img src="https://placehold.co/600x300/ccfbf1/14b8a6?text=Imagen+Organos+Sociales+SA" alt="[Imagen de Organos Sociales SA]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/ccfbf1/14b8a6?text=Error+al+cargar+imagen';">
+            <p class="mb-4">La S.A. tiene dos órganos principales:</p>
+            <ol class="list-decimal list-inside space-y-4 mb-4 pl-4">
+                <li>
+                    <strong>Junta General de Accionistas:</strong> Es el órgano soberano de la sociedad, donde los accionistas deliberan y deciden por mayoría sobre los asuntos fundamentales.
+                    <ul class="list-disc list-inside space-y-1 mt-2 pl-6">
+                        <li><strong>Competencias clave:</strong> Aprobar las cuentas anuales, aplicar el resultado, nombrar y cesar administradores, auditores, modificar estatutos, aumentar o reducir capital, transformación, fusión, escisión, disolución de la sociedad.</li>
+                        <li><strong>Clases de Juntas:</strong>
+                            <ul class="list-circle list-inside space-y-1 mt-1 pl-8">
+                                <li><strong>Ordinaria:</strong> Se reúne <strong>obligatoriamente dentro de los seis primeros meses</strong> de cada ejercicio para aprobar las cuentas del ejercicio anterior y resolver sobre la aplicación del resultado.</li>
+                                <li><strong>Extraordinaria:</strong> Cualquier junta que no sea la ordinaria.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Convocatoria:</strong> Realizada por los administradores (o judicialmente o por solicitud de minoría). Debe publicarse en el <strong>BORME y en la web de la sociedad</strong> (si está inscrita y registrada) con una antelación mínima de <strong>un mes</strong> para S.A. (15 días para S.L.).</li>
+                        <li><strong>Quórums y Mayorías:</strong> Varían según la materia. Para acuerdos importantes (modificación estatutos, aumento/reducción capital, etc.) se exigen quórums reforzados (en 1ª convocatoria: 50% capital suscrito con derecho a voto; en 2ª: 25%) y mayorías cualificadas (mayoría absoluta o incluso 2/3 en ciertos casos).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Órgano de Administración:</strong> Es el órgano ejecutivo y de representación de la sociedad. Gestiona el día a día y representa a la sociedad frente a terceros.
+                    <ul class="list-disc list-inside space-y-1 mt-2 pl-6">
+                        <li><strong>Estructura:</strong> Puede ser:
+                            <ul class="list-circle list-inside space-y-1 mt-1 pl-8">
+                                <li><strong>Administrador Único.</strong></li>
+                                <li><strong>Varios Administradores Solidarios:</strong> Cada uno puede actuar y obligar a la sociedad por sí solo.</li>
+                                <li><strong>Varios Administradores Mancomunados:</strong> Deben actuar conjuntamente (normalmente, al menos dos).</li>
+                                <li><strong>Consejo de Administración:</strong> Órgano colegiado (mínimo 3 miembros, máximo sin límite legal salvo estatutario). Nombra un Consejero Delegado o Comisión Ejecutiva si lo prevén los estatutos.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Nombramiento y Cese:</strong> Corresponde a la Junta General. <strong>Duración máxima del cargo: 6 años</strong> (reelegibles).</li>
+                        <li><strong>Deberes:</strong> Diligencia (actuar como un ordenado empresario) y Lealtad (actuar en interés de la sociedad, evitar conflictos de interés).</li>
+                        <li><strong>Responsabilidad:</strong> Responden frente a la sociedad, los socios y los acreedores por los daños causados por actos u omisiones contrarios a la ley, los estatutos o por incumplimiento de sus deberes. La responsabilidad es <strong>solidaria</strong> entre todos los miembros del órgano de administración.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Especialidades de Sociedades Mercantiles Públicas Locales</h2>
+            <p class="mb-4">
+                Son aquellas sociedades mercantiles (normalmente S.A. o S.L.) cuyo capital social pertenece <strong>mayoritariamente</strong> a una o varias Entidades Locales (Ayuntamientos, Diputaciones...). Se rigen por la Ley de Sociedades de Capital, pero con especialidades derivadas de la Ley Reguladora de las Bases del Régimen Local (LRBRL) y la normativa de contratación del sector público y presupuestaria.
+            </p>
+            <p class="mb-4"><strong>Aspectos clave:</strong></p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Creación:</strong> Requiere acuerdo del Pleno de la Entidad Local.</li>
+                <li><strong>Objeto social:</strong> Generalmente, la gestión de servicios públicos o actividades económicas de interés local.</li>
+                <li><strong>Control:</strong> Están sometidas a controles específicos por parte de la Entidad Local (control financiero, de eficacia).</li>
+                <li><strong>Régimen presupuestario y contable:</strong> Adaptado a la normativa pública.</li>
+                <li><strong>Contratación:</strong> Sujetas a la Ley de Contratos del Sector Público si cumplen determinados requisitos (poder adjudicador).</li>
+                <li><strong>Personal:</strong> Puede ser laboral, aunque los puestos directivos suelen ser de libre designación.</li>
+            </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Constitución, Funcionamiento y Disolución (S.A. y S.L.)</h2>
+
+            <h3 class="text-xl font-bold text-blue-500 mb-3">Constitución</h3>
+            <p class="mb-4">Proceso para crear la sociedad:</p>
+            <ol class="list-decimal list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Certificación negativa de denominación social:</strong> Obtener del Registro Mercantil Central un certificado que acredite que el nombre elegido no coincide con otro ya existente. <strong>Vigencia: 6 meses</strong> (pero la reserva a favor del solicitante dura 2 meses).</li>
+                <li><strong>Aportaciones sociales:</strong> Desembolso del capital mínimo (o superior) y de la parte exigida (<strong>100% en S.L., 25% en S.A.</strong>). Las aportaciones pueden ser dinerarias (certificado bancario) o no dinerarias (requieren informe de experto independiente en S.A., no obligatorio en S.L. pero los fundadores responden solidariamente de su valoración).</li>
+                <li><strong>Otorgamiento de la escritura pública:</strong> Ante notario, por todos los socios fundadores. Contiene los estatutos.</li>
+                <li><strong>Liquidación del Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados (ITP y AJD):</strong> La constitución de sociedades está <strong>exenta</strong>, pero hay que presentar la autoliquidación.</li>
+                <li><strong>Inscripción en el Registro Mercantil Provincial:</strong> <strong>Plazo: 1 mes</strong> desde la escritura. Con la inscripción, la sociedad adquiere <strong>personalidad jurídica propia</strong>.</li>
+                <li><strong>Obtención del Número de Identificación Fiscal (NIF):</strong> Provisional al inicio y definitivo tras la inscripción.</li>
+            </ol>
+
+            <h3 class="text-xl font-bold text-blue-500 mb-3">Funcionamiento</h3>
+            <p class="mb-4">Una vez constituida, la sociedad opera a través de sus órganos (Junta y Administradores). Aspectos clave del funcionamiento:</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Cuentas Anuales:</strong> Los administradores deben formularlas en el <strong>plazo máximo de 3 meses</strong> desde el cierre del ejercicio. Incluyen: Balance, Cuenta de Pérdidas y Ganancias, Estado de Cambios en el Patrimonio Neto, Estado de Flujos de Efectivo (no obligatorio para PYMES) y Memoria. Deben ser firmadas por todos los administradores.</li>
+                <li><strong>Informe de Gestión:</strong> Acompaña a las Cuentas Anuales (salvo modelos abreviados).</li>
+                <li><strong>Auditoría de Cuentas:</strong> Obligatoria para sociedades que superen ciertos límites (activo, cifra de negocios, número de empleados) durante dos ejercicios consecutivos, o por otras causas legales (recibir subvenciones, etc.). El auditor es nombrado por la Junta General <strong>antes de que finalice el ejercicio a auditar</strong>, por un periodo inicial de <strong>entre 3 y 9 años</strong>.</li>
+                <li><strong>Aprobación de Cuentas:</strong> Por la Junta General Ordinaria, dentro de los <strong>6 primeros meses</strong> del ejercicio siguiente.</li>
+                <li><strong>Aplicación del Resultado:</strong> La Junta decide el destino del beneficio (reservas, dividendos...). Es <strong>obligatorio destinar un 10% del beneficio a la Reserva Legal</strong> hasta que esta alcance el <strong>20% del capital social</strong>.</li>
+                <li><strong>Depósito de Cuentas:</strong> Las cuentas aprobadas (junto con informe de gestión y auditoría si procede) deben depositarse en el Registro Mercantil en el <strong>mes siguiente</strong> a su aprobación. El incumplimiento impide inscribir otros documentos y puede acarrear sanciones.</li>
+                <li><strong>Modificaciones Estatutarias:</strong> Requieren acuerdo de la Junta General con quórums y mayorías reforzadas, escritura pública e inscripción en el Registro Mercantil.</li>
+                <li><strong>Aumento y Reducción de Capital:</strong> Operaciones complejas que también requieren acuerdo de Junta, escritura e inscripción, con garantías para socios y acreedores.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-blue-500 mb-3">Disolución</h3>
+             <img src="https://placehold.co/600x300/fef2f2/f87171?text=Imagen+Disolucion+Sociedad" alt="[Imagen de Disolucion Sociedad]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/fef2f2/f87171?text=Error+al+cargar+imagen';">
+            <p class="mb-4">La sociedad se extingue, pero antes pasa por un proceso de liquidación. Causas de disolución:</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>De pleno derecho:</strong> Por transcurso del término fijado en estatutos, transcurso de un año desde acuerdo de reducción de capital por debajo del mínimo legal sin transformar o disolver.</li>
+                <li><strong>Por constatación de causa legal o estatutaria:</strong> Requiere acuerdo de Junta General o resolución judicial. Causas legales importantes:
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-8">
+                        <li>Cese en el ejercicio de la actividad(es) del objeto social (<strong>inactividad por más de 1 año</strong>).</li>
+                        <li>Conclusión de la empresa que constituya su objeto.</li>
+                        <li>Imposibilidad manifiesta de conseguir el fin social.</li>
+                        <li>Paralización de los órganos sociales.</li>
+                        <li><strong>Pérdidas que dejen reducido el patrimonio neto a una cantidad inferior a la mitad del capital social</strong>, a no ser que éste se aumente o se reduzca en la medida suficiente (y siempre que no sea procedente solicitar concurso de acreedores). <strong>¡Causa muy importante!</strong> Los administradores tienen <strong>2 meses</strong> desde que conocen esta situación para convocar Junta o solicitar disolución judicial/concurso. Si no lo hacen, responden <strong>solidariamente</strong> de las deudas sociales posteriores.</li>
+                        <li>Reducción del capital social por debajo del mínimo legal (si no es por cumplimiento de ley).</li>
+                        <li>Porque el valor nominal de las participaciones/acciones sin voto exceda de la mitad del capital social desembolsado.</li>
+                        <li>Cualquier otra causa establecida en los estatutos.</li>
+                    </ul>
+                </li>
+                <li><strong>Por mero acuerdo de la Junta General.</strong></li>
+            </ul>
+            <p class="mt-4">La disolución abre el <strong>periodo de liquidación</strong>. La sociedad conserva su personalidad jurídica pero añade "en liquidación" a su denominación. Los administradores cesan y se nombran <strong>liquidadores</strong> (normalmente los propios administradores, salvo disposición contraria). Funciones de los liquidadores: realizar operaciones pendientes, cobrar créditos, pagar deudas, vender bienes sociales y elaborar el balance final de liquidación. El haber social resultante se reparte entre los socios (cuota de liquidación). Finalmente, se otorga escritura de extinción y se cancelan los asientos en el Registro Mercantil.</p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-green-700 mb-4">Trucos Nemotécnicos</h2>
+            <ul class="list-disc list-inside space-y-3 pl-4 bg-green-50 p-4 rounded-lg border border-green-200">
+                <li>
+                    <strong>Capitales Mínimos:</strong>
+                    <ul>
+                        <li><strong>S.L. = 1 €</strong> (¡Reciente! Antes 3.000). Piensa en "Sociedad <strong>L</strong>igera" = casi sin capital.</li>
+                        <li><strong>S.A. = 60.000 €</strong>. Piensa en "Sociedad <strong>A</strong>mplia" o "<strong>A</strong>lta" = necesita más capital. Fácil recordar 60.</li>
+                        <li><strong>S. Comanditaria por Acciones = 60.000 €</strong> (igual que S.A. porque tiene "Acciones").</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Desembolso Inicial S.A.:</strong> <strong>25%</strong>. Piensa en "un cuarto" para empezar (1/4 de 60.000 = 15.000 €).
+                </li>
+                 <li>
+                    <strong>Plazos Junta General Ordinaria (S.A. y S.L.):</strong> <strong>6 meses</strong> desde cierre ejercicio para celebrarla. Piensa en "medio año para las cuentas".
+                </li>
+                 <li>
+                    <strong>Plazo Formulación Cuentas Anuales:</strong> <strong>3 meses</strong> desde cierre ejercicio. Piensa que los administradores tienen "la mitad de tiempo" (3 meses) que la Junta (6 meses) para hacer su parte.
+                </li>
+                <li>
+                    <strong>Plazo Depósito Cuentas en RM:</strong> <strong>1 mes</strong> desde la aprobación por la Junta. Piensa "un mes para llevar los papeles al Registro".
+                </li>
+                 <li>
+                    <strong>Reserva Legal Obligatoria:</strong> <strong>10%</strong> del beneficio hasta alcanzar el <strong>20%</strong> del capital social. Piensa en la regla "10 hasta 20".
+                </li>
+                 <li>
+                    <strong>Causa Disolución por Pérdidas:</strong> Patrimonio Neto < <strong>1/2</strong> Capital Social. Piensa "menos de la mitad del capital = peligro". Los administradores tienen <strong>2 meses</strong> para actuar. Piensa "dos meses o respondes tú".
+                </li>
+                <li>
+                    <strong>Duración cargo Administrador S.A.:</strong> Máximo <strong>6 años</strong>. Coincide con los 6 meses de la Junta Ordinaria (número 6).
+                </li>
+                 <li>
+                    <strong>Antelación Convocatoria Junta S.A.:</strong> <strong>1 mes</strong>. Piensa "un mes de aviso" para una sociedad grande. (S.L. son 15 días, "la mitad").
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-purple-700 mb-4">Test de Autoevaluación (25 Preguntas)</h2>
+            <p class="mb-4">Selecciona la respuesta que consideres correcta. Se indicará si has acertado o fallado y cuál era la opción correcta.</p>
+            <div id="quiz-container" class="space-y-6">
+                </div>
+             <div id="quiz-results" class="mt-6 text-lg font-semibold"></div>
+        </section>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "1. ¿Cuál es el capital mínimo para constituir una Sociedad Anónima (S.A.)?",
+                options: ["3.000 €", "1 €", "60.000 €", "No hay mínimo"],
+                answer: "60.000 €"
+            },
+            {
+                question: "2. ¿Qué porcentaje del capital social debe desembolsarse como mínimo al constituir una S.A.?",
+                options: ["10%", "25%", "50%", "100%"],
+                answer: "25%"
+            },
+            {
+                question: "3. ¿Cuál es el capital mínimo actual para constituir una Sociedad de Responsabilidad Limitada (S.L.)?",
+                options: ["60.000 €", "3.000 €", "1 €", "1.000 €"],
+                answer: "1 €"
+            },
+            {
+                question: "4. ¿En qué tipo de sociedad responden los socios colectivos ilimitada y solidariamente?",
+                options: ["Sociedad Anónima", "Sociedad Limitada", "Sociedad Colectiva", "Sociedad Comanditaria por Acciones"],
+                answer: "Sociedad Colectiva"
+            },
+            {
+                question: "5. ¿Qué institución se encarga de la publicidad oficial de los actos de las sociedades mercantiles?",
+                options: ["Agencia Tributaria", "Registro Civil", "Registro Mercantil", "Ministerio de Economía"],
+                answer: "Registro Mercantil"
+            },
+            {
+                question: "6. ¿Cuál es el plazo general para solicitar la inscripción de la escritura de constitución en el Registro Mercantil?",
+                options: ["15 días", "1 mes", "2 meses", "6 meses"],
+                answer: "1 mes"
+            },
+            {
+                question: "7. ¿Qué órgano social es el competente para aprobar las cuentas anuales en una S.A.?",
+                options: ["El Consejo de Administración", "El Administrador Único", "La Junta General de Accionistas", "El Auditor de Cuentas"],
+                answer: "La Junta General de Accionistas"
+            },
+            {
+                question: "8. ¿Dentro de qué plazo debe reunirse la Junta General Ordinaria para aprobar las cuentas?",
+                options: ["Dentro de los 3 primeros meses del ejercicio", "Dentro de los 6 primeros meses del ejercicio", "Dentro del primer mes del ejercicio", "En cualquier momento del año"],
+                answer: "Dentro de los 6 primeros meses del ejercicio"
+            },
+            {
+                question: "9. ¿Cuál es la duración máxima del cargo de administrador en una S.A., salvo disposición estatutaria distinta?",
+                options: ["4 años", "5 años", "6 años", "Indefinida"],
+                answer: "6 años"
+            },
+            {
+                question: "10. ¿Qué significa que la responsabilidad de los socios en una S.L. es limitada?",
+                options: ["Responden con todo su patrimonio personal", "Responden solo hasta el límite del capital aportado", "Responden solidariamente con la sociedad", "No tienen ninguna responsabilidad"],
+                answer: "Responden solo hasta el límite del capital aportado"
+            },
+            {
+                question: "11. ¿Qué publicación oficial utiliza el Registro Mercantil para dar publicidad a sus actos?",
+                options: ["Boletín Oficial del Estado (BOE)", "Diario Oficial de la Unión Europea (DOUE)", "Boletín Oficial del Registro Mercantil (BORME)", "Boletín Oficial de la Provincia (BOP)"],
+                answer: "Boletín Oficial del Registro Mercantil (BORME)"
+            },
+            {
+                question: "12. ¿Cuál es el plazo máximo para que los administradores formulen las cuentas anuales?",
+                options: ["1 mes desde cierre del ejercicio", "3 meses desde cierre del ejercicio", "6 meses desde cierre del ejercicio", "12 meses desde cierre del ejercicio"],
+                answer: "3 meses desde cierre del ejercicio"
+            },
+            {
+                question: "13. ¿Qué porcentaje del beneficio debe destinarse obligatoriamente a la reserva legal hasta que esta alcance un límite?",
+                options: ["5% del beneficio hasta el 10% del capital", "10% del beneficio hasta el 20% del capital", "15% del beneficio hasta el 25% del capital", "20% del beneficio hasta el 30% del capital"],
+                answer: "10% del beneficio hasta el 20% del capital"
+            },
+             {
+                question: "14. Una causa legal de disolución es que las pérdidas dejen el patrimonio neto por debajo de:",
+                options: ["El capital social", "La mitad del capital social", "Un tercio del capital social", "Cero"],
+                answer: "La mitad del capital social"
+            },
+            {
+                question: "15. Si una S.A. incurre en causa de disolución por pérdidas (PN < 1/2 CS), ¿qué plazo tienen los administradores para convocar Junta o solicitar disolución/concurso?",
+                options: ["15 días", "1 mes", "2 meses", "6 meses"],
+                answer: "2 meses"
+            },
+            {
+                question: "16. ¿Qué documento contiene las reglas de funcionamiento interno de una sociedad?",
+                options: ["La Escritura de Constitución", "Los Estatutos Sociales", "El Libro de Actas", "El Informe de Gestión"],
+                answer: "Los Estatutos Sociales"
+            },
+            {
+                question: "17. ¿Cuál es la antelación mínima para convocar una Junta General en una S.A.?",
+                options: ["7 días", "15 días", "1 mes", "2 meses"],
+                answer: "1 mes"
+            },
+             {
+                question: "18. ¿Qué tipo de sociedad mercantil requiere un informe de experto independiente para valorar las aportaciones no dinerarias en su constitución?",
+                options: ["S.L.", "S. Colectiva", "S.A.", "Todas las anteriores"],
+                answer: "S.A."
+            },
+            {
+                question: "19. ¿Cuándo adquiere una sociedad mercantil personalidad jurídica propia?",
+                options: ["Al otorgar la escritura pública", "Al obtener el NIF provisional", "Con la inscripción en el Registro Mercantil", "Al iniciar su actividad"],
+                answer: "Con la inscripción en el Registro Mercantil"
+            },
+            {
+                question: "20. ¿Qué órgano nombra al auditor de cuentas?",
+                options: ["Los administradores", "El Registro Mercantil", "La Junta General", "El Ministerio de Economía"],
+                answer: "La Junta General"
+            },
+            {
+                question: "21. El capital de una S.L. está dividido en:",
+                options: ["Acciones", "Participaciones sociales", "Cuotas", "Bonos"],
+                answer: "Participaciones sociales"
+            },
+             {
+                question: "22. ¿Cuál es el domicilio social de una empresa?",
+                options: ["Donde viven los socios", "Donde está la fábrica principal", "Donde radica su efectiva administración y dirección o principal establecimiento", "Cualquier lugar elegido libremente"],
+                answer: "Donde radica su efectiva administración y dirección o principal establecimiento"
+            },
+            {
+                question: "23. En una Sociedad Comanditaria Simple, ¿quiénes tienen responsabilidad limitada?",
+                options: ["Los socios colectivos", "Los socios comanditarios", "Todos los socios", "Ningún socio"],
+                answer: "Los socios comanditarios"
+            },
+             {
+                question: "24. ¿Qué sucede si las cuentas anuales no se depositan en el Registro Mercantil?",
+                options: ["Nada, es voluntario", "La sociedad se disuelve automáticamente", "Se cierra la hoja registral (no se inscriben más actos) y pueden imponerse sanciones", "Los administradores van a la cárcel"],
+                answer: "Se cierra la hoja registral (no se inscriben más actos) y pueden imponerse sanciones"
+            },
+             {
+                question: "25. ¿Qué significa BORME?",
+                options: ["Boletín Oficial de Registros Mercantiles Españoles", "Base Oficial del Registro Mercantil", "Boletín Oficial del Registro Mercantil", "Boletín de Operaciones y Registros Mercantiles"],
+                answer: "Boletín Oficial del Registro Mercantil"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('quiz-results');
+        let score = 0;
+
+        function buildQuiz() {
+            quizData.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('quiz-question', 'p-4', 'border', 'border-gray-200', 'rounded-lg', 'bg-white');
+                questionDiv.setAttribute('data-question-index', index);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('mb-3', 'font-semibold');
+                questionText.textContent = item.question;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('space-y-2');
+
+                item.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.classList.add('quiz-option', 'block', 'w-full', 'text-left', 'p-2', 'border', 'border-gray-300', 'rounded-md', 'hover:bg-gray-100');
+                    optionButton.textContent = option;
+                    optionButton.setAttribute('data-correct', option === item.answer);
+                    optionButton.onclick = (event) => selectAnswer(event, index);
+                    optionsDiv.appendChild(optionButton);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(event, questionIndex) {
+            const selectedButton = event.target;
+            const questionDiv = selectedButton.closest('.quiz-question');
+            const isCorrect = selectedButton.getAttribute('data-correct') === 'true';
+            const questionData = quizData[questionIndex];
+
+            // Disable all options for this question
+            const options = questionDiv.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null; // Remove click listener
+                 // Highlight the actual correct answer if the user was wrong
+                 if (opt.getAttribute('data-correct') === 'true') {
+                     opt.classList.add('correct-answer'); // Add a class to always show the correct one
+                 }
+            });
+
+            selectedButton.classList.add('selected'); // Mark the selected button
+
+            if (isCorrect) {
+                questionDiv.classList.add('correct');
+                score++;
+            } else {
+                questionDiv.classList.add('incorrect');
+            }
+
+            updateResults();
+        }
+
+         function updateResults() {
+            const answeredQuestions = document.querySelectorAll('.quiz-question.correct, .quiz-question.incorrect').length;
+            resultsContainer.textContent = `Progreso: ${answeredQuestions} de ${quizData.length} preguntas respondidas. Aciertos: ${score}.`;
+             if (answeredQuestions === quizData.length) {
+                 resultsContainer.textContent += ` ¡Test completado! Puntuación final: ${score} de ${quizData.length}.`;
+             }
+        }
+
+
+        // Build the quiz when the page loads
+        buildQuiz();
+
+    </script>
+
+</body>
+</html>

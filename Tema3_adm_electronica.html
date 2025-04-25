@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Tema 3: Sector Público Electrónico, Datos y Transparencia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-question.correct .selected {
+            background-color: #22c55e; /* green-500 */
+            color: white;
+        }
+        .quiz-question.incorrect .selected {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+        /* Highlight correct answer always */
+        .quiz-question .correct-answer {
+             background-color: #d9f99d; /* lime-200 */
+             border: 1px solid #a3e635; /* lime-400 */
+             font-weight: 600; /* Slightly bolder */
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         .quiz-option:hover {
+            background-color: #f0f0f0; /* gray-100 */
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* Style for the correct answer when the user answered incorrectly */
+        .quiz-question.incorrect .quiz-option[data-correct="true"] {
+             background-color: #a3e635 !important; /* lime-400 */
+             color: #1a2e05; /* Darker text for contrast */
+             border: 1px solid #4d7c0f;
+        }
+
+        /* Style for the incorrectly selected answer */
+        .quiz-question.incorrect .quiz-option.selected {
+            background-color: #ef4444 !important; /* red-500 */
+            color: white !important;
+            border: 1px solid #b91c1c;
+        }
+
+        /* Style for the correctly selected answer */
+         .quiz-question.correct .quiz-option.selected {
+            background-color: #22c55e !important; /* green-500 */
+            color: white !important;
+            border: 1px solid #15803d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-md">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 mb-6 border-b-2 border-indigo-200 pb-2">Tema 3: Funcionamiento Electrónico, Datos y Transparencia</h1>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-4">Introducción</h2>
+            <p class="mb-4">
+                Este tema aborda la modernización de las Administraciones Públicas (AAPP) a través de las tecnologías de la información y la comunicación (TIC), así como dos pilares fundamentales de la relación entre la administración y los ciudadanos en el siglo XXI: la protección de los datos personales y el derecho a la transparencia y al acceso a la información pública. Se basa principalmente en la Ley 39/2015 (Procedimiento Administrativo Común), la Ley 40/2015 (Régimen Jurídico del Sector Público), la Ley Orgánica 3/2018 (Protección de Datos y Garantía de Derechos Digitales) y la Ley 19/2013 (Transparencia).
+            </p>
+             <img src="https://placehold.co/600x300/eef2ff/4f46e5?text=Imagen+Administracion+Electronica" alt="[Imagen de Administración Electrónica]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/eef2ff/4f46e5?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-4">Funcionamiento Electrónico del Sector Público (Leyes 39 y 40/2015)</h2>
+            <p class="mb-4">Las Leyes 39/2015 y 40/2015 establecen la <strong>obligatoriedad de la tramitación electrónica</strong> como forma habitual de funcionamiento de las AAPP, tanto en sus relaciones internas como con los ciudadanos y empresas.</p>
+            <p class="mb-4"><strong>Conceptos clave:</strong></p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Derecho y obligación de relacionarse electrónicamente:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Derecho</strong> para las <strong>personas físicas</strong> (pueden elegir comunicarse por medios electrónicos o no, salvo que estén obligadas).</li>
+                        <li><strong>Obligación</strong> para: <strong>personas jurídicas</strong>, entidades sin personalidad jurídica, quienes ejerzan actividad profesional colegiada, empleados públicos para trámites por razón de su cargo, y quienes representen a un obligado.</li>
+                    </ul>
+                </li>
+                <li><strong>Sede Electrónica:</strong> Dirección electrónica disponible para los ciudadanos, cuya titularidad corresponde a una AAPP. Es el <strong>punto de acceso electrónico general</strong> seguro. Debe identificarse claramente el titular, los medios disponibles, e incluir sistemas de verificación de certificados.</li>
+                <li><strong>Portal de Internet:</strong> Punto de acceso electrónico a información y servicios, complementario a la Sede Electrónica.</li>
+                <li><strong>Sistemas de identificación de las AAPP:</strong> Sello electrónico (basado en certificado electrónico cualificado) para actuación administrativa automatizada; Código Seguro de Verificación (CSV) para verificar documentos electrónicos.</li>
+                <li><strong>Sistemas de firma de las AAPP:</strong> Firma electrónica del titular del órgano o empleado público; Sello electrónico; Actuación administrativa automatizada.</li>
+                <li><strong>Sistemas de identificación de los interesados:</strong> Certificados electrónicos cualificados (DNIe, FNMT...), sistemas de clave concertada (<strong>Cl@ve PIN, Cl@ve Permanente</strong>), y otros sistemas que garanticen la identidad.</li>
+                <li><strong>Sistemas de firma de los interesados:</strong> Firma electrónica cualificada y avanzada (basada en certificado), sello electrónico cualificado, y otros sistemas como Cl@ve Firma. Las AAPP deben admitir todos los sistemas válidos.</li>
+                <li><strong>Registro Electrónico General:</strong> Cada AAPP debe tener uno. Punto para la <strong>presentación de documentos</strong> dirigidos a cualquier órgano de esa AAPP o de otras AAPP integradas en el Sistema de Interconexión de Registros (SIR). Emite <strong>recibo</strong> con fecha y hora de presentación. <strong>Funciona 24x7 todos los días del año</strong>. La presentación en día inhábil se entiende hecha el primer día hábil siguiente.</li>
+                <li><strong>Expediente Administrativo Electrónico:</strong> Conjunto ordenado de documentos y actuaciones electrónicas. Debe contener un <strong>índice electrónico</strong> y metadatos obligatorios. Debe garantizar la integridad, autenticidad y conservación.</li>
+                <li><strong>Documento Administrativo Electrónico:</strong> Información en soporte electrónico archivada por la AAPP. Válidos si contienen metadatos mínimos, están firmados electrónicamente y permiten la interoperabilidad. Las <strong>copias auténticas</strong> (en papel o electrónicas) tienen la misma validez que el original.</li>
+                <li><strong>Notificación Electrónica:</strong> Será la <strong>preferente</strong> y obligatoria para los sujetos obligados a relacionarse electrónicamente. Se realiza mediante <strong>comparecencia en la Sede Electrónica</strong> o a través de la <strong>Dirección Electrónica Habilitada única (DEHú)</strong>. Se entiende practicada en el momento de acceso a su contenido. Se entiende <strong>rechazada si transcurren 10 días naturales</strong> desde la puesta a disposición sin acceder a ella (salvo que de oficio o a instancia se compruebe imposibilidad técnica).</li>
+                <li><strong>Archivo Electrónico Único:</strong> Cada AAPP debe mantener uno, donde se archiven los expedientes finalizados. Debe garantizar la seguridad, integridad, autenticidad, confidencialidad, calidad, protección y conservación de los documentos.</li>
+                <li><strong>Interoperabilidad:</strong> Capacidad de los sistemas de información para compartir datos y posibilitar el intercambio de información y conocimiento. Se basa en el <strong>Esquema Nacional de Interoperabilidad (ENI)</strong>. Implica que el ciudadano <strong>no debe aportar documentos que ya obren en poder de la AAPP</strong> o que puedan ser consultados por esta (Plataforma de Intermediación de Datos).</li>
+                <li><strong>Seguridad:</strong> Garantizada por el <strong>Esquema Nacional de Seguridad (ENS)</strong>.</li>
+            </ul>
+             <img src="https://placehold.co/600x300/f3e8ff/7e22ce?text=Imagen+Firma+Electronica" alt="[Imagen de Firma Electrónica]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/f3e8ff/7e22ce?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-4">Ley Orgánica 3/2018 de Protección de Datos Personales y Garantía de Derechos Digitales (LOPDGDD)</h2>
+            <p class="mb-4">Adapta el ordenamiento español al Reglamento General de Protección de Datos (RGPD) de la UE. Regula la protección de las personas físicas en relación con el tratamiento de sus datos personales y la libre circulación de estos datos.</p>
+            <p class="mb-4"><strong>Principios del tratamiento de datos (¡Memorizar!):</strong></p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Licitud, lealtad y transparencia:</strong> El tratamiento debe ser legal, justo y transparente para el interesado.</li>
+                <li><strong>Limitación de la finalidad:</strong> Los datos deben recogerse con fines determinados, explícitos y legítimos, y no tratarse ulteriormente de manera incompatible.</li>
+                <li><strong>Minimización de datos:</strong> Adecuados, pertinentes y limitados a lo necesario para los fines.</li>
+                <li><strong>Exactitud:</strong> Datos exactos y actualizados. Deben tomarse medidas para suprimir o rectificar los inexactos.</li>
+                <li><strong>Limitación del plazo de conservación:</strong> No más tiempo del necesario para los fines del tratamiento.</li>
+                <li><strong>Integridad y confidencialidad:</strong> Tratamiento que garantice la seguridad adecuada (protección contra tratamiento no autorizado, pérdida, destrucción...).</li>
+                <li><strong>Responsabilidad proactiva (Accountability):</strong> El responsable del tratamiento debe ser capaz de demostrar el cumplimiento de los principios.</li>
+            </ul>
+            <p class="mb-4"><strong>Derechos de los interesados (Derechos ARSOPL):</strong></p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Acceso:</strong> Derecho a obtener confirmación de si se tratan sus datos, acceder a ellos y obtener información sobre el tratamiento.</li>
+                <li><strong>Rectificación:</strong> Derecho a obtener la rectificación de datos inexactos o incompletos.</li>
+                <li><strong>Supresión ("Derecho al olvido"):</strong> Derecho a obtener la supresión de los datos cuando ya no sean necesarios, se retire el consentimiento, etc.</li>
+                <li><strong>Oposición:</strong> Derecho a oponerse al tratamiento por motivos relacionados con su situación particular, o para fines de mercadotecnia directa.</li>
+                <li><strong>Portabilidad:</strong> Derecho a recibir los datos en formato estructurado, de uso común y lectura mecánica, y a transmitirlos a otro responsable (si el tratamiento se basa en consentimiento o contrato y es automatizado).</li>
+                <li><strong>Limitación del tratamiento:</strong> Derecho a obtener la limitación del tratamiento mientras se verifica la exactitud, la licitud, o en caso de oposición o necesidad para reclamaciones.</li>
+             </ul>
+             <p class="mb-4"><strong>Figuras clave:</strong></p>
+              <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Responsable del Tratamiento:</strong> Quien decide sobre los fines y medios del tratamiento.</li>
+                <li><strong>Encargado del Tratamiento:</strong> Quien trata datos por cuenta del responsable (requiere contrato).</li>
+                <li><strong>Delegado de Protección de Datos (DPD/DPO):</strong> Figura obligatoria en AAPP y en ciertas entidades privadas. Informa, asesora, supervisa el cumplimiento y coopera con la autoridad de control. Debe tener conocimientos especializados. <strong>Nombramiento debe comunicarse a la AEPD en 10 días</strong>.</li>
+             </ul>
+             <p class="mb-4"><strong>Obligaciones del responsable/encargado:</strong> Registro de actividades de tratamiento, análisis de riesgos, evaluación de impacto (si procede), medidas de seguridad, notificación de violaciones de seguridad a la AEPD (<strong>en 72 horas máximo</strong>) y al interesado (si hay alto riesgo), designar DPD si es obligatorio.</p>
+             <p class="mb-4"><strong>Autoridad de control:</strong> La <strong>Agencia Española de Protección de Datos (AEPD)</strong>. Supervisa, asesora, tramita reclamaciones y ejerce potestad sancionadora (multas muy elevadas). Existen autoridades autonómicas en Cataluña, País Vasco y Andalucía.</p>
+             <p class="mb-4"><strong>Garantía de Derechos Digitales:</strong> La LOPDGDD incluye un título sobre derechos en el entorno digital: neutralidad de la red, acceso universal, seguridad, educación digital, protección de menores, rectificación en medios digitales, actualización de informaciones, derecho al olvido en buscadores y redes sociales, testamento digital, derechos laborales (desconexión digital, intimidad ante videovigilancia y geolocalización).</p>
+             <img src="https://placehold.co/600x300/fefce8/a16207?text=Imagen+Proteccion+de+Datos" alt="[Imagen de Protección de Datos]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/fefce8/a16207?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-4">La Transparencia de la Actividad Pública (Ley 19/2013)</h2>
+            <p class="mb-4">Esta ley tiene un doble objetivo: incrementar la transparencia mediante la <strong>publicidad activa</strong> y reconocer y garantizar el <strong>derecho de acceso a la información pública</strong>.</p>
+
+            <h3 class="text-xl font-bold text-indigo-500 mb-3">Publicidad Activa</h3>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Concepto:</strong> Obligación de las entidades del sector público de <strong>publicar de forma periódica y actualizada</strong> la información relevante para garantizar la transparencia de su actividad. Es una transparencia <strong>proactiva</strong>.</li>
+                <li><strong>Principios:</strong> Gratuidad, accesibilidad, interoperabilidad, calidad de la información.</li>
+                <li><strong>Objeto (Información a publicar - ¡Importante!):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Información institucional, organizativa y de planificación:</strong> Funciones, normativa, estructura organizativa (organigrama), planes y programas anuales/plurianuales.</li>
+                        <li><strong>Información de relevancia jurídica:</strong> Directrices, instrucciones, anteproyectos de ley, proyectos de reglamentos, memorias e informes de elaboración.</li>
+                        <li><strong>Información económica, presupuestaria y estadística:</strong> <strong>Contratos</strong> (objeto, duración, importe licitación y adjudicación, procedimiento, adjudicatario - ¡mínimo trimestral!), <strong>convenios</strong>, encomiendas de gestión, <strong>subvenciones y ayudas públicas</strong>, presupuestos, cuentas anuales, <strong>retribuciones de altos cargos</strong> y máximos responsables, indemnizaciones por cese, declaraciones anuales de bienes y actividades de los representantes locales, información estadística necesaria.</li>
+                    </ul>
+                </li>
+                <li><strong>Portal de Transparencia:</strong> Plataforma electrónica centralizada (dependiente del Ministerio de la Presidencia para la AGE) donde se publica la información de publicidad activa. Las CCAA y EELL pueden tener sus propios portales.</li>
+                <li><strong>Control:</strong> El cumplimiento de las obligaciones de publicidad activa es supervisado por el <strong>Consejo de Transparencia y Buen Gobierno (CTBG)</strong> y los órganos autonómicos equivalentes. El incumplimiento puede dar lugar a amonestaciones o infracciones disciplinarias.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-indigo-500 mb-3">Derecho de Acceso a la Información Pública</h3>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Concepto:</strong> Derecho de <strong>todas las personas</strong> (sin necesidad de acreditar interés legítimo ni motivación) a acceder a los contenidos o documentos, cualquiera que sea su formato, que obren en poder de las entidades del sector público y que hayan sido elaborados o adquiridos en el ejercicio de sus funciones. Es una transparencia <strong>reactiva</strong> (a solicitud).</li>
+                <li><strong>Límites al derecho de acceso (Causas de inadmisión o denegación - ¡Importante!):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Información en curso de elaboración, auxiliar o de apoyo, que requiera reelaboración previa, dirigida a otros órganos, cuyo acceso perjudique la <strong>seguridad nacional, defensa, relaciones exteriores, seguridad pública, prevención/investigación de ilícitos, secreto profesional, propiedad intelectual/industrial, garantía de confidencialidad, protección del medio ambiente</strong>.</li>
+                        <li>Si la información contiene <strong>datos personales especialmente protegidos</strong>, el acceso solo se permite con consentimiento expreso del afectado o si lo ampara una ley. Si contiene datos meramente identificativos relacionados con la organización o actividad pública, se concede el acceso (salvo que prevalezca la protección de datos).</li>
+                        <li>La aplicación de los límites debe ser <strong>justificada y proporcionada</strong>. El acceso puede ser parcial si es posible omitir la parte afectada por el límite.</li>
+                    </ul>
+                </li>
+                <li><strong>Procedimiento:</strong> Solicitud dirigida al titular del órgano que posea la información. No requiere motivación. Se prefiere formato electrónico.</li>
+                <li><strong>Plazo de resolución:</strong> <strong>1 mes</strong> desde la recepción de la solicitud. Ampliable por <strong>otro mes</strong> si hay volumen o complejidad (notificando al solicitante).</li>
+                <li><strong>Silencio administrativo:</strong> <strong>Negativo</strong> (se entiende desestimada la solicitud si no hay resolución expresa en plazo).</li>
+                <li><strong>Resolución:</strong> Motivada si concede acceso parcial, deniega o inadmite. Gratuita (salvo costes de expedición de copias o transposición a formato diferente).</li>
+                <li><strong>Recursos:</strong> Contra la resolución denegatoria (expresa o presunta) cabe:
+                    <ul class="list-disc list-inside space-y-1 mt-1 pl-8">
+                        <li><strong>Reclamación potestativa ante el CTBG</strong> (o equivalente autonómico) en el plazo de <strong>1 mes</strong>. Es requisito previo a la vía contencioso-administrativa (salvo para AAPP territoriales, donde es sustitutiva de recursos administrativos). Plazo de resolución del CTBG: <strong>3 meses</strong> (silencio negativo).</li>
+                        <li>Recurso contencioso-administrativo.</li>
+                    </ul>
+                </li>
+             </ul>
+              <img src="https://placehold.co/600x300/f5f3ff/6d28d9?text=Imagen+Transparencia" alt="[Imagen de Transparencia]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/f5f3ff/6d28d9?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-4">Ley 39/2015 del Procedimiento Administrativo Común (Aspectos Clave)</h2>
+            <p class="mb-4">Regula los requisitos de validez y eficacia de los actos administrativos, el procedimiento administrativo común (garantizando trato común ante todas las AAPP) y la revisión de los actos en vía administrativa.</p>
+            <p class="mb-4"><strong>Ámbito de aplicación:</strong> Sector Público (AGE, CCAA, EELL, Sector Público Institucional).</p>
+            <p class="mb-4"><strong>Interesados en el procedimiento:</strong></p>
+            <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+                <li>Quienes lo promuevan como titulares de derechos o intereses legítimos individuales o colectivos.</li>
+                <li>Los que, sin haber iniciado el procedimiento, tengan derechos que puedan resultar afectados por la decisión.</li>
+                <li>Aquellos cuyos intereses legítimos puedan resultar afectados y se personen.</li>
+                <li>Asociaciones y organizaciones representativas de intereses económicos y sociales (como interesados colectivos).</li>
+            </ul>
+            <p class="mb-4"><strong>Derechos de las personas en sus relaciones con las AAPP (Art. 13):</strong> A comunicarse por medios electrónicos, a ser asistidos en el uso de medios electrónicos, a la igualdad en el acceso electrónico, a conocer el estado de tramitación, a identificar autoridades y personal, a no presentar documentos originales (salvo excepción), <strong>a no presentar datos y documentos que ya obren en poder de las AAPP</strong>, a formular alegaciones, a obtener información y orientación, a actuar asistido de asesor, etc.</p>
+            <p class="mb-4"><strong>Plazos:</strong></p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Cómputo:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Por <strong>horas:</strong> de hora en hora desde la notificación/publicación.</li>
+                        <li>Por <strong>días:</strong> Se cuentan solo los <strong>días hábiles</strong> (excluyen sábados, domingos y festivos). Se inicia el cómputo al día siguiente de la notificación/publicación o estimación/desestimación por silencio. Si el último día es inhábil, se prorroga al siguiente hábil.</li>
+                        <li>Por <strong>meses o años:</strong> De fecha a fecha. Si en el mes de vencimiento no hay día equivalente, expira el último día del mes. Si el último día es inhábil, se prorroga al siguiente hábil.</li>
+                    </ul>
+                </li>
+                <li><strong>Obligatoriedad de resolver:</strong> La AAPP está obligada a dictar resolución expresa y notificarla en todos los procedimientos. <strong>Plazo máximo:</strong> el fijado por la norma reguladora, sin exceder <strong>6 meses</strong> (salvo ley con rango superior o normativa UE). Si no se fija plazo, es de <strong>3 meses</strong>.</li>
+                <li><strong>Ampliación de plazos:</strong> Se puede ampliar el plazo máximo para resolver (y otros plazos) de forma motivada, sin exceder el tiempo inicial.</li>
+             </ul>
+             <p class="mb-4"><strong>Silencio Administrativo:</strong> Efectos de la falta de resolución expresa en plazo.</p>
+              <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Actos iniciados a solicitud del interesado:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Regla general: Silencio Positivo (Estimatorio)</strong>.</li>
+                        <li><strong>Excepciones (Silencio Negativo - Desestimatorio):</strong> En procedimientos relativos al derecho de petición, aquellos cuya estimación implique transferencia de facultades sobre dominio o servicio público, los que impliquen ejercicio de actividades que puedan dañar el medio ambiente, procedimientos de responsabilidad patrimonial, impugnación de actos y disposiciones (recursos). También si una norma con rango de ley o norma UE/internacional lo establece.</li>
+                    </ul>
+                </li>
+                 <li><strong>Actos iniciados de oficio:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Si derivan en actos <strong>favorables</strong> para los interesados: <strong>Silencio Negativo (Desestimatorio)</strong>.</li>
+                        <li>Si derivan en actos <strong>desfavorables o de gravamen</strong> (ej: sancionadores): <strong>Caducidad</strong> del procedimiento.</li>
+                    </ul>
+                 </li>
+                <li>La estimación por silencio tiene a todos los efectos la consideración de <strong>acto administrativo finalizador</strong>. La desestimación permite interponer los recursos procedentes.</li>
+             </ul>
+             <p class="mb-4"><strong>Actos Administrativos:</strong></p>
+              <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Requisitos:</strong> Producidos por órgano competente, con contenido lícito, posible, determinado y adecuado a los fines, siguiendo el procedimiento establecido, y normalmente motivados (sobre todo si limitan derechos, resuelven recursos, se separan del precedente...).</li>
+                <li><strong>Eficacia:</strong> Producen efectos desde la fecha en que se dictan, salvo que se disponga otra cosa. La eficacia puede quedar demorada a la <strong>notificación, publicación</strong> o aprobación superior.</li>
+                <li><strong>Nulidad de pleno derecho (Art. 47):</strong> Actos que lesionen derechos y libertades fundamentales, dictados por órgano manifiestamente incompetente, con contenido imposible, constitutivos de infracción penal, dictados prescindiendo total y absolutamente del procedimiento, actos expresos o presuntos contrarios al ordenamiento por los que se adquieren facultades careciendo de requisitos esenciales. <strong>No convalidables, efectos ex tunc (desde siempre)</strong>.</li>
+                <li><strong>Anulabilidad (Art. 48):</strong> Vicios menos graves (infracción del ordenamiento, desviación de poder, defecto de forma que cause indefensión, actuaciones fuera de plazo si hacen imposible el objeto). <strong>Son convalidables, efectos ex nunc (desde ahora)</strong>.</li>
+              </ul>
+              <p class="mb-4"><strong>Fases del Procedimiento Administrativo Común:</strong></p>
+               <ol class="list-decimal list-inside space-y-2 mb-4 pl-4">
+                    <li><strong>Iniciación:</strong> De oficio (por acuerdo órgano competente, orden superior, petición razonada otros órganos, denuncia) o a solicitud del interesado.</li>
+                    <li><strong>Ordenación:</strong> Impulso de oficio, concentración de trámites, cumplimiento de trámites (plazo 10 días general).</li>
+                    <li><strong>Instrucción:</strong> Actos necesarios para determinar, conocer y comprobar los hechos (alegaciones, informes -preceptivos/facultativos, vinculantes/no vinculantes-, prueba, trámite de audiencia -plazo 10-15 días-, información pública).</li>
+                    <li><strong>Finalización:</strong> Resolución (decide todas las cuestiones, motivada), desistimiento (del interesado), renuncia (al derecho), caducidad (por inactividad interesado o de la Adm. en procedimientos sancionadores/desfavorables), terminación convencional (acuerdos, pactos).</li>
+               </ol>
+               <p class="mb-4"><strong>Recursos Administrativos:</strong></p>
+                <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                    <li><strong>Alzada:</strong> Contra actos que <strong>no ponen fin a la vía administrativa</strong> (dictados por órgano inferior). Se interpone ante el órgano superior jerárquico del que dictó el acto. <strong>Plazo: 1 mes</strong> (acto expreso) o en cualquier momento a partir del día siguiente al silencio (acto presunto). Plazo para resolver: <strong>3 meses</strong> (silencio negativo, salvo excepciones LOPDGDD/Transparencia).</li>
+                    <li><strong>Potestativo de Reposición:</strong> Contra actos que <strong>sí ponen fin a la vía administrativa</strong>. Se interpone ante el <strong>mismo órgano</strong> que dictó el acto. Es potestativo (se puede ir directamente al contencioso). <strong>Plazo: 1 mes</strong> (expreso) o en cualquier momento (presunto). Plazo para resolver: <strong>1 mes</strong> (silencio negativo). No se puede interponer recurso contencioso hasta que se resuelva la reposición o se entienda desestimada por silencio.</li>
+                    <li><strong>Extraordinario de Revisión:</strong> Contra actos firmes en vía administrativa, por causas tasadas (error de hecho, documentos nuevos esenciales, cohecho, prevaricación...). Plazos específicos según la causa.</li>
+                </ul>
+        </section>
+
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-cyan-700 mb-4">Trucos Nemotécnicos</h2>
+            <ul class="list-disc list-inside space-y-3 pl-4 bg-cyan-50 p-4 rounded-lg border border-cyan-200">
+                <li>
+                    <strong>LOPDGDD Principios:</strong> Imagina una receta "LIFI-LEMI-PLACE" => <strong>LI</strong>citud, <strong>FI</strong>nalidad, <strong>LE</strong>altad, <strong>MI</strong>nimización, <strong>PLA</strong>zo conservación, <strong>C</strong>onfidencialidad/Integridad, <strong>E</strong>xactitud (+ Transparencia, Responsabilidad).
+                </li>
+                <li>
+                    <strong>LOPDGDD Derechos:</strong> "El ciudadano puede <strong>ARSOPL</strong>ar sus datos" => <strong>A</strong>cceso, <strong>R</strong>ectificación, <strong>S</strong>upresión, <strong>O</strong>posición, <strong>P</strong>ortabilidad, <strong>L</strong>imitación.
+                </li>
+                <li>
+                    <strong>Notificación Electrónica Rechazada:</strong> <strong>10 días naturales</strong> sin acceder = Rechazada. Piensa "Diez días para abrir la carta digital".
+                </li>
+                <li>
+                    <strong>Notificación Brecha Seguridad AEPD:</strong> <strong>72 horas</strong> máximo. Piensa "Tres días para avisar del agujero".
+                </li>
+                <li>
+                    <strong>Transparencia: Publicidad Activa vs. Derecho Acceso:</strong>
+                    <ul>
+                        <li><strong>Activa:</strong> La AAPP publica <strong>A</strong>ntes (proactiva), es <strong>A</strong>mplia (general).</li>
+                        <li><strong>Acceso:</strong> El ciudadano pide <strong>A</strong>hora (reactiva), es <strong>A</strong>lgo concreto (específica).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Plazo Resolución Derecho Acceso:</strong> <strong>1 mes</strong> (+ 1 mes posible). Piensa "Un mes para buscar papeles".
+                </li>
+                <li>
+                    <strong>Silencio Derecho Acceso / Reclamación CTBG:</strong> Siempre <strong>Negativo</strong>. "Si callan, es que no".
+                </li>
+                 <li>
+                    <strong>Ley 39 Cómputo Plazos por Días:</strong> Solo <strong>HÁBILES</strong> (sin Sábados, Domingos, Festivos). Piensa "Los funcionarios descansan findes y festivos". (¡Ojo! Salvo que una norma diga naturales).
+                </li>
+                 <li>
+                    <strong>Ley 39 Silencio Iniciados por Interesado:</strong> Regla General = <strong>POSITIVO</strong>. Excepciones importantes (Negativo): Derecho Petición, Dominio Público, Medio Ambiente, Responsabilidad Patrimonial, Recursos. Piensa "Normalmente, si callan otorgan, salvo que sea algo 'gordo' o un recurso".
+                </li>
+                 <li>
+                    <strong>Recursos Administrativos Plazos (Acto Expreso):</strong> <strong>1 mes</strong> (Alzada y Reposición). Fácil de recordar.
+                </li>
+                 <li>
+                    <strong>Recursos Administrativos Silencio (Resolución):</strong> Alzada (3 meses, negativo), Reposición (1 mes, negativo).
+                </li>
+                 <li>
+                    <strong>Nulidad vs. Anulabilidad:</strong>
+                    <ul>
+                        <li><strong>Nulidad:</strong> Vicio <strong>Gordo, Gordo</strong> (lesión derechos fundamentales, incompetencia manifiesta, contenido imposible, sin procedimiento...). <strong>Nunca se arregla</strong> (no convalidable).</li>
+                        <li><strong>Anulabilidad:</strong> Vicio <strong>Menos gordo</strong> (infracción normal, desviación poder, defecto forma...). <strong>Se puede arreglar</strong> (convalidable).</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-purple-700 mb-4">Test de Autoevaluación (25 Preguntas)</h2>
+            <p class="mb-4">Selecciona la respuesta que consideres correcta. Se indicará si has acertado o fallado y cuál era la opción correcta.</p>
+            <div id="quiz-container" class="space-y-6">
+                </div>
+             <div id="quiz-results" class="mt-6 text-lg font-semibold"></div>
+        </section>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "1. Según la Ley 39/2015, ¿quiénes están obligados a relacionarse electrónicamente con las AAPP?",
+                options: ["Solo las personas físicas", "Solo las personas jurídicas", "Personas jurídicas, profesionales colegiados, empleados públicos (para su cargo), entre otros", "Nadie está obligado, siempre es un derecho"],
+                answer: "Personas jurídicas, profesionales colegiados, empleados públicos (para su cargo), entre otros"
+            },
+            {
+                question: "2. ¿Cómo se llama el punto de acceso electrónico general cuya titularidad corresponde a una AAPP?",
+                options: ["Portal de Internet", "Registro Electrónico", "Sede Electrónica", "Archivo Electrónico Único"],
+                answer: "Sede Electrónica"
+            },
+            {
+                question: "3. ¿Cuántos días naturales tienen que pasar desde la puesta a disposición de una notificación electrónica para que se entienda rechazada si no se accede?",
+                options: ["5 días", "10 días", "15 días", "1 mes"],
+                answer: "10 días"
+            },
+            {
+                question: "4. ¿Cuál de estos NO es un principio del tratamiento de datos según la LOPDGDD?",
+                options: ["Limitación de la finalidad", "Minimización de datos", "Máxima difusión", "Exactitud"],
+                answer: "Máxima difusión"
+            },
+            {
+                question: "5. El derecho a obtener la supresión de los datos personales se denomina:",
+                options: ["Derecho de acceso", "Derecho de oposición", "Derecho de supresión (al olvido)", "Derecho de portabilidad"],
+                answer: "Derecho de supresión (al olvido)"
+            },
+            {
+                question: "6. ¿En qué plazo máximo debe el responsable notificar una violación de seguridad de datos a la AEPD?",
+                options: ["24 horas", "48 horas", "72 horas", "1 semana"],
+                answer: "72 horas"
+            },
+            {
+                question: "7. La obligación de las AAPP de publicar información relevante de forma periódica y actualizada se llama:",
+                options: ["Derecho de acceso", "Publicidad activa", "Silencio administrativo", "Interoperabilidad"],
+                answer: "Publicidad activa"
+            },
+            {
+                question: "8. ¿Cuál es el plazo general para resolver una solicitud de derecho de acceso a la información pública?",
+                options: ["15 días hábiles", "1 mes", "3 meses", "6 meses"],
+                answer: "1 mes"
+            },
+            {
+                question: "9. Si la AAPP no resuelve una solicitud de acceso a la información en plazo, el silencio se entiende:",
+                options: ["Positivo (estimatorio)", "Negativo (desestimatorio)", "Depende de la materia", "Caducado"],
+                answer: "Negativo (desestimatorio)"
+            },
+            {
+                question: "10. ¿Qué recurso potestativo se puede interponer contra una resolución denegatoria del derecho de acceso antes de ir al contencioso-administrativo?",
+                options: ["Recurso de alzada", "Recurso de reposición", "Reclamación ante el Consejo de Transparencia", "Queja al Defensor del Pueblo"],
+                answer: "Reclamación ante el Consejo de Transparencia"
+            },
+            {
+                question: "11. Según la Ley 39/2015, ¿cómo se computan los plazos señalados por días?",
+                options: ["Siempre naturales", "Siempre hábiles (excluyendo sábados, domingos y festivos)", "Depende de si es verano o invierno", "Hábiles o naturales según la norma específica"],
+                answer: "Siempre hábiles (excluyendo sábados, domingos y festivos)" // Rule general, although norms can specify natural days
+            },
+            {
+                question: "12. ¿Cuál es el plazo máximo supletorio para resolver y notificar un procedimiento administrativo si la norma no fija otro?",
+                options: ["1 mes", "3 meses", "6 meses", "1 año"],
+                answer: "3 meses"
+            },
+            {
+                question: "13. En procedimientos iniciados a solicitud del interesado, la regla general del silencio administrativo es:",
+                options: ["Negativo", "Positivo", "Caducidad", "No hay silencio"],
+                answer: "Positivo"
+            },
+             {
+                question: "14. ¿En cuál de estos casos el silencio administrativo iniciado a solicitud del interesado es NEGATIVO?",
+                options: ["Solicitud de una licencia de obra menor", "Solicitud de una beca", "Interposición de un recurso de alzada", "Solicitud de inscripción en un registro"],
+                answer: "Interposición de un recurso de alzada"
+            },
+            {
+                question: "15. Un acto administrativo dictado por un órgano manifiestamente incompetente por razón de la materia es:",
+                options: ["Válido", "Nulo de pleno derecho", "Anulable", "Irregular no invalidante"],
+                answer: "Nulo de pleno derecho"
+            },
+            {
+                question: "16. La anulabilidad de un acto administrativo implica que:",
+                options: ["El acto es nulo desde su origen", "El acto no puede ser convalidado", "El acto tiene un vicio menos grave y puede ser convalidado", "El acto no produce efectos"],
+                answer: "El acto tiene un vicio menos grave y puede ser convalidado"
+            },
+            {
+                question: "17. ¿Qué fase del procedimiento incluye el trámite de audiencia al interesado?",
+                options: ["Iniciación", "Ordenación", "Instrucción", "Finalización"],
+                answer: "Instrucción"
+            },
+             {
+                question: "18. El recurso de alzada se interpone contra actos que:",
+                options: ["Ponen fin a la vía administrativa", "No ponen fin a la vía administrativa", "Son firmes", "Son nulos de pleno derecho"],
+                answer: "No ponen fin a la vía administrativa"
+            },
+            {
+                question: "19. ¿Ante quién se interpone el recurso potestativo de reposición?",
+                options: ["Ante el órgano superior jerárquico", "Ante el mismo órgano que dictó el acto", "Ante el Consejo de Transparencia", "Ante el juez de lo contencioso"],
+                answer: "Ante el mismo órgano que dictó el acto"
+            },
+            {
+                question: "20. ¿Qué es el Esquema Nacional de Interoperabilidad (ENI)?",
+                options: ["Un sistema de identificación electrónica", "Un marco para garantizar la seguridad", "Un conjunto de criterios y recomendaciones para la conservación de documentos", "Un conjunto de criterios y recomendaciones para que las AAPP compartan información"],
+                answer: "Un conjunto de criterios y recomendaciones para que las AAPP compartan información"
+            },
+            {
+                question: "21. El derecho a la portabilidad de los datos permite al interesado:",
+                options: ["Borrar sus datos", "Oponerse al tratamiento", "Recibir sus datos en formato estructurado y transmitirlos a otro responsable", "Limitar el tratamiento"],
+                answer: "Recibir sus datos en formato estructurado y transmitirlos a otro responsable"
+            },
+             {
+                question: "22. ¿Cuál de estas informaciones NO es obligatoria en Publicidad Activa según la Ley 19/2013?",
+                options: ["Contratos y subvenciones", "Retribuciones de altos cargos", "Opiniones personales de los empleados públicos", "Normativa y estructura organizativa"],
+                answer: "Opiniones personales de los empleados públicos"
+            },
+            {
+                question: "23. El derecho de los ciudadanos a no aportar documentos que ya obran en poder de la AAPP se basa en el principio de:",
+                options: ["Transparencia", "Prudencia", "Interoperabilidad / Consulta e intercambio de datos", "Devengo"],
+                answer: "Interoperabilidad / Consulta e intercambio de datos"
+            },
+             {
+                question: "24. La caducidad en un procedimiento iniciado de oficio sancionador se produce por:",
+                options: ["Falta de resolución expresa en plazo por la AAPP", "Desistimiento del interesado", "Renuncia del interesado", "Acuerdo entre las partes"],
+                answer: "Falta de resolución expresa en plazo por la AAPP"
+            },
+             {
+                question: "25. ¿Qué significa Cl@ve PIN?",
+                options: ["Un certificado electrónico en la nube", "Un sistema de firma basado en DNIe", "Un sistema de identificación basado en claves concertadas de validez limitada en el tiempo", "Un sistema de archivo electrónico"],
+                answer: "Un sistema de identificación basado en claves concertadas de validez limitada en el tiempo"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('quiz-results');
+        let score = 0;
+        let answeredCount = 0;
+
+        function buildQuiz() {
+            quizData.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('quiz-question', 'p-4', 'border', 'border-gray-200', 'rounded-lg', 'bg-white', 'shadow-sm');
+                questionDiv.setAttribute('data-question-index', index);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('mb-3', 'font-semibold', 'text-gray-700');
+                questionText.textContent = item.question;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('space-y-2');
+
+                item.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.classList.add('quiz-option', 'block', 'w-full', 'text-left', 'p-3', 'border', 'border-gray-300', 'rounded-md', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-indigo-300');
+                    optionButton.textContent = option;
+                    optionButton.setAttribute('data-correct', option === item.answer);
+                    optionButton.onclick = (event) => selectAnswer(event, index);
+                    optionsDiv.appendChild(optionButton);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+             updateResults(); // Initial result display
+        }
+
+        function selectAnswer(event, questionIndex) {
+            const selectedButton = event.target;
+            const questionDiv = selectedButton.closest('.quiz-question');
+
+             if (questionDiv.classList.contains('answered')) {
+                 return;
+             }
+             questionDiv.classList.add('answered');
+             answeredCount++;
+
+            const isCorrect = selectedButton.getAttribute('data-correct') === 'true';
+
+            const options = questionDiv.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null;
+                 if (opt.getAttribute('data-correct') === 'true') {
+                     opt.classList.add('correct-answer');
+                 }
+            });
+
+            selectedButton.classList.add('selected');
+
+            if (isCorrect) {
+                questionDiv.classList.add('correct');
+                score++;
+            } else {
+                questionDiv.classList.add('incorrect');
+            }
+
+            updateResults();
+        }
+
+         function updateResults() {
+            resultsContainer.textContent = `Progreso: ${answeredCount} de ${quizData.length} preguntas respondidas. Aciertos: ${score}.`;
+             if (answeredCount === quizData.length) {
+                 resultsContainer.textContent += ` ¡Test completado! Puntuación final: ${score} de ${quizData.length}.`;
+                 resultsContainer.classList.add('text-indigo-700', 'font-bold');
+             }
+        }
+
+        buildQuiz();
+    </script>
+
+</body>
+</html>
