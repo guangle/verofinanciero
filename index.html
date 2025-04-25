@@ -1,9 +1,98 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plaza de Vero: temas de estudio</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo personalizado para el fondo */
+        body {
+            background-color: #f0f4f8; /* Un color de fondo suave */
+            font-family: 'Inter', sans-serif; /* Usar la fuente Inter */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Asegura que ocupe al menos toda la altura de la ventana */
+            padding: 20px; /* Añade padding para evitar que el contenido toque los bordes en móviles */
+        }
+        /* Estilo para los enlaces dentro de las cajas */
+        .link-box a {
+            display: flex; /* Usa flexbox para alinear icono y texto */
+            flex-direction: column; /* Apila el icono y el texto verticalmente */
+            align-items: center; /* Centra horizontalmente el contenido */
+            text-decoration: none; /* Elimina el subrayado del enlace */
+            color: #1e3a8a; /* Color del texto del enlace */
+            padding: 20px; /* Espaciado interno de la caja */
+            border-radius: 12px; /* Bordes redondeados */
+            background-color: #ffffff; /* Fondo blanco para las cajas */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Transición suave al pasar el ratón */
+            text-align: center; /* Centra el texto */
+            height: 100%; /* Asegura que las cajas tengan la misma altura en un grid */
+        }
+        .link-box a:hover {
+            transform: translateY(-5px); /* Efecto de levantar al pasar el ratón */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
+            color: #1d4ed8; /* Cambia el color del texto al pasar el ratón */
+        }
+        .link-box i {
+            font-size: 3rem; /* Tamaño grande para los iconos */
+            margin-bottom: 15px; /* Espacio entre el icono y el texto */
+            color: #3b82f6; /* Color de los iconos */
+        }
+        .link-box span {
+            font-size: 1.1rem; /* Tamaño del texto del tema */
+            font-weight: 600; /* Texto en negrita */
+        }
+    </style>
+</head>
+<body>
 
-  <body>
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Plaza de Vero: temas de estudio</h1>
 
-    test1
-    
-  </body>
-  
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+            <div class="link-box">
+                <a href="Tema1_sociedades_mercantiles.html">
+                    <i class="fas fa-building"></i> <span>Tema 1: Sociedades mercantiles</span>
+                </a>
+            </div>
+
+            <div class="link-box">
+                <a href="Tema_2_contablidad_general.html">
+                    <i class="fas fa-calculator"></i> <span>Tema 2: Contabilidad General</span>
+                </a>
+            </div>
+
+            <div class="link-box">
+                <a href="Tema3_adm_electronica.html">
+                    <i class="fas fa-laptop-code"></i> <span>Tema 3: Administración electrónica</span>
+                </a>
+            </div>
+
+            <div class="link-box">
+                <a href="Tema4_contratacion_sector_publico.html">
+                    <i class="fas fa-file-contract"></i> <span>Tema 4: Contratación sector público</span>
+                </div>
+            </a>
+
+            <div class="link-box">
+                <a href="Tema5_informatica_basica.html">
+                    <i class="fas fa-computer"></i>
+                    <span>Tema 5: Informática básica</span>
+                </a>
+            </div>
+
+            <div class="link-box">
+                <a href="Tema6_prevencion_riesgos_laborales.html">
+                    <i class="fas fa-helmet-safety"></i> <span>Tema 6: Prevención riesgos laborales</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
 </html>
