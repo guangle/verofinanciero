@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Tema 6: PRL - Pantallas de Visualización de Datos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-question.correct .selected {
+            background-color: #22c55e; /* green-500 */
+            color: white;
+        }
+        .quiz-question.incorrect .selected {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+        /* Highlight correct answer always */
+        .quiz-question .correct-answer {
+             background-color: #d9f99d; /* lime-200 */
+             border: 1px solid #a3e635; /* lime-400 */
+             font-weight: 600; /* Slightly bolder */
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         .quiz-option:hover {
+            background-color: #f0f0f0; /* gray-100 */
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* Style for the correct answer when the user answered incorrectly */
+        .quiz-question.incorrect .quiz-option[data-correct="true"] {
+             background-color: #a3e635 !important; /* lime-400 */
+             color: #1a2e05; /* Darker text for contrast */
+             border: 1px solid #4d7c0f;
+        }
+
+        /* Style for the incorrectly selected answer */
+        .quiz-question.incorrect .quiz-option.selected {
+            background-color: #ef4444 !important; /* red-500 */
+            color: white !important;
+            border: 1px solid #b91c1c;
+        }
+
+        /* Style for the correctly selected answer */
+         .quiz-question.correct .quiz-option.selected {
+            background-color: #22c55e !important; /* green-500 */
+            color: white !important;
+            border: 1px solid #15803d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-md">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-orange-700 mb-6 border-b-2 border-orange-200 pb-2">Tema 6: Prevención de Riesgos Laborales - Trabajo con Pantallas de Visualización de Datos (PVD)</h1>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-orange-600 mb-4">Introducción y Normativa Aplicable</h2>
+            <p class="mb-4">
+                La Prevención de Riesgos Laborales (PRL) es el conjunto de actividades o medidas adoptadas o previstas en todas las fases de actividad de la empresa con el fin de evitar o disminuir los riesgos derivados del trabajo. La normativa básica es la <strong>Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales</strong>, y el <strong>Real Decreto 39/1997, por el que se aprueba el Reglamento de los Servicios de Prevención</strong>.
+            </p>
+            <p class="mb-4">
+                Para el trabajo específico con Pantallas de Visualización de Datos (PVD), la normativa clave es el <strong>Real Decreto 488/1997, de 14 de abril, sobre disposiciones mínimas de seguridad y salud relativas al trabajo con equipos que incluyen pantallas de visualización</strong>. Este RD establece las obligaciones del empresario y las condiciones mínimas que deben reunir estos puestos de trabajo para proteger la salud de los trabajadores.
+            </p>
+             <img src="https://placehold.co/600x300/fff7ed/c2410c?text=Imagen+Normativa+PRL" alt="[Imagen de Normativa PRL]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/fff7ed/c2410c?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-orange-600 mb-4">Definiciones Clave (RD 488/1997)</h2>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Pantalla de visualización de datos (PVD):</strong> Una pantalla alfanumérica o gráfica, independientemente del método de representación visual utilizado (CRT, LCD, Plasma, LED, etc.).</li>
+                <li><strong>Puesto de trabajo con PVD:</strong> Aquel constituido por un equipo con PVD, dotado eventualmente de un teclado o dispositivo de entrada de datos, de un programa para la interconexión persona/máquina, de accesorios ofimáticos, de un asiento y mesa o superficie de trabajo, así como del entorno laboral inmediato.</li>
+                <li><strong>Trabajador usuario de PVD:</strong> Aquel que <strong>habitualmente y durante una parte relevante de su trabajo normal</strong> utiliza un equipo con PVD. Se considera relevante superar las <strong>4 horas diarias o 20 horas semanales</strong> de trabajo efectivo con dichos equipos (criterio orientativo del INSST, no explícito en el RD).</li>
+            </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-orange-600 mb-4">Obligaciones del Empresario</h2>
+            <p class="mb-4">Según el RD 488/1997 y la Ley 31/1995, el empresario tiene las siguientes obligaciones respecto a los puestos con PVD:</p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Evaluación de Riesgos:</strong> <strong>Evaluar los riesgos</strong> para la seguridad y salud de los trabajadores usuarios de PVD, teniendo en cuenta en particular los posibles riesgos para la <strong>vista</strong>, los problemas <strong>físicos (musculoesqueléticos)</strong> y la carga <strong>mental</strong>. Deberá tener en cuenta las características del puesto, las exigencias de la tarea y las posibles interacciones. Se realizará al crear el puesto, al modificarlo o cuando se detecten daños a la salud.</li>
+                <li><strong>Adopción de Medidas Preventivas:</strong> Adoptar las medidas necesarias para eliminar o reducir los riesgos detectados. Asegurar que los puestos de trabajo cumplan las <strong>disposiciones mínimas</strong> establecidas en el Anexo del RD 488/1997 (diseño del puesto, entorno...).</li>
+                <li><strong>Información y Formación:</strong> Proporcionar a los trabajadores <strong>información</strong> sobre todos los aspectos relacionados con la seguridad y salud en su puesto (riesgos, medidas preventivas, uso correcto equipos, pausas...). Proporcionar <strong>formación</strong> específica y adecuada sobre las modalidades de uso de los equipos antes de comenzar a trabajar con PVD y cuando se modifiquen las condiciones.</li>
+                <li><strong>Consulta y Participación:</strong> Consultar a los trabajadores (o sus representantes) y permitir su participación en estas materias.</li>
+                <li><strong>Vigilancia de la Salud:</strong> Garantizar una vigilancia adecuada y específica de la salud de los trabajadores usuarios de PVD, en función de los riesgos detectados. Se debe prestar especial atención a los riesgos para la vista y los trastornos musculoesqueléticos. Se ofrecerá un <strong>reconocimiento inicial</strong> (antes de empezar), <strong>periódicos</strong>, tras ausencia prolongada por motivos de salud, y si aparecen trastornos que puedan deberse al trabajo con PVD. Es <strong>voluntaria</strong> para el trabajador (salvo excepciones legales).</li>
+                <li><strong>Planificación de la actividad preventiva:</strong> Integrar las medidas anteriores en un plan de prevención.</li>
+                <li><strong>Organización del trabajo:</strong> Planificar las tareas diarias de forma que se incluyan <strong>pausas periódicas</strong> o cambios de actividad que reduzcan la carga de trabajo en pantalla.</li>
+            </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-orange-600 mb-4">Riesgos Asociados al Trabajo con PVD</h2>
+            <p class="mb-4">El uso continuado de PVD puede generar diversos riesgos si no se adoptan las medidas adecuadas:</p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li>
+                    <strong>Trastornos Musculoesqueléticos (TME):</strong> Son los más frecuentes. Afectan a espalda (lumbalgias, dorsalgias), cuello (cervicalgias), hombros y extremidades superiores (tendinitis, síndrome del túnel carpiano). Causados por:
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Posturas forzadas o estáticas</strong> mantenidas durante mucho tiempo.</li>
+                        <li>Diseño inadecuado del puesto (altura silla/mesa, ubicación pantalla/teclado...).</li>
+                        <li>Movimientos repetitivos (uso intensivo del ratón/teclado).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Fatiga Visual:</strong> Síntomas como pesadez de ojos, picor, escozor, lagrimeo, visión borrosa, dolor de cabeza. Causada por:
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Exigencia visual elevada de la tarea.</li>
+                        <li>Mala calidad de imagen de la pantalla (brillo, contraste, parpadeo...).</li>
+                        <li>Iluminación inadecuada del puesto (reflejos, deslumbramientos, poca luz...).</li>
+                        <li>Problemas de visión previos no corregidos.</li>
+                        <li>Distancia o ángulo de visión incorrectos.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Fatiga Mental y Estrés:</strong> Sensación de cansancio, dificultad de concentración, irritabilidad, ansiedad. Causada por:
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Excesiva carga de trabajo o presión de tiempo.</li>
+                        <li>Software inadecuado o complejo.</li>
+                        <li>Falta de control sobre la tarea.</li>
+                        <li>Aislamiento, falta de apoyo social.</li>
+                        <li>Interrupciones frecuentes.</li>
+                        <li>Diseño inadecuado del puesto o entorno (ruido...).</li>
+                    </ul>
+                </li>
+                 <li><strong>Otros riesgos</strong> (menos específicos o frecuentes): Derivados de la exposición a campos electromagnéticos (generalmente muy bajos en pantallas modernas), problemas dermatológicos (en casos raros), sedentarismo.</li>
+            </ul>
+             <img src="https://placehold.co/600x300/ffedd5/ea580c?text=Imagen+Riesgos+PVD" alt="[Imagen de Riesgos PVD]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/ffedd5/ea580c?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-orange-600 mb-4">Medidas Preventivas</h2>
+            <p class="mb-4">El Anexo del RD 488/1997 establece las disposiciones mínimas que deben cumplir los puestos de trabajo con PVD. Se complementan con guías técnicas (INSST).</p>
+
+            <h3 class="text-xl font-bold text-orange-500 mb-3">1. Diseño del Puesto de Trabajo (Equipo)</h3>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Pantalla:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Caracteres bien definidos, tamaño suficiente, espacio adecuado entre caracteres y renglones.</li>
+                        <li>Imagen <strong>estable, sin parpadeos</strong> ni destellos.</li>
+                        <li><strong>Brillo y contraste ajustables</strong> por el usuario.</li>
+                        <li><strong>Orientable e inclinable</strong> a voluntad.</li>
+                        <li>Preferiblemente sobre soporte independiente o regulable en altura.</li>
+                        <li>Colocación: Parte superior a la <strong>altura de los ojos o ligeramente inferior</strong>. Distancia: <strong>mínimo 40 cm</strong> (recomendado 50-70 cm, según tamaño). Perpendicular a las ventanas.</li>
+                    </ul>
+                </li>
+                <li><strong>Teclado:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Inclinable e independiente</strong> de la pantalla.</li>
+                        <li>Espacio suficiente delante para apoyar manos/muñecas.</li>
+                        <li>Superficie <strong>mate</strong> para evitar reflejos.</li>
+                        <li>Símbolos de las teclas legibles y contrastados.</li>
+                    </ul>
+                </li>
+                 <li><strong>Ratón (u otro dispositivo apuntador):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Diseño <strong>ergonómico</strong>, adaptado a la mano.</li>
+                        <li>Ubicado al alcance, en el mismo plano que el teclado.</li>
+                        <li>Alternar su uso con el teclado y cambiar de mano si es posible.</li>
+                    </ul>
+                </li>
+                 <li><strong>Mesa o Superficie de Trabajo:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Dimensiones suficientes</strong> para colocar pantalla, teclado, documentos y accesorios de forma flexible.</li>
+                        <li>Superficie <strong>poco reflectante</strong>.</li>
+                        <li>Profundidad suficiente para correcta distancia a pantalla y apoyo de antebrazos (recomendado >= 80 cm).</li>
+                        <li>Altura adecuada (fija o regulable, aprox. 70-75 cm).</li>
+                    </ul>
+                </li>
+                 <li><strong>Asiento de Trabajo (Silla):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Estable</strong> (5 apoyos con ruedas).</li>
+                        <li><strong>Altura del asiento regulable</strong>.</li>
+                        <li><strong>Respaldo inclinable y regulable en altura</strong>, con apoyo lumbar.</li>
+                        <li>Recomendable: Reposabrazos regulables, mecanismo basculante.</li>
+                        <li>Permitir libertad de movimientos y postura cómoda.</li>
+                    </ul>
+                </li>
+                <li><strong>Reposapiés:</strong> Poner a disposición de quienes lo deseen (si no llegan cómodamente al suelo).</li>
+                <li><strong>Atril (Portadocumentos):</strong> Estable, regulable, situado a la misma altura y distancia visual que la pantalla.</li>
+             </ul>
+             <img src="https://placehold.co/600x300/fff7ed/f97316?text=Imagen+Puesto+de+Trabajo+Ergonomico" alt="[Imagen de Puesto de Trabajo Ergonómico]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/fff7ed/f97316?text=Error+al+cargar+imagen';">
+
+            <h3 class="text-xl font-bold text-orange-500 mb-3">2. Entorno de Trabajo</h3>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Espacio:</strong> Dimensiones suficientes para permitir movimientos y cambios de postura (recomendado > 2 m² libres).</li>
+                <li><strong>Iluminación:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Garantizar <strong>niveles adecuados</strong> (recomendado 300-500 lux para oficinas) y contrastes adecuados entre pantalla y entorno.</li>
+                        <li><strong>Evitar reflejos y deslumbramientos</strong> directos (sol, luces) o indirectos (superficies brillantes) en la pantalla o superficie de trabajo. Colocar pantalla perpendicular a ventanas, usar persianas/cortinas, luminarias con difusores.</li>
+                    </ul>
+                </li>
+                <li><strong>Ruido:</strong> Nivel bajo para no perturbar la atención ni la comunicación (ruido de impresoras, teléfonos...).</li>
+                <li><strong>Condiciones termohigrométricas:</strong> Temperatura, humedad y velocidad del aire confortables y adecuadas a la actividad (ver RD 486/1997 sobre lugares de trabajo). Evitar corrientes de aire molestas.</li>
+                <li><strong>Emisiones (Radiaciones):</strong> Las PVD modernas emiten niveles muy bajos, no considerados peligrosos.</li>
+             </ul>
+
+            <h3 class="text-xl font-bold text-orange-500 mb-3">3. Interconexión Ordenador/Persona (Software)</h3>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li>Software <strong>adaptado a la tarea</strong>.</li>
+                <li><strong>Fácil de usar</strong> y adaptable al nivel de conocimientos del usuario.</li>
+                <li>Proporcionar <strong>indicaciones sobre su funcionamiento</strong>.</li>
+                <li>Permitir <strong>control por parte del usuario</strong> sobre el ritmo, errores, etc.</li>
+                <li>No usar sistemas de control cuantitativo/cualitativo sin informar a los trabajadores.</li>
+             </ul>
+
+            <h3 class="text-xl font-bold text-orange-500 mb-3">4. Organización del Trabajo y Recomendaciones al Usuario</h3>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Pausas y Cambios de Actividad:</strong> <strong>Realizar pausas periódicas</strong> que permitan relajar la vista y cambiar de postura (ej: 5-10 min cada hora, o 15 min cada 2 horas - son recomendaciones, no obligación legal explícita de duración). Alternar tareas con PVD con otras que no requieran su uso.</li>
+                <li><strong>Postura Correcta:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Espalda recta apoyada en el respaldo.</li>
+                        <li>Pies apoyados en el suelo o reposapiés.</li>
+                        <li>Muslos horizontales, piernas formando ángulo de 90º o algo más.</li>
+                        <li>Brazos pegados al cuerpo, codos a 90º.</li>
+                        <li>Antebrazos apoyados en la mesa o reposabrazos.</li>
+                        <li>Muñecas rectas al teclear.</li>
+                        <li>Cabeza y cuello rectos, mirando al frente.</li>
+                    </ul>
+                </li>
+                <li><strong>Cuidado de la Vista:</strong> Parpadear frecuentemente, enfocar la vista a lo lejos periódicamente, ajustar brillo/contraste, usar corrección óptica si se necesita.</li>
+                <li><strong>Ejercicios:</strong> Realizar estiramientos suaves de cuello, hombros, espalda y muñecas durante las pausas.</li>
+             </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-orange-600 mb-4">Vigilancia de la Salud</h2>
+            <p class="mb-4">Como se mencionó, el empresario debe garantizarla. El RD 488/1997 especifica que se debe ofrecer un control adecuado de la salud <strong>antes de comenzar</strong> a trabajar con PVD, <strong>posteriormente con periodicidad</strong> ajustada a los riesgos, y cuando aparezcan <strong>trastornos</strong> que puedan deberse a este tipo de trabajo.</p>
+            <p class="mb-4">Se prestará especial atención a:</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Riesgos para la vista:</strong> Se realizará un control oftalmológico adecuado. Si se detectan problemas y las gafas normales no sirven, el empresario deberá proporcionar gafas o lentillas específicas para el trabajo con PVD.</li>
+                <li><strong>Trastornos musculoesqueléticos:</strong> Evaluación de posibles problemas en espalda, cuello, hombros, brazos, muñecas.</li>
+            </ul>
+            <p class="mb-4">Los protocolos de vigilancia sanitaria específica suelen incluir cuestionarios de salud, exploración física y pruebas específicas (control visión, valoración postural...).</p>
+        </section>
+
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-yellow-700 mb-4">Trucos Nemotécnicos</h2>
+            <ul class="list-disc list-inside space-y-3 pl-4 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                <li>
+                    <strong>RD Clave PVD:</strong> <strong>RD 488</strong>/1997. Piensa en "Cuatro Ochos" (4-8-8) para recordar el número. O imagina "4 Ojos (8) en la Pantalla (8)".
+                </li>
+                <li>
+                    <strong>Trabajador Usuario PVD (Horas):</strong> Criterio orientativo: <strong>4h/día o 20h/semana</strong>. Piensa "Media jornada (4h) o casi media semana (20h)".
+                </li>
+                <li>
+                    <strong>Riesgos Principales PVD:</strong> "La PVD te deja <strong>V</strong>i<strong>F</strong>o<strong>M</strong>o" => <strong>V</strong>ista (Fatiga Visual), <strong>F</strong>ísico (TME), <strong>M</strong>ental (Fatiga Mental/Estrés).
+                </li>
+                <li>
+                    <strong>Ajustes Clave Silla Ergonómica:</strong> "<strong>A R I</strong>a quiere una silla" => <strong>A</strong>ltura asiento, <strong>R</strong>espaldo (altura e inclinación), <strong>I</strong>nclinación asiento (opcional). ¡Y 5 ruedas!
+                </li>
+                 <li>
+                    <strong>Colocación Pantalla:</strong>
+                    <ul>
+                        <li><strong>Altura:</strong> Borde superior a nivel de <strong>Ojos</strong> o poco menos.</li>
+                        <li><strong>Distancia:</strong> Mínimo <strong>40 cm</strong> (longitud de un brazo estirado aprox.).</li>
+                        <li><strong>Posición:</strong> <strong>Perpendicular</strong> a ventanas (evitar reflejos).</li>
+                    </ul>
+                 </li>
+                 <li>
+                    <strong>Iluminación Oficina (PVD):</strong> Nivel recomendado <strong>300-500 lux</strong>. ¡Evitar <strong>Reflejos</strong>!
+                 </li>
+                 <li>
+                    <strong>Pausas PVD:</strong> No hay regla fija legal, pero piensa "Pequeñas y Frecuentes" (ej: 5-10 min cada hora). Cambiar de actividad.
+                 </li>
+                 <li>
+                    <strong>Vigilancia Salud PVD:</strong> Obligatoria ofrecerla (Inicial, Periódica, si hay Trastornos). Foco en <strong>Vista y TME</strong>. Si necesitas gafas específicas para PVD, las paga la empresa.
+                 </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-purple-700 mb-4">Test de Autoevaluación (25 Preguntas)</h2>
+            <p class="mb-4">Selecciona la respuesta que consideres correcta. Se indicará si has acertado o fallado y cuál era la opción correcta.</p>
+            <div id="quiz-container" class="space-y-6">
+                </div>
+             <div id="quiz-results" class="mt-6 text-lg font-semibold"></div>
+        </section>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "1. ¿Qué Real Decreto regula las disposiciones mínimas de seguridad y salud para el trabajo con PVD?",
+                options: ["RD 39/1997", "RD 486/1997", "RD 488/1997", "Ley 31/1995"],
+                answer: "RD 488/1997"
+            },
+            {
+                question: "2. ¿Qué se entiende por 'trabajador usuario de PVD' según criterios orientativos?",
+                options: ["Cualquiera que use un ordenador ocasionalmente", "Quien use PVD más de 1h/día o 5h/semana", "Quien use PVD más de 4h/día o 20h/semana", "Solo programadores informáticos"],
+                answer: "Quien use PVD más de 4h/día o 20h/semana"
+            },
+            {
+                question: "3. ¿Cuál es una obligación principal del empresario respecto a los puestos con PVD?",
+                options: ["Proporcionar el ordenador más potente", "Evaluar los riesgos del puesto", "Limitar el uso de PVD a 2h/día", "Instalar siempre filtros de pantalla"],
+                answer: "Evaluar los riesgos del puesto"
+            },
+            {
+                question: "4. ¿Qué tipo de riesgos debe considerar especialmente la evaluación de puestos con PVD?",
+                options: ["Riesgos químicos y biológicos", "Riesgos para la vista, físicos (TME) y carga mental", "Riesgos eléctricos y de incendio", "Riesgos de caídas y golpes"],
+                answer: "Riesgos para la vista, físicos (TME) y carga mental"
+            },
+            {
+                question: "5. Los Trastornos Musculoesqueléticos (TME) en usuarios de PVD se deben principalmente a:",
+                options: ["Mala iluminación", "Software complejo", "Posturas forzadas/estáticas y diseño inadecuado del puesto", "Exceso de ruido"],
+                answer: "Posturas forzadas/estáticas y diseño inadecuado del puesto"
+            },
+            {
+                question: "6. ¿Cuál NO es un síntoma típico de fatiga visual por uso de PVD?",
+                options: ["Picor o escozor de ojos", "Visión borrosa", "Dolor de cabeza", "Pérdida de audición"],
+                answer: "Pérdida de audición"
+            },
+            {
+                question: "7. La pantalla de visualización debe tener como característica:",
+                options: ["Imagen inestable con parpadeos", "Brillo y contraste fijos", "Ser orientable e inclinable", "Estar siempre integrada en la mesa"],
+                answer: "Ser orientable e inclinable"
+            },
+            {
+                question: "8. ¿Cuál es la recomendación general sobre la altura de la pantalla?",
+                options: ["Muy por encima del nivel de los ojos", "El borde superior a la altura de los ojos o ligeramente inferior", "A la altura del pecho", "Lo más baja posible"],
+                answer: "El borde superior a la altura de los ojos o ligeramente inferior"
+            },
+            {
+                question: "9. ¿Qué distancia mínima se recomienda entre los ojos del usuario y la pantalla?",
+                options: ["10 cm", "20 cm", "40 cm", "1 metro"],
+                answer: "40 cm"
+            },
+            {
+                question: "10. El teclado debe ser preferiblemente:",
+                options: ["Fijo e integrado en la pantalla", "Inclinable e independiente de la pantalla", "Muy brillante", "Pequeño y sin espacio delante"],
+                answer: "Inclinable e independiente de la pantalla"
+            },
+            {
+                question: "11. ¿Cuántos apoyos con ruedas debe tener una silla de trabajo estable?",
+                options: ["3", "4", "5", "6"],
+                answer: "5"
+            },
+            {
+                question: "12. ¿Qué elemento se debe poner a disposición del trabajador si no llega cómodamente al suelo desde la silla?",
+                options: ["Un cojín", "Un reposapiés", "Una mesa más baja", "Un taburete"],
+                answer: "Un reposapiés"
+            },
+            {
+                question: "13. Para evitar reflejos en la pantalla, ¿cómo se recomienda colocarla respecto a las ventanas?",
+                options: ["Paralela", "Perpendicular", "Debajo", "Directamente enfrente"],
+                answer: "Perpendicular"
+            },
+             {
+                question: "14. ¿Qué se debe hacer para reducir la carga de trabajo continuado en pantalla?",
+                options: ["Aumentar el brillo al máximo", "Trabajar sin descanso para acabar antes", "Realizar pausas periódicas o cambios de actividad", "Usar siempre la misma postura"],
+                answer: "Realizar pausas periódicas o cambios de actividad"
+            },
+            {
+                question: "15. La vigilancia de la salud para usuarios de PVD es:",
+                options: ["Obligatoria para el trabajador siempre", "Voluntaria para el trabajador (salvo excepciones)", "Obligatoria solo si el trabajador lo solicita", "Innecesaria si el puesto está bien diseñado"],
+                answer: "Voluntaria para el trabajador (salvo excepciones)"
+            },
+            {
+                question: "16. ¿Cuándo debe ofrecerse el primer reconocimiento médico específico para PVD?",
+                options: ["Después de un año trabajando", "Antes de comenzar a trabajar con PVD", "Solo si aparecen síntomas", "Cada 5 años"],
+                answer: "Antes de comenzar a trabajar con PVD"
+            },
+            {
+                question: "17. Si un trabajador necesita gafas específicas para el trabajo con PVD (y las normales no sirven), ¿quién debe proporcionarlas?",
+                options: ["El trabajador", "La Seguridad Social", "El empresario", "El servicio de prevención ajeno"],
+                answer: "El empresario"
+            },
+             {
+                question: "18. ¿Qué aspecto NO corresponde al diseño ergonómico del software?",
+                options: ["Ser fácil de usar", "Ser adaptable al usuario", "Permitir control sobre el ritmo", "Tener muchos colores brillantes"],
+                answer: "Tener muchos colores brillantes"
+            },
+            {
+                question: "19. ¿Qué es un atril o portadocumentos en un puesto con PVD?",
+                options: ["Un reposapiés", "Un soporte para el ratón", "Un soporte para colocar documentos a la altura de la pantalla", "Un filtro para la pantalla"],
+                answer: "Un soporte para colocar documentos a la altura de la pantalla"
+            },
+            {
+                question: "20. Una superficie de trabajo poco reflectante ayuda a prevenir:",
+                options: ["Trastornos musculoesqueléticos", "Fatiga mental", "Deslumbramientos y fatiga visual", "Ruido excesivo"],
+                answer: "Deslumbramientos y fatiga visual"
+            },
+            {
+                question: "21. ¿Qué acción preventiva es recomendable para el cuidado de la vista?",
+                options: ["Mirar fijamente la pantalla sin pausa", "Aumentar el brillo al máximo", "Parpadear frecuentemente y enfocar a lo lejos periódicamente", "Usar siempre gafas de sol"],
+                answer: "Parpadear frecuentemente y enfocar a lo lejos periódicamente"
+            },
+             {
+                question: "22. La formación sobre el uso de PVD debe proporcionarse:",
+                options: ["Solo si el trabajador la pide", "Antes de comenzar a trabajar con PVD y si hay cambios", "Anualmente", "Cada vez que se actualiza Windows"],
+                answer: "Antes de comenzar a trabajar con PVD y si hay cambios"
+            },
+            {
+                question: "23. ¿Cuál es el objetivo principal del RD 488/1997?",
+                options: ["Regular el teletrabajo", "Establecer las disposiciones mínimas de seguridad y salud para PVD", "Limitar las horas de uso de ordenadores", "Fomentar el uso de software libre"],
+                answer: "Establecer las disposiciones mínimas de seguridad y salud para PVD"
+            },
+             {
+                question: "24. Mantener las muñecas rectas al teclear ayuda a prevenir riesgos en:",
+                options: ["La espalda", "El cuello", "Las muñecas (ej: túnel carpiano)", "La vista"],
+                answer: "Las muñecas (ej: túnel carpiano)"
+            },
+             {
+                question: "25. ¿Qué nivel de iluminación general se recomienda para oficinas con PVD?",
+                options: ["Menos de 100 lux", "Entre 100 y 200 lux", "Entre 300 y 500 lux", "Más de 1000 lux"],
+                answer: "Entre 300 y 500 lux"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('quiz-results');
+        let score = 0;
+        let answeredCount = 0;
+
+        function buildQuiz() {
+            quizData.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('quiz-question', 'p-4', 'border', 'border-gray-200', 'rounded-lg', 'bg-white', 'shadow-sm');
+                questionDiv.setAttribute('data-question-index', index);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('mb-3', 'font-semibold', 'text-gray-700');
+                questionText.textContent = item.question;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('space-y-2');
+
+                item.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.classList.add('quiz-option', 'block', 'w-full', 'text-left', 'p-3', 'border', 'border-gray-300', 'rounded-md', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-orange-300');
+                    optionButton.textContent = option;
+                    optionButton.setAttribute('data-correct', option === item.answer);
+                    optionButton.onclick = (event) => selectAnswer(event, index);
+                    optionsDiv.appendChild(optionButton);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+             updateResults(); // Initial result display
+        }
+
+        function selectAnswer(event, questionIndex) {
+            const selectedButton = event.target;
+            const questionDiv = selectedButton.closest('.quiz-question');
+
+             if (questionDiv.classList.contains('answered')) {
+                 return;
+             }
+             questionDiv.classList.add('answered');
+             answeredCount++;
+
+            const isCorrect = selectedButton.getAttribute('data-correct') === 'true';
+
+            const options = questionDiv.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null;
+                 if (opt.getAttribute('data-correct') === 'true') {
+                     opt.classList.add('correct-answer');
+                 }
+            });
+
+            selectedButton.classList.add('selected');
+
+            if (isCorrect) {
+                questionDiv.classList.add('correct');
+                score++;
+            } else {
+                questionDiv.classList.add('incorrect');
+            }
+
+            updateResults();
+        }
+
+         function updateResults() {
+            resultsContainer.textContent = `Progreso: ${answeredCount} de ${quizData.length} preguntas respondidas. Aciertos: ${score}.`;
+             if (answeredCount === quizData.length) {
+                 resultsContainer.textContent += ` ¡Test completado! Puntuación final: ${score} de ${quizData.length}.`;
+                 resultsContainer.classList.add('text-orange-700', 'font-bold');
+             }
+        }
+
+        buildQuiz();
+    </script>
+
+</body>
+</html>

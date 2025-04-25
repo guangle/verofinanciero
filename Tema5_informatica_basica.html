@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Tema 5: Informática Básica, Windows, Internet y Google Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-question.correct .selected {
+            background-color: #22c55e; /* green-500 */
+            color: white;
+        }
+        .quiz-question.incorrect .selected {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+        /* Highlight correct answer always */
+        .quiz-question .correct-answer {
+             background-color: #d9f99d; /* lime-200 */
+             border: 1px solid #a3e635; /* lime-400 */
+             font-weight: 600; /* Slightly bolder */
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         .quiz-option:hover {
+            background-color: #f0f0f0; /* gray-100 */
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* Style for the correct answer when the user answered incorrectly */
+        .quiz-question.incorrect .quiz-option[data-correct="true"] {
+             background-color: #a3e635 !important; /* lime-400 */
+             color: #1a2e05; /* Darker text for contrast */
+             border: 1px solid #4d7c0f;
+        }
+
+        /* Style for the incorrectly selected answer */
+        .quiz-question.incorrect .quiz-option.selected {
+            background-color: #ef4444 !important; /* red-500 */
+            color: white !important;
+            border: 1px solid #b91c1c;
+        }
+
+        /* Style for the correctly selected answer */
+         .quiz-question.correct .quiz-option.selected {
+            background-color: #22c55e !important; /* green-500 */
+            color: white !important;
+            border: 1px solid #15803d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-md">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2">Tema 5: Informática Básica, Windows, Internet y Google Workspace</h1>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Informática Básica: Conceptos</h2>
+            <p class="mb-4">
+                La informática es la ciencia que estudia el tratamiento automático de la información mediante computadoras u ordenadores. Un sistema informático consta fundamentalmente de dos partes: Hardware y Software.
+            </p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Hardware:</strong> Parte <strong>física</strong> del sistema informático. Son los componentes tangibles. Se divide en:
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Unidad Central de Proceso (CPU o Procesador):</strong> El "cerebro" del ordenador, ejecuta las instrucciones de los programas.</li>
+                        <li><strong>Memoria Principal (RAM - Random Access Memory):</strong> Memoria <strong>volátil</strong> donde se cargan los programas y datos que se están usando en el momento. Rápida pero pierde contenido al apagar el equipo.</li>
+                        <li><strong>Memoria Secundaria (Almacenamiento):</strong> Dispositivos que almacenan información de forma <strong>permanente</strong> (no volátil): Discos Duros (HDD), Unidades de Estado Sólido (SSD), memorias USB, CD/DVD...</li>
+                        <li><strong>Periféricos:</strong> Dispositivos que conectan el ordenador con el exterior.
+                            <ul>
+                                <li><strong>De Entrada:</strong> Permiten introducir información (Teclado, Ratón, Escáner, Micrófono).</li>
+                                <li><strong>De Salida:</strong> Muestran información procesada (Monitor/Pantalla, Impresora, Altavoces).</li>
+                                <li><strong>De Entrada/Salida (Mixtos):</strong> Realizan ambas funciones (Pantalla táctil, Multifunción -impresora/escáner-, Módem/Router).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Software:</strong> Parte <strong>lógica</strong> del sistema informático. Conjunto de programas, instrucciones y datos que hacen funcionar el hardware. Se divide en:
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Software de Sistema (Sistema Operativo - SO):</strong> Programa fundamental que <strong>gestiona los recursos</strong> del hardware y sirve de interfaz entre el usuario y la máquina (Ej: <strong>Windows, macOS, Linux, Android, iOS</strong>).</li>
+                        <li><strong>Software de Aplicación:</strong> Programas diseñados para realizar tareas específicas para el usuario (Ej: Procesador de textos -Word, Google Docs-, Hoja de cálculo -Excel, Google Sheets-, Navegador web -Chrome, Edge-, Correo electrónico -Outlook, Gmail-, etc.).</li>
+                        <li><strong>Software de Programación/Desarrollo:</strong> Herramientas para crear otros programas (Compiladores, editores de código...).</li>
+                    </ul>
+                </li>
+                <li><strong>Unidades de medida de la información:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Bit:</strong> Unidad mínima de información (0 o 1).</li>
+                        <li><strong>Byte (B):</strong> Conjunto de <strong>8 bits</strong>. Suele representar un carácter (letra, número...).</li>
+                        <li><strong>Kilobyte (KB):</strong> 1024 Bytes (aprox. mil).</li>
+                        <li><strong>Megabyte (MB):</strong> 1024 KB (aprox. un millón).</li>
+                        <li><strong>Gigabyte (GB):</strong> 1024 MB (aprox. mil millones).</li>
+                        <li><strong>Terabyte (TB):</strong> 1024 GB (aprox. un billón).</li>
+                    </ul>
+                </li>
+                 <li><strong>Redes Informáticas:</strong> Conjunto de ordenadores y dispositivos conectados entre sí para compartir recursos e información.
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>LAN (Local Area Network):</strong> Red de área local (edificio, oficina).</li>
+                        <li><strong>WAN (Wide Area Network):</strong> Red de área extensa (país, continente). <strong>Internet</strong> es la WAN más grande.</li>
+                        <li><strong>Topologías:</strong> Forma en que se conectan los equipos (bus, estrella, anillo...).</li>
+                        <li><strong>Componentes:</strong> Tarjeta de red, cableado, switches, routers...</li>
+                    </ul>
+                 </li>
+            </ul>
+             <img src="https://placehold.co/600x300/e0f2fe/075985?text=Imagen+Hardware+y+Software" alt="[Imagen de Hardware y Software]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/e0f2fe/075985?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Introducción al Sistema Operativo Windows 10/11</h2>
+            <p class="mb-4">Windows es el sistema operativo de Microsoft, uno de los más utilizados en ordenadores personales. Proporciona una interfaz gráfica de usuario (GUI) para interactuar con el ordenador.</p>
+            <p class="mb-4"><strong>Componentes principales de la interfaz:</strong></p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Escritorio:</strong> Área principal de trabajo donde se muestran iconos de acceso directo, archivos y carpetas. Fondo personalizable (papel tapiz).</li>
+                <li><strong>Barra de Tareas:</strong> Banda horizontal (normalmente inferior) que contiene el Menú Inicio, iconos de acceso rápido, programas abiertos, área de notificación (reloj, iconos sistema) y botón de vista de tareas/escritorios virtuales.</li>
+                <li><strong>Menú Inicio:</strong> Botón (generalmente esquina inferior izquierda) que despliega un menú con acceso a aplicaciones instaladas, configuración, opciones de energía (apagar, reiniciar, suspender) y cuenta de usuario.</li>
+                <li><strong>Explorador de Archivos:</strong> Herramienta fundamental para <strong>gestionar archivos y carpetas</strong>. Permite ver el contenido de las unidades de almacenamiento (Disco C:, USB...), crear, copiar, mover, renombrar y eliminar archivos/carpetas, buscar elementos, etc. Vistas personalizables (iconos, lista, detalles...). Acceso rápido a carpetas comunes (Documentos, Descargas, Imágenes...).</li>
+                <li><strong>Panel de Control / Configuración:</strong> Aplicaciones que permiten ajustar las opciones del sistema, hardware, software, redes, cuentas de usuario, privacidad, etc. (En Windows 10/11, la app <strong>Configuración</strong> está reemplazando gradualmente al Panel de Control clásico).</li>
+            </ul>
+            <p class="mb-4"><strong>Operaciones básicas con archivos y carpetas:</strong></p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Archivo:</strong> Conjunto de información almacenada con un nombre y una extensión (ej: `documento.docx`, `imagen.jpg`). La extensión indica el tipo de archivo y con qué programa se abre.</li>
+                <li><strong>Carpeta (o Directorio):</strong> Contenedor para organizar archivos y otras carpetas.</li>
+                <li><strong>Seleccionar:</strong> Hacer clic sobre un elemento. Ctrl+Clic para selección múltiple discontinua. Shift+Clic para selección múltiple continua. Ctrl+A para seleccionar todo.</li>
+                <li><strong>Copiar (Ctrl+C):</strong> Duplica un archivo/carpeta en el portapapeles.</li>
+                <li><strong>Cortar (Ctrl+X):</strong> Mueve un archivo/carpeta al portapapeles (lo elimina de origen al pegar).</li>
+                <li><strong>Pegar (Ctrl+V):</strong> Inserta el contenido del portapapeles en la ubicación actual.</li>
+                <li><strong>Eliminar (Tecla Supr/Del):</strong> Envía el elemento a la <strong>Papelera de Reciclaje</strong> (se puede restaurar). Shift+Supr para eliminación permanente (sin pasar por la papelera).</li>
+                <li><strong>Crear carpeta:</strong> Clic derecho -> Nuevo -> Carpeta.</li>
+                <li><strong>Renombrar:</strong> Seleccionar -> F2 o Clic derecho -> Cambiar nombre.</li>
+             </ul>
+             <img src="https://placehold.co/600x300/e0f2fe/0ea5e9?text=Imagen+Escritorio+Windows" alt="[Imagen de Escritorio Windows]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/e0f2fe/0ea5e9?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">La Red Internet</h2>
+            <p class="mb-4"><strong>Internet</strong> es una <strong>red mundial descentralizada de ordenadores</strong> interconectados que utilizan la familia de protocolos <strong>TCP/IP</strong> para comunicarse. Permite acceder a una gran cantidad de servicios e información.</p>
+            <p class="mb-4"><strong>Conceptos clave:</strong></p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Navegador Web (Browser):</strong> Software de aplicación que permite visualizar páginas web (Ej: <strong>Google Chrome, Microsoft Edge, Mozilla Firefox, Safari</strong>). Interpreta el código HTML, CSS y JavaScript.</li>
+                <li><strong>Buscador Web (Search Engine):</strong> Sitio web que permite buscar información en Internet introduciendo palabras clave (Ej: <strong>Google, Bing, DuckDuckGo</strong>). Utilizan "arañas" o "robots" para indexar el contenido de la web.</li>
+                <li><strong>World Wide Web (WWW):</strong> Sistema de distribución de documentos de hipertexto (páginas web) interconectados y accesibles a través de Internet.</li>
+                <li><strong>Página Web:</strong> Documento electrónico (normalmente en HTML) que contiene texto, imágenes, enlaces, etc., accesible a través de un navegador.</li>
+                <li><strong>Sitio Web:</strong> Conjunto de páginas web relacionadas y accesibles bajo un mismo nombre de dominio.</li>
+                <li><strong>URL (Uniform Resource Locator):</strong> Dirección única que identifica un recurso en Internet (ej: `https://www.google.com`). Partes:
+                    <ul>
+                        <li><strong>Protocolo:</strong> `https://` (Protocolo seguro de transferencia de hipertexto). `http://` (no seguro). Otros: `ftp://`, `mailto:`.</li>
+                        <li><strong>Dominio:</strong> `www.google.com` (Nombre que identifica al sitio web). Incluye subdominio (`www`), dominio de segundo nivel (`google`) y dominio de nivel superior o TLD (`.com`, `.es`, `.org`, `.gob`...).</li>
+                        <li><strong>Ruta:</strong> `/carpeta/archivo.html` (Opcional, indica la ubicación específica del recurso dentro del servidor).</li>
+                    </ul>
+                </li>
+                <li><strong>Dirección IP:</strong> Número único que identifica a un dispositivo conectado a una red que utiliza el protocolo IP (ej: `192.168.1.1`, `2001:db8::1`). El <strong>DNS (Domain Name System)</strong> traduce los nombres de dominio (fáciles de recordar) a direcciones IP (que entienden las máquinas).</li>
+                <li><strong>Hipervínculo (Enlace, Link):</strong> Elemento en una página web que al hacer clic te lleva a otra página o recurso.</li>
+                <li><strong>Correo Electrónico (Email):</strong> Servicio para enviar y recibir mensajes electrónicos. (Ver sección específica).</li>
+                <li><strong>Otros servicios:</strong> FTP (transferencia archivos), VoIP (llamadas voz), Streaming (video/audio), Redes Sociales, Mensajería Instantánea...</li>
+                <li><strong>Riesgos y Seguridad:</strong>
+                    <ul>
+                        <li><strong>Malware:</strong> Software malicioso (<strong>Virus</strong> -se replica-, <strong>Gusanos</strong> -se propagan por red-, <strong>Troyanos</strong> -parecen legítimos-, <strong>Ransomware</strong> -secuestra datos-, <strong>Spyware</strong> -espía-...). Protección: <strong>Antivirus</strong> actualizado, no descargar de fuentes dudosas.</li>
+                        <li><strong>Phishing:</strong> Suplantación de identidad (ej: email falso del banco) para robar credenciales o datos personales. Verificar remitente, no hacer clic en enlaces sospechosos.</li>
+                        <li><strong>Seguridad contraseñas:</strong> Usar contraseñas <strong>largas, complejas</strong> (mayúsculas, minúsculas, números, símbolos) y <strong>únicas</strong> para cada servicio. Considerar gestores de contraseñas y autenticación de dos factores (2FA).</li>
+                        <li><strong>HTTPS:</strong> Indica conexión segura (cifrada) con el sitio web. Verificar el candado en la barra de direcciones.</li>
+                    </ul>
+                </li>
+            </ul>
+             <img src="https://placehold.co/600x300/dbeafe/1d4ed8?text=Imagen+Red+Internet" alt="[Imagen de Red Internet]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/dbeafe/1d4ed8?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Trabajo Colaborativo con Herramientas de Google (Google Workspace)</h2>
+            <p class="mb-4"><strong>Google Workspace</strong> (anteriormente G Suite) es una <strong>suite de herramientas ofimáticas, de colaboración y comunicación basada en la nube</strong> ofrecida por Google. Permite trabajar de forma conjunta y acceder a la información desde cualquier lugar con conexión a Internet.</p>
+            <p class="mb-4"><strong>Componentes principales (versiones gratuitas y de Workspace):</strong></p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Google Drive:</strong> Servicio de <strong>almacenamiento en la nube</strong>. Permite guardar archivos de todo tipo y sincronizarlos entre dispositivos. Facilita la organización en carpetas y la búsqueda. Es la base para las demás herramientas.</li>
+                <li><strong>Google Documentos (Docs):</strong> <strong>Procesador de textos</strong> online. Similar a Microsoft Word. Permite crear y editar documentos de texto.</li>
+                <li><strong>Google Hojas de Cálculo (Sheets):</strong> <strong>Hoja de cálculo</strong> online. Similar a Microsoft Excel. Permite trabajar con datos en tablas, realizar cálculos, crear gráficos.</li>
+                <li><strong>Google Presentaciones (Slides):</strong> Herramienta para crear <strong>presentaciones</strong> online. Similar a Microsoft PowerPoint.</li>
+                <li><strong>Google Formularios (Forms):</strong> Permite crear <strong>encuestas y formularios</strong> online para recopilar información fácilmente.</li>
+                <li><strong>Google Meet:</strong> Servicio de <strong>videoconferencias</strong>.</li>
+                <li><strong>Google Chat:</strong> Servicio de <strong>mensajería instantánea</strong> para equipos.</li>
+                <li><strong>Gmail:</strong> Servicio de <strong>correo electrónico</strong>. (Ver sección específica).</li>
+                <li><strong>Google Calendar:</strong> <strong>Calendario</strong> online para gestionar eventos y citas.</li>
+            </ul>
+            <p class="mb-4"><strong>Características clave del trabajo colaborativo:</strong></p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Compartir:</strong> Se pueden compartir archivos y carpetas con otros usuarios, otorgando diferentes niveles de permiso (<strong>Lector, Comentador, Editor</strong>). Se comparte mediante enlace o directamente a correos electrónicos.</li>
+                <li><strong>Edición simultánea (en tiempo real):</strong> Varios usuarios pueden <strong>trabajar en el mismo documento, hoja de cálculo o presentación al mismo tiempo</strong>. Se ven los cursores y cambios de los demás colaboradores.</li>
+                <li><strong>Historial de versiones:</strong> Se guarda automáticamente un historial de los cambios realizados, permitiendo <strong>ver versiones anteriores y restaurarlas</strong> si es necesario.</li>
+                <li><strong>Comentarios y sugerencias:</strong> Se pueden añadir comentarios en partes específicas del documento para discutir o hacer anotaciones. El modo "Sugerencias" permite proponer cambios que el propietario puede aceptar o rechazar.</li>
+                <li><strong>Acceso desde cualquier lugar:</strong> Al estar basado en la nube, se puede acceder y trabajar desde cualquier dispositivo con navegador web y conexión a Internet.</li>
+             </ul>
+             <p class="mb-4"><strong>Google Workspace (versiones de pago):</strong> Ofrece funcionalidades adicionales orientadas a empresas y organizaciones, como: dominios de correo personalizados (@tuempresa.com), mayor espacio de almacenamiento, controles de seguridad y administración avanzados, soporte técnico, etc.</p>
+             <img src="https://placehold.co/600x300/e0f2fe/0ea5e9?text=Imagen+Google+Workspace+Colaboracion" alt="[Imagen de Google Workspace Colaboración]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/e0f2fe/0ea5e9?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">El Correo Electrónico de Google (Gmail): Conceptos y Funcionamiento</h2>
+            <p class="mb-4">Gmail es el servicio de correo electrónico gratuito (y parte de Workspace) de Google. Es uno de los más populares y se accede principalmente a través de interfaz web o aplicaciones móviles.</p>
+            <p class="mb-4"><strong>Conceptos elementales y funcionamiento:</strong></p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Dirección de correo:</strong> Identificador único con formato `nombredeusuario@dominio.com` (ej: `usuario@gmail.com`).</li>
+                <li><strong>Interfaz principal:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Recibidos (Inbox):</strong> Carpeta principal donde llegan los nuevos correos. Puede tener pestañas (Principal, Social, Promociones...).</li>
+                        <li><strong>Enviados:</strong> Mensajes que has enviado.</li>
+                        <li><strong>Borradores:</strong> Mensajes que has empezado a escribir pero no has enviado.</li>
+                        <li><strong>Spam (Correo no deseado):</strong> Carpeta donde Gmail filtra automáticamente correos sospechosos o publicitarios masivos. ¡Revisar ocasionalmente!</li>
+                        <li><strong>Papelera:</strong> Mensajes eliminados (se borran definitivamente tras un tiempo, <strong>30 días</strong>).</li>
+                        <li><strong>Etiquetas (Labels):</strong> Sistema flexible para <strong>organizar correos</strong> (similar a carpetas, pero un correo puede tener varias etiquetas). Se pueden crear etiquetas personalizadas y asignarles colores.</li>
+                        <li><strong>Barra de búsqueda:</strong> Potente buscador para encontrar correos por remitente, asunto, contenido, fecha, etc. Admite operadores de búsqueda avanzada.</li>
+                    </ul>
+                </li>
+                <li><strong>Redactar un correo nuevo:</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>Para (To):</strong> Destinatario(s) principal(es).</li>
+                        <li><strong>CC (Copia de Carbón):</strong> Enviar una copia a otros destinatarios (todos ven quién está en Para y CC).</li>
+                        <li><strong>CCO (Copia de Carbón Oculta) / BCC (Blind Carbon Copy):</strong> Enviar una copia oculta a otros destinatarios (los de Para y CC no ven a los de CCO; los de CCO no se ven entre sí). <strong>Útil para enviar a muchas personas sin revelar sus direcciones</strong> o para copias informativas discretas.</li>
+                        <li><strong>Asunto (Subject):</strong> Título breve y descriptivo del correo. <strong>¡Importante ponerlo siempre!</strong></li>
+                        <li><strong>Cuerpo del mensaje:</strong> Contenido principal del correo. Se puede formatear (negrita, cursiva, listas...).</li>
+                        <li><strong>Adjuntar archivos (Attach):</strong> Icono de clip para añadir documentos, imágenes, etc., desde el ordenador o Google Drive. Existen límites de tamaño (aprox. 25 MB por correo, si es más grande se comparte enlace de Drive).</li>
+                        <li><strong>Firma:</strong> Texto que se añade automáticamente al final de los correos (nombre, cargo, contacto...). Configurable.</li>
+                    </ul>
+                </li>
+                <li><strong>Acciones con correos recibidos:</strong> Responder, Responder a todos, Reenviar, Archivar (quita de Recibidos sin borrar), Marcar como leído/no leído, Marcar como importante, Mover a (etiqueta), Filtrar mensajes similares, Bloquear remitente, Marcar como spam.</li>
+                <li><strong>Filtros:</strong> Reglas automáticas para organizar correos entrantes (ej: aplicar etiqueta, archivar, eliminar... según remitente, asunto, etc.).</li>
+                <li><strong>Contactos:</strong> Agenda para guardar direcciones de correo y otra información. Integrada con Google Contacts.</li>
+                <li><strong>Seguridad:</strong> Además de las generales de Internet, Gmail tiene filtros de spam/phishing, advertencias de seguridad, opción de deshacer envío (unos segundos), verificación en dos pasos (2FA).</li>
+            </ul>
+             <img src="https://placehold.co/600x300/dbeafe/1e40af?text=Imagen+Interfaz+Gmail" alt="[Imagen de Interfaz Gmail]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/dbeafe/1e40af?text=Error+al+cargar+imagen';">
+        </section>
+
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-green-700 mb-4">Trucos Nemotécnicos</h2>
+            <ul class="list-disc list-inside space-y-3 pl-4 bg-green-50 p-4 rounded-lg border border-green-200">
+                <li>
+                    <strong>Hardware vs. Software:</strong> <strong>Hard</strong>ware es lo "duro", lo que puedes <strong>tocar</strong>. <strong>Soft</strong>ware es lo "blando", lo <strong>lógico</strong> (programas).
+                </li>
+                <li>
+                    <strong>RAM vs. Almacenamiento:</strong> <strong>RAM</strong> es como la <strong>mesa de trabajo</strong> (rápida, temporal, se limpia al irte). <strong>Almacenamiento</strong> (disco duro, SSD) es como el <strong>archivador</strong> (lento, permanente, guarda todo).
+                </li>
+                <li>
+                    <strong>Periféricos Entrada/Salida:</strong> Piensa en la dirección de la información: ¿Entra al ordenador o Sale del ordenador?
+                    <ul>
+                        <li>Teclado/Ratón -> <strong>Entra</strong> info.</li>
+                        <li>Monitor/Impresora -> <strong>Sale</strong> info.</li>
+                        <li>Pantalla Táctil -> <strong>Entra</strong> (tocas) y <strong>Sale</strong> (ves).</li>
+                    </ul>
+                </li>
+                 <li>
+                    <strong>Unidades de Medida (Orden):</strong> <strong>B</strong>it -> <strong>B</strong>yte -> <strong>K</strong>ilo -> <strong>M</strong>ega -> <strong>G</strong>iga -> <strong>T</strong>era. (Alfabeto B-K-M-G-T). Recuerda que van de <strong>1024 en 1024</strong> (no 1000).
+                 </li>
+                 <li>
+                    <strong>Windows Atajos Comunes:</strong>
+                    <ul>
+                        <li><strong>Ctrl+C / Ctrl+X / Ctrl+V:</strong> Copiar / Cortar / Pegar (¡Fundamentales!).</li>
+                        <li><strong>Ctrl+Z:</strong> Deshacer (¡Salvavidas!).</li>
+                        <li><strong>Alt+Tab:</strong> Cambiar entre ventanas abiertas.</li>
+                        <li><strong>Tecla Windows + E:</strong> Abrir <strong>E</strong>xplorador de archivos.</li>
+                        <li><strong>Tecla Windows + L:</strong> B<strong>L</strong>oquear sesión.</li>
+                    </ul>
+                 </li>
+                 <li>
+                    <strong>HTTP vs. HTTPS:</strong> La <strong>S</strong> final es de <strong>S</strong>eguro (conexión cifrada). ¡Busca siempre la S y el candado!
+                 </li>
+                 <li>
+                    <strong>Gmail CC vs. CCO (BCC):</strong>
+                    <ul>
+                        <li><strong>CC:</strong> Copia <strong>C</strong>on vista (todos ven).</li>
+                        <li><strong>CCO/BCC:</strong> Copia <strong>C</strong>on <strong>O</strong>cultación / <strong>B</strong>lind (Ciega) Carbon Copy (nadie ve a los de CCO).</li>
+                    </ul>
+                 </li>
+                 <li>
+                    <strong>Google Workspace Colaboración:</strong> Piensa en "<strong>C</strong>ompartir, <strong>C</strong>omentar, <strong>C</strong>o-editar".
+                 </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-purple-700 mb-4">Test de Autoevaluación (25 Preguntas)</h2>
+            <p class="mb-4">Selecciona la respuesta que consideres correcta. Se indicará si has acertado o fallado y cuál era la opción correcta.</p>
+            <div id="quiz-container" class="space-y-6">
+                </div>
+             <div id="quiz-results" class="mt-6 text-lg font-semibold"></div>
+        </section>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "1. ¿Qué componente del hardware es considerado el 'cerebro' del ordenador?",
+                options: ["Memoria RAM", "Disco Duro", "CPU (Procesador)", "Tarjeta Gráfica"],
+                answer: "CPU (Procesador)"
+            },
+            {
+                question: "2. ¿Qué tipo de memoria es volátil y pierde su contenido al apagar el equipo?",
+                options: ["Disco Duro (HDD)", "Unidad de Estado Sólido (SSD)", "Memoria RAM", "Memoria USB"],
+                answer: "Memoria RAM"
+            },
+            {
+                question: "3. Un teclado y un ratón son periféricos de:",
+                options: ["Entrada", "Salida", "Entrada/Salida", "Almacenamiento"],
+                answer: "Entrada"
+            },
+            {
+                question: "4. ¿Cuántos bits forman un Byte?",
+                options: ["1", "8", "16", "1024"],
+                answer: "8"
+            },
+            {
+                question: "5. ¿Qué tipo de software es fundamental para gestionar los recursos del hardware y servir de interfaz?",
+                options: ["Software de Aplicación", "Software de Programación", "Software de Sistema (Sistema Operativo)", "Firmware"],
+                answer: "Software de Sistema (Sistema Operativo)"
+            },
+            {
+                question: "6. ¿Qué elemento de la interfaz de Windows contiene el Menú Inicio y los iconos de programas abiertos?",
+                options: ["Escritorio", "Explorador de Archivos", "Barra de Tareas", "Panel de Control"],
+                answer: "Barra de Tareas"
+            },
+            {
+                question: "7. ¿Qué combinación de teclas se usa comúnmente para Copiar?",
+                options: ["Ctrl+V", "Ctrl+X", "Ctrl+C", "Ctrl+Z"],
+                answer: "Ctrl+C"
+            },
+            {
+                question: "8. Al eliminar un archivo con la tecla Supr en Windows, ¿a dónde va por defecto?",
+                options: ["Se elimina permanentemente", "A la carpeta Descargas", "A la Papelera de Reciclaje", "Al portapapeles"],
+                answer: "Papelera de Reciclaje"
+            },
+            {
+                question: "9. ¿Qué programa se utiliza para visualizar páginas web?",
+                options: ["Buscador Web", "Navegador Web", "Servidor Web", "Cliente de correo"],
+                answer: "Navegador Web"
+            },
+            {
+                question: "10. ¿Qué significa DNS en el contexto de Internet?",
+                options: ["Digital Network Service", "Domain Name System", "Data Network Security", "Dynamic Naming Service"],
+                answer: "Domain Name System"
+            },
+            {
+                question: "11. ¿Qué indica el protocolo HTTPS en una URL?",
+                options: ["Que la página es muy rápida", "Que la conexión es segura (cifrada)", "Que la página contiene hipertexto", "Que es un sitio del gobierno"],
+                answer: "Que la conexión es segura (cifrada)"
+            },
+            {
+                question: "12. El software malicioso que se replica a sí mismo se denomina:",
+                options: ["Troyano", "Ransomware", "Virus", "Spyware"],
+                answer: "Virus"
+            },
+            {
+                question: "13. ¿Qué servicio de Google Workspace se utiliza principalmente para almacenamiento en la nube?",
+                options: ["Google Docs", "Google Sheets", "Google Drive", "Gmail"],
+                answer: "Google Drive"
+            },
+             {
+                question: "14. ¿Cuál es el equivalente de Google a Microsoft Excel?",
+                options: ["Google Docs", "Google Slides", "Google Forms", "Google Sheets"],
+                answer: "Google Sheets"
+            },
+            {
+                question: "15. En Google Docs, si compartes un archivo con permiso de 'Lector', ¿qué puede hacer esa persona?",
+                options: ["Editar el documento", "Solo ver el documento", "Comentar el documento", "Eliminar el documento"],
+                answer: "Solo ver el documento"
+            },
+            {
+                question: "16. La capacidad de varios usuarios de trabajar en el mismo documento de Google al mismo tiempo se llama:",
+                options: ["Historial de versiones", "Edición simultánea", "Modo sugerencias", "Compartir enlace"],
+                answer: "Edición simultánea"
+            },
+            {
+                question: "17. ¿Qué campo del correo electrónico se usa para enviar una copia a alguien sin que los demás destinatarios lo sepan?",
+                options: ["Para (To)", "CC (Copia de Carbón)", "CCO (Copia de Carbón Oculta)", "Asunto (Subject)"],
+                answer: "CCO (Copia de Carbón Oculta)"
+            },
+             {
+                question: "18. ¿Qué son las 'Etiquetas' en Gmail?",
+                options: ["Firmas automáticas", "Filtros de spam", "Un sistema para organizar correos (similar a carpetas)", "Contactos frecuentes"],
+                answer: "Un sistema para organizar correos (similar a carpetas)"
+            },
+            {
+                question: "19. ¿Qué significa adjuntar un archivo a un correo?",
+                options: ["Escribir el cuerpo del mensaje", "Añadir un destinatario oculto", "Incluir un documento, imagen, etc., junto con el mensaje", "Guardar el correo como borrador"],
+                answer: "Incluir un documento, imagen, etc., junto con el mensaje"
+            },
+            {
+                question: "20. ¿Qué es el Phishing?",
+                options: ["Un tipo de virus", "Un sistema de cifrado", "Una técnica de suplantación de identidad para robar datos", "Un protocolo de red"],
+                answer: "Una técnica de suplantación de identidad para robar datos"
+            },
+            {
+                question: "21. ¿Qué herramienta de Windows se usa para gestionar archivos y carpetas?",
+                options: ["Panel de Control", "Configuración", "Explorador de Archivos", "Administrador de Tareas"],
+                answer: "Explorador de Archivos"
+            },
+             {
+                question: "22. ¿Cuál es la unidad de medida de información más grande de esta lista?",
+                options: ["Megabyte (MB)", "Gigabyte (GB)", "Kilobyte (KB)", "Terabyte (TB)"],
+                answer: "Terabyte (TB)"
+            },
+            {
+                question: "23. ¿Qué permite hacer la función 'Historial de versiones' en Google Docs/Sheets/Slides?",
+                options: ["Chatear con colaboradores", "Ver y restaurar cambios anteriores del documento", "Crear filtros automáticos", "Insertar comentarios"],
+                answer: "Ver y restaurar cambios anteriores del documento"
+            },
+             {
+                question: "24. ¿Para qué sirve principalmente Google Forms?",
+                options: ["Crear presentaciones", "Realizar videoconferencias", "Crear encuestas y formularios online", "Gestionar tareas"],
+                answer: "Crear encuestas y formularios online"
+            },
+             {
+                question: "25. ¿Qué significa la 'S' en HTTPS?",
+                options: ["Simple", "Standard", "Secure (Seguro)", "Service"],
+                answer: "Secure (Seguro)"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('quiz-results');
+        let score = 0;
+        let answeredCount = 0;
+
+        function buildQuiz() {
+            quizData.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('quiz-question', 'p-4', 'border', 'border-gray-200', 'rounded-lg', 'bg-white', 'shadow-sm');
+                questionDiv.setAttribute('data-question-index', index);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('mb-3', 'font-semibold', 'text-gray-700');
+                questionText.textContent = item.question;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('space-y-2');
+
+                item.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.classList.add('quiz-option', 'block', 'w-full', 'text-left', 'p-3', 'border', 'border-gray-300', 'rounded-md', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-300');
+                    optionButton.textContent = option;
+                    optionButton.setAttribute('data-correct', option === item.answer);
+                    optionButton.onclick = (event) => selectAnswer(event, index);
+                    optionsDiv.appendChild(optionButton);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+             updateResults(); // Initial result display
+        }
+
+        function selectAnswer(event, questionIndex) {
+            const selectedButton = event.target;
+            const questionDiv = selectedButton.closest('.quiz-question');
+
+             if (questionDiv.classList.contains('answered')) {
+                 return;
+             }
+             questionDiv.classList.add('answered');
+             answeredCount++;
+
+            const isCorrect = selectedButton.getAttribute('data-correct') === 'true';
+
+            const options = questionDiv.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null;
+                 if (opt.getAttribute('data-correct') === 'true') {
+                     opt.classList.add('correct-answer');
+                 }
+            });
+
+            selectedButton.classList.add('selected');
+
+            if (isCorrect) {
+                questionDiv.classList.add('correct');
+                score++;
+            } else {
+                questionDiv.classList.add('incorrect');
+            }
+
+            updateResults();
+        }
+
+         function updateResults() {
+            resultsContainer.textContent = `Progreso: ${answeredCount} de ${quizData.length} preguntas respondidas. Aciertos: ${score}.`;
+             if (answeredCount === quizData.length) {
+                 resultsContainer.textContent += ` ¡Test completado! Puntuación final: ${score} de ${quizData.length}.`;
+                 resultsContainer.classList.add('text-blue-700', 'font-bold');
+             }
+        }
+
+        buildQuiz();
+    </script>
+
+</body>
+</html>

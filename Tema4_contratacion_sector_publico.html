@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Tema 4: Ley de Contratos del Sector Público</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-question.correct .selected {
+            background-color: #22c55e; /* green-500 */
+            color: white;
+        }
+        .quiz-question.incorrect .selected {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+        /* Highlight correct answer always */
+        .quiz-question .correct-answer {
+             background-color: #d9f99d; /* lime-200 */
+             border: 1px solid #a3e635; /* lime-400 */
+             font-weight: 600; /* Slightly bolder */
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         .quiz-option:hover {
+            background-color: #f0f0f0; /* gray-100 */
+        }
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        /* Style for the correct answer when the user answered incorrectly */
+        .quiz-question.incorrect .quiz-option[data-correct="true"] {
+             background-color: #a3e635 !important; /* lime-400 */
+             color: #1a2e05; /* Darker text for contrast */
+             border: 1px solid #4d7c0f;
+        }
+
+        /* Style for the incorrectly selected answer */
+        .quiz-question.incorrect .quiz-option.selected {
+            background-color: #ef4444 !important; /* red-500 */
+            color: white !important;
+            border: 1px solid #b91c1c;
+        }
+
+        /* Style for the correctly selected answer */
+         .quiz-question.correct .quiz-option.selected {
+            background-color: #22c55e !important; /* green-500 */
+            color: white !important;
+            border: 1px solid #15803d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-md">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-sky-700 mb-6 border-b-2 border-sky-200 pb-2">Tema 4: La Ley de Contratos del Sector Público</h1>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-sky-600 mb-4">Introducción y Conceptos Elementales</h2>
+            <p class="mb-4">
+                La contratación pública es el conjunto de normas y procedimientos que regulan cómo las entidades del sector público adquieren bienes, contratan servicios o encargan la ejecución de obras a terceros (empresas o particulares). La normativa principal es la <strong>Ley 9/2017, de 8 de noviembre, de Contratos del Sector Público (LCSP)</strong>, que transpone directivas europeas. Su objetivo es garantizar la eficiencia en el gasto público y el respeto a los principios de <strong>libertad de acceso a las licitaciones, publicidad y transparencia</strong> de los procedimientos, y <strong>no discriminación e igualdad de trato</strong> entre los licitadores.
+            </p>
+            <p class="mb-4">
+                Conceptos elementales:
+            </p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Licitador/Candidato:</strong> Empresario que presenta una proposición (licitador) o solicitud de participación (candidato) en un procedimiento de adjudicación.</li>
+                <li><strong>Contratista:</strong> Licitador al que se ha adjudicado el contrato.</li>
+                <li><strong>Órgano de Contratación:</strong> Órgano del sector público que, en virtud de norma legal o delegación, tiene la facultad de celebrar contratos en su nombre.</li>
+                <li><strong>Perfil de Contratante:</strong> Espacio web específico dentro de la Plataforma de Contratación del Sector Público (o servicio similar autonómico/local) donde los órganos de contratación difunden obligatoriamente la información relativa a su actividad contractual (anuncios previos, licitaciones, adjudicaciones, formalizaciones...).</li>
+                <li><strong>Plataforma de Contratación del Sector Público (PLACSP):</strong> Plataforma electrónica estatal que centraliza la publicación de la información contractual y permite la licitación electrónica.</li>
+             </ul>
+             <img src="https://placehold.co/600x300/ecfeff/0e7490?text=Imagen+Contrato+Publico" alt="[Imagen de Contrato Público]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/ecfeff/0e7490?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-sky-600 mb-4">Objeto y Ámbito de Aplicación de la LCSP</h2>
+            <p class="mb-4">
+                La LCSP tiene por objeto regular la contratación del sector público para garantizar los principios mencionados y asegurar una eficiente utilización de los fondos públicos mediante la exigencia de la definición previa de las necesidades a satisfacer, la salvaguarda de la libre competencia y la selección de la <strong>oferta económicamente más ventajosa</strong> (basada en la <strong>mejor relación calidad-precio</strong> o, en ciertos casos, solo en el precio o coste).
+            </p>
+            <p class="mb-4"><strong>Ámbito Subjetivo (¿A quién se aplica?):</strong></p>
+            <p class="mb-4">La ley distingue dentro del <strong>Sector Público</strong> (Art. 3 LCSP):</p>
+            <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li><strong>Administraciones Públicas (AAPP):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>La Administración General del Estado (AGE), las AAPP de las CCAA y las Entidades que integran la Administración Local (Ayuntamientos, Diputaciones...).</li>
+                        <li>Las entidades gestoras y servicios comunes de la Seguridad Social.</li>
+                        <li>Los Organismos Autónomos.</li>
+                        <li>Las Universidades Públicas.</li>
+                        <li>Las entidades de derecho público vinculadas a una AAPP que cumplan ciertos requisitos (no financiación mayoritaria privada, control público).</li>
+                        <li>Las Diputaciones Forales y Juntas Generales del País Vasco (en lo no regulado por su normativa específica).</li>
+                    </ul>
+                </li>
+                <li><strong>Poderes Adjudicadores (PANAP y Otros):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li><strong>PANAP (Poder Adjudicador que es Administración Pública):</strong> Son las AAPP listadas arriba.</li>
+                        <li><strong>Otros Poderes Adjudicadores (PANOSP - Poder Adjudicador No Siendo Administración Pública):</strong> Entidades con personalidad jurídica propia, creadas para satisfacer necesidades de interés general sin carácter industrial o mercantil, y bajo control o financiación mayoritariamente pública (ej: fundaciones públicas, consorcios...).</li>
+                    </ul>
+                </li>
+                <li><strong>Otras Entidades del Sector Público:</strong> Aquellas que no son ni AAPP ni Poderes Adjudicadores (ej: sociedades mercantiles públicas, entidades públicas empresariales no consideradas PANOSP).</li>
+            </ul>
+             <p class="mb-4">La intensidad de la aplicación de la LCSP varía según el tipo de entidad.</p>
+             <p class="mb-4"><strong>Ámbito Objetivo (¿Qué contratos regula?):</strong></p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li>Contratos onerosos, cualquiera que sea su naturaleza jurídica, celebrados por entidades del sector público.</li>
+                <li>Contratos subvencionados por entidades del sector público que cumplan requisitos específicos.</li>
+                <li><strong>Negocios y contratos excluidos (¡Importante!):</strong> Relaciones laborales, convenios interadministrativos (salvo que sean contratos encubiertos), contratos de servicios financieros relacionados con deuda pública, servicios de arbitraje y conciliación, ciertos contratos de investigación y desarrollo, contratos de compraventa de valores, etc. (Ver Arts. 4 a 11 LCSP).</li>
+             </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-sky-600 mb-4">Disposiciones Generales sobre la Contratación</h2>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Libertad de pactos:</strong> Las partes pueden incluir las cláusulas que consideren convenientes, siempre que no sean contrarias al interés público, al ordenamiento jurídico o a los principios de buena administración.</li>
+                <li><strong>Necesidad e idoneidad del contrato:</strong> Antes de iniciar la licitación, el órgano de contratación debe justificar la necesidad del contrato y que su objeto es idóneo para satisfacerla.</li>
+                <li><strong>División en lotes:</strong> <strong>Regla general: Obligatoriedad de dividir el objeto del contrato en lotes</strong> si es posible (naturaleza o modo de ejecución), para fomentar la participación de PYMES. La no división debe justificarse en el expediente.</li>
+                <li><strong>Duración de los contratos:</strong> Debe establecerse según la naturaleza de las prestaciones y la necesidad de someter periódicamente a concurrencia. <strong>Plazo máximo general (incluidas prórrogas): 5 años</strong> para servicios y suministros (salvo excepciones justificadas). Obras y concesiones tienen reglas específicas.</li>
+                <li><strong>Precio:</strong> Debe ser <strong>cierto</strong>, expresado en euros. Puede ser fijo o variable (revisión de precios en casos tasados, principalmente en obras, suministros de fabricación y servicios a partir de cierto plazo y ejecución).</li>
+                <li><strong>Publicidad:</strong> Obligatoria a través del <strong>Perfil de Contratante</strong> alojado en la PLACSP (o servicio autonómico/local). Anuncios de información previa, licitación, adjudicación, formalización, modificaciones, etc. Publicación en DOUE para contratos SARA.</li>
+                <li><strong>Confidencialidad:</strong> El órgano de contratación no puede divulgar información facilitada por los empresarios como confidencial (secretos técnicos/comerciales, aspectos confidenciales de las ofertas).</li>
+                <li><strong>Integridad y lucha contra la corrupción:</strong> Obligación de tomar medidas para prevenir, detectar y solucionar conflictos de intereses, fraude y corrupción.</li>
+                <li><strong>Consideraciones sociales, laborales y ambientales:</strong> Obligatoriedad de incluir criterios de adjudicación y condiciones especiales de ejecución de carácter social, ético, laboral o ambiental, siempre que estén vinculados al objeto del contrato.</li>
+            </ul>
+        </section>
+
+         <section class="mb-8">
+            <h2 class="text-2xl font-bold text-sky-600 mb-4">Contenido, Perfección y Forma del Contrato</h2>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Contenido mínimo del contrato:</strong> Identificación de las partes, objeto, legislación aplicable, enumeración de documentos del expediente (pliegos), precio, duración, condiciones de recepción/pago, causas de resolución, crédito presupuestario, etc.</li>
+                <li><strong>Pliegos de Cláusulas Administrativas (PCA):</strong> Documento clave que establece los <strong>pactos y condiciones definidores de los derechos y obligaciones</strong> de las partes del contrato. Son la "ley" del contrato. Pueden ser generales (aprobados para una categoría de contratos) o particulares (para un contrato específico).</li>
+                <li><strong>Pliegos de Prescripciones Técnicas (PPT):</strong> Establecen las características técnicas que deben reunir los bienes, obras o servicios. Deben permitir la concurrencia y no favorecer a marcas específicas (salvo justificación).</li>
+                <li><strong>Perfección del contrato:</strong> Los contratos que celebran las AAPP se perfeccionan con su <strong>formalización</strong>. Los contratos de entidades del sector público que no son AAPP se perfeccionan con el <strong>consentimiento</strong> de las partes (salvo excepciones).</li>
+                <li><strong>Formalización:</strong> Debe realizarse en <strong>documento administrativo</strong> que se ajuste con exactitud a las condiciones de la licitación. Plazo general: <strong>no más de 15 días hábiles</strong> desde la notificación de la adjudicación. No se puede iniciar la ejecución sin formalización (salvo excepciones). La formalización se publica en el Perfil de Contratante. Para contratos SARA, no se puede formalizar antes de <strong>15 días hábiles</strong> desde la notificación de adjudicación si se interpuso recurso especial o hay intención de interponerlo.</li>
+            </ul>
+             <img src="https://placehold.co/600x300/e0f2fe/0891b2?text=Imagen+Firma+de+Contrato" alt="[Imagen de Firma de Contrato]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/e0f2fe/0891b2?text=Error+al+cargar+imagen';">
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-sky-600 mb-4">Tipos de Contratos del Sector Público</h2>
+            <p class="mb-4">La LCSP define varios tipos contractuales:</p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Contrato de Obras:</strong> Objeto: ejecución de una obra (construcción, rehabilitación, reparación de un bien inmueble) o realización de trabajos enumerados en el Anexo I LCSP, destinados a cumplir una función económica o técnica. Requiere <strong>proyecto de obras</strong> previo.</li>
+                <li><strong>Contrato de Concesión de Obras:</strong> Objeto: realización de obras (incluida restauración/reparación) cuya contraprestación consiste en el <strong>derecho a explotar la obra</strong> o en dicho derecho acompañado de percibir un precio. El concesionario asume el <strong>riesgo operacional</strong>.</li>
+                <li><strong>Contrato de Concesión de Servicios:</strong> Objeto: gestión de un servicio cuya prestación sea competencia de la AAPP, siendo la contraprestación el <strong>derecho a explotar el servicio</strong> (o derecho + precio). El concesionario asume el <strong>riesgo operacional</strong>.</li>
+                <li><strong>Contrato de Suministro:</strong> Objeto: adquisición, arrendamiento financiero o arrendamiento (con o sin opción de compra) de <strong>productos o bienes muebles</strong>. Incluye la entrega de bienes, pero también la instalación o el mantenimiento si son accesorios.</li>
+                <li><strong>Contrato de Servicios:</strong> Objeto: prestaciones de hacer consistentes en el desarrollo de una actividad o dirigidas a obtener un resultado distinto de una obra o suministro. <strong>Categoría residual</strong> para lo que no encaja en las anteriores (limpieza, seguridad, consultoría, mantenimiento...).</li>
+                <li><strong>Contratos Mixtos:</strong> Contienen prestaciones de varios tipos. Se aplica el régimen del tipo de contrato de la <strong>prestación principal</strong> (según su valor económico, salvo excepciones).</li>
+            </ul>
+            <p class="mb-4"><strong>Especial referencia a Obras, Suministros y Servicios:</strong></p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-blue-50 p-4 rounded border border-blue-200">
+                    <h3 class="font-bold text-blue-700 mb-2">Obras (Arts. 231-246)</h3>
+                    <ul class="list-disc list-inside pl-4 space-y-1 text-sm">
+                        <li>Requiere <strong>proyecto técnico</strong> detallado (salvo excepciones).</li>
+                        <li><strong>Clasificación empresarial</strong> obligatoria para obras de valor estimado >= 500.000 €.</li>
+                        <li>Posibilidad de <strong>modificaciones</strong> del contrato (previstas o no previstas) bajo condiciones estrictas.</li>
+                        <li><strong>Recepción de la obra:</strong> Acto formal tras la finalización. Inicio del <strong>plazo de garantía</strong> (mínimo 1 año).</li>
+                        <li>Responsabilidad decenal del contratista por vicios ruinógenos.</li>
+                    </ul>
+                </div>
+                 <div class="bg-green-50 p-4 rounded border border-green-200">
+                    <h3 class="font-bold text-green-700 mb-2">Suministros (Arts. 298-307)</h3>
+                     <ul class="list-disc list-inside pl-4 space-y-1 text-sm">
+                        <li>Tipos: compraventa, arrendamiento (financiero o no).</li>
+                        <li>Entrega y recepción: Según pliegos. Plazo para denunciar vicios: <strong>30 días</strong> desde entrega (salvo pacto).</li>
+                        <li><strong>Plazo de garantía</strong> si se establece en pliegos.</li>
+                        <li>Contratos de fabricación: Se asimilan a obras en algunos aspectos.</li>
+                    </ul>
+                </div>
+                 <div class="bg-yellow-50 p-4 rounded border border-yellow-200">
+                    <h3 class="font-bold text-yellow-700 mb-2">Servicios (Arts. 308-315)</h3>
+                     <ul class="list-disc list-inside pl-4 space-y-1 text-sm">
+                        <li>Categoría amplia y residual.</li>
+                        <li>Duración limitada (máx. 5 años general).</li>
+                        <li>Precio determinado o determinable.</li>
+                        <li>Cumplimiento según pliegos. Posibilidad de penalidades por incumplimiento.</li>
+                        <li>Servicios a las personas: Reglas especiales (calidad, continuidad).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-sky-600 mb-4">Contratos Sujetos a Regulación Armonizada (SARA)</h2>
+            <p class="mb-4">Son aquellos contratos que, por su tipo y cuantía, están sujetos a las normas de procedimiento y publicidad más estrictas derivadas de las Directivas Europeas. El objetivo es garantizar la libre competencia a nivel de la UE.</p>
+            <p class="mb-4"><strong>Son contratos SARA (Arts. 20-23 LCSP):</strong></p>
+             <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li>Los contratos de <strong>obras, concesión de obras y concesión de servicios</strong> cuyo valor estimado sea <strong>igual o superior a 5.538.000 euros</strong> (umbral 2024-2025).</li>
+                <li>Los contratos de <strong>suministro</strong> cuyo valor estimado sea <strong>igual o superior a 143.000 euros</strong> (AGE) o <strong>221.000 euros</strong> (resto sector público) (umbrales 2024-2025).</li>
+                <li>Los contratos de <strong>servicios</strong> cuyo valor estimado sea <strong>igual o superior a 143.000 euros</strong> (AGE) o <strong>221.000 euros</strong> (resto sector público), o <strong>750.000 euros</strong> para ciertos servicios sociales y específicos (Anexo IV) (umbrales 2024-2025).</li>
+                <li>Contratos subvencionados que cumplan ciertos requisitos.</li>
+             </ul>
+             <p class="mb-4"><strong>Consecuencias de ser SARA:</strong></p>
+              <ul class="list-disc list-inside space-y-2 mb-4 pl-4">
+                <li>Obligatoriedad de publicación de anuncios en el <strong>Diario Oficial de la Unión Europea (DOUE)</strong>.</li>
+                <li>Plazos de licitación más amplios.</li>
+                <li>Procedimientos de adjudicación específicos (abierto, restringido, negociado con publicidad, diálogo competitivo, asociación para la innovación).</li>
+                <li>Obligatoriedad de admitir el <strong>Documento Europeo Único de Contratación (DEUC)</strong>.</li>
+                <li>Régimen de recursos más estricto (Recurso Especial en Materia de Contratación).</li>
+              </ul>
+              <p class="mb-4"><strong>¡Importante! Los umbrales SARA se actualizan cada dos años por la Comisión Europea.</strong> Los indicados son para 2024-2025.</p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-sky-600 mb-4">Contratos Administrativos y Contratos Privados</h2>
+            <p class="mb-4">La LCSP distingue entre contratos administrativos y privados celebrados por entidades del sector público.</p>
+            <ul class="list-disc list-inside space-y-3 mb-4 pl-4">
+                <li><strong>Contratos Administrativos (Art. 25):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Son los celebrados por una <strong>Administración Pública</strong>.</li>
+                        <li>Tipos: <strong>Obras, Concesión de Obras, Concesión de Servicios, Suministro y Servicios</strong> (salvo los que tengan carácter privado por ley o por su objeto - ver abajo). También los declarados así expresamente por Ley y los de objeto distinto pero naturaleza administrativa especial.</li>
+                        <li><strong>Régimen jurídico:</strong> Se rigen en cuanto a su preparación, adjudicación, efectos y extinción por la <strong>LCSP y sus disposiciones de desarrollo</strong>. Supletoriamente, por las demás normas de derecho administrativo y, en último término, por el derecho privado.</li>
+                        <li><strong>Jurisdicción competente:</strong> <strong>Contencioso-Administrativa</strong>.</li>
+                        <li>Tienen prerrogativas especiales para la AAPP (interpretación unilateral, modificación unilateral por interés público -ius variandi-, resolución unilateral, etc.).</li>
+                    </ul>
+                </li>
+                 <li><strong>Contratos Privados (Art. 26):</strong>
+                    <ul class="list-circle list-inside space-y-1 mt-1 pl-6">
+                        <li>Los celebrados por entidades del sector público que <strong>no son AAPP</strong> (PANOSP y otras entidades).</li>
+                        <li>Los celebrados por AAPP cuyo objeto sea distinto de los típicos administrativos (obras, concesiones, suministro, servicios) o que, siendo de estos tipos, tengan carácter privado por ley (ej: servicios financieros, artísticos, suscripción a publicaciones...).</li>
+                        <li><strong>Régimen jurídico:</strong>
+                            <ul>
+                                <li><strong>Preparación y Adjudicación:</strong> Se rigen por la <strong>LCSP</strong> (garantizando principios de publicidad, concurrencia, transparencia, igualdad).</li>
+                                <li><strong>Efectos y Extinción:</strong> Se rigen por el <strong>Derecho Privado</strong> (Código Civil, Código de Comercio, legislación específica).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Jurisdicción competente:</strong> <strong>Civil</strong> (salvo para cuestiones de preparación y adjudicación, que son de la Contencioso-Administrativa).</li>
+                    </ul>
+                </li>
+            </ul>
+             <img src="https://placehold.co/600x300/f0f9ff/0ea5e9?text=Imagen+Contrato+Administrativo+vs+Privado" alt="[Imagen de Contrato Administrativo vs Privado]" class="rounded-lg shadow-sm mx-auto my-4" onerror="this.src='https://placehold.co/600x300/f0f9ff/0ea5e9?text=Error+al+cargar+imagen';">
+        </section>
+
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-teal-700 mb-4">Trucos Nemotécnicos</h2>
+            <ul class="list-disc list-inside space-y-3 pl-4 bg-teal-50 p-4 rounded-lg border border-teal-200">
+                <li>
+                    <strong>Ámbito Subjetivo LCSP:</strong> Piensa en capas:
+                    <ul>
+                        <li>Núcleo duro: <strong>AAPP</strong> (AGE, CCAA, EELL, OOAA, Univ...).</li>
+                        <li>Capa intermedia: <strong>PANOSP</strong> (Poder Adjudicador No AAPP - ej: fundaciones públicas). AAPP + PANOSP = Poderes Adjudicadores.</li>
+                        <li>Capa externa: <strong>Resto Sector Público</strong> (ej: empresas públicas).</li>
+                        <li>AAPP = Máxima aplicación LCSP. Resto = Menor intensidad.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Tipos de Contratos Típicos:</strong> "El Sector Público <strong>O</strong>rdena, <strong>C</strong>oncede, <strong>S</strong>uministra y <strong>S</strong>irve" => <strong>O</strong>bras, <strong>C</strong>oncesión (Obras/Servicios), <strong>S</strong>uministro, <strong>S</strong>ervicios.
+                </li>
+                <li>
+                    <strong>Perfección Contratos:</strong>
+                    <ul>
+                        <li><strong>AAPP:</strong> Necesita "papel oficial" -> <strong>Formalización</strong>.</li>
+                        <li><strong>No AAPP:</strong> Como en lo privado -> <strong>Consentimiento</strong>.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Plazo Formalización:</strong> <strong>15 días hábiles</strong> desde notificación adjudicación. Piensa "Quince días para firmar".</li>
+                <li>
+                    <strong>Contratos SARA (Umbrales 2024-2025 - ¡Aproximados para memorizar!):</strong>
+                    <ul>
+                        <li>Obras / Concesiones: Muy alto -> <strong>~5,5 Millones €</strong>.</li>
+                        <li>Suministros / Servicios (AGE): Bajo -> <strong>~140 mil €</strong>.</li>
+                        <li>Suministros / Servicios (Resto): Medio -> <strong>~220 mil €</strong>.</li>
+                        <li>Servicios Sociales (Anexo IV): Alto -> <strong>~750 mil €</strong>.</li>
+                        <li>(Recuerda que cambian cada 2 años).</li>
+                    </ul>
+                </li>
+                 <li>
+                    <strong>Administrativo vs. Privado:</strong>
+                    <ul>
+                        <li><strong>Administrativo:</strong> Celebrado por <strong>AAPP</strong> + Objeto típico (O, C, S, S). Régimen = <strong>LCSP + D. Admin</strong>. Jurisdicción = <strong>Contencioso-Admin</strong>.</li>
+                        <li><strong>Privado:</strong> Celebrado por <strong>No AAPP</strong> O por AAPP con objeto "raro". Prep./Adjud. = <strong>LCSP</strong>. Efectos/Extinción = <strong>D. Privado</strong>. Jurisdicción = <strong>Civil</strong> (salvo Prep./Adjud.).</li>
+                    </ul>
+                 </li>
+                 <li>
+                    <strong>División en Lotes:</strong> <strong>Regla General = SÍ</strong> (Obligatorio si se puede). Fomenta PYMES.
+                 </li>
+                 <li>
+                    <strong>Duración Máxima General (Servicios/Suministros):</strong> <strong>5 años</strong> (incl. prórrogas).
+                 </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-purple-700 mb-4">Test de Autoevaluación (25 Preguntas)</h2>
+            <p class="mb-4">Selecciona la respuesta que consideres correcta. Se indicará si has acertado o fallado y cuál era la opción correcta.</p>
+            <div id="quiz-container" class="space-y-6">
+                </div>
+             <div id="quiz-results" class="mt-6 text-lg font-semibold"></div>
+        </section>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "1. ¿Cuál es la ley principal que regula los contratos del sector público en España?",
+                options: ["Ley 39/2015", "Ley 40/2015", "Ley 9/2017 (LCSP)", "Real Decreto Legislativo 3/2011 (TRLCSP)"],
+                answer: "Ley 9/2017 (LCSP)"
+            },
+            {
+                question: "2. ¿Qué principio NO es uno de los rectores de la contratación pública?",
+                options: ["Publicidad y transparencia", "Libertad de acceso a licitaciones", "Adjudicación directa como regla general", "No discriminación e igualdad de trato"],
+                answer: "Adjudicación directa como regla general"
+            },
+            {
+                question: "3. ¿Cuál de las siguientes entidades NO se considera Administración Pública a efectos de la LCSP?",
+                options: ["Un Ayuntamiento", "Una Universidad Pública", "Un Organismo Autónomo", "Una Sociedad Mercantil Estatal"],
+                answer: "Una Sociedad Mercantil Estatal" // (Sería 'Otra Entidad del Sector Público' o PANOSP si cumple requisitos)
+            },
+            {
+                question: "4. ¿Qué significa PANOSP?",
+                options: ["Parte Administrativa No Sector Público", "Poder Adjudicador No Siendo Administración Pública", "Procedimiento Abreviado Nacional O Sectorial Público", "Plan Anual Normativo O Sectorial Público"],
+                answer: "Poder Adjudicador No Siendo Administración Pública"
+            },
+            {
+                question: "5. ¿Cuál es la regla general respecto a la división del objeto del contrato en lotes?",
+                options: ["Está prohibida", "Es voluntaria para el órgano de contratación", "Es obligatoria si la naturaleza del objeto lo permite", "Solo se permite en contratos de obras"],
+                answer: "Es obligatoria si la naturaleza del objeto lo permite"
+            },
+            {
+                question: "6. ¿Cuál es el plazo máximo general de duración (incluidas prórrogas) para contratos de servicios y suministros?",
+                options: ["1 año", "3 años", "5 años", "10 años"],
+                answer: "5 años"
+            },
+            {
+                question: "7. ¿Dónde se publica obligatoriamente la información contractual de los órganos de contratación?",
+                options: ["En el BOE", "En el DOUE", "En el Perfil de Contratante (PLACSP o similar)", "En el tablón de anuncios físico"],
+                answer: "En el Perfil de Contratante (PLACSP o similar)"
+            },
+            {
+                question: "8. ¿Cuándo se perfeccionan los contratos celebrados por las Administraciones Públicas?",
+                options: ["Con el consentimiento", "Con la adjudicación", "Con la formalización", "Con el inicio de la ejecución"],
+                answer: "Con la formalización"
+            },
+            {
+                question: "9. ¿Cuál es el plazo general para formalizar un contrato tras la notificación de la adjudicación?",
+                options: ["5 días hábiles", "10 días hábiles", "15 días hábiles", "1 mes"],
+                answer: "15 días hábiles"
+            },
+            {
+                question: "10. Un contrato cuyo objeto es la construcción de un hospital es un contrato de:",
+                options: ["Servicios", "Suministro", "Obras", "Concesión de servicios"],
+                answer: "Obras"
+            },
+            {
+                question: "11. Un contrato para la limpieza de edificios administrativos es un contrato de:",
+                options: ["Obras", "Suministro", "Servicios", "Concesión de obras"],
+                answer: "Servicios"
+            },
+            {
+                question: "12. ¿Qué característica define principalmente a los contratos de concesión (obras o servicios)?",
+                options: ["Su corta duración", "La transferencia del riesgo operacional al concesionario", "La ausencia de precio", "Que solo pueden celebrarlos las AAPP"],
+                answer: "La transferencia del riesgo operacional al concesionario"
+            },
+            {
+                question: "13. ¿Qué significa que un contrato es SARA?",
+                options: ["Que es un Servicio Administrativo Rápido y Ágil", "Que está Sujeto A Regulación Armonizada (normativa UE)", "Que es Secreto y Reservado por la Administración", "Que es de Suministro Anual Recurrente Automático"],
+                answer: "Que está Sujeto A Regulación Armonizada (normativa UE)"
+            },
+             {
+                question: "14. ¿A partir de qué umbral (aprox. 2024-2025) un contrato de obras es considerado SARA?",
+                options: ["143.000 €", "221.000 €", "750.000 €", "5.538.000 €"],
+                answer: "5.538.000 €"
+            },
+            {
+                question: "15. ¿Qué publicación es obligatoria para los anuncios de licitación de contratos SARA?",
+                options: ["Solo el Perfil de Contratante", "El BOE y el Perfil de Contratante", "El DOUE y el Perfil de Contratante", "El Boletín Oficial de la Provincia"],
+                answer: "El DOUE y el Perfil de Contratante"
+            },
+            {
+                question: "16. ¿Qué tipo de contrato es, por regla general, un contrato de servicios financieros celebrado por un Ayuntamiento?",
+                options: ["Administrativo", "Privado", "Mixto", "SARA siempre"],
+                answer: "Privado" // (Art. 25.1.a) excluye los financieros del carácter administrativo)
+            },
+            {
+                question: "17. Los efectos y extinción de los contratos privados celebrados por el sector público se rigen por:",
+                options: ["La LCSP exclusivamente", "El Derecho Administrativo", "El Derecho Privado", "Normativa europea únicamente"],
+                answer: "El Derecho Privado"
+            },
+             {
+                question: "18. ¿Qué jurisdicción es competente para resolver litigios sobre los efectos y extinción de un contrato administrativo?",
+                options: ["Civil", "Social", "Contencioso-Administrativa", "Mercantil"],
+                answer: "Contencioso-Administrativa"
+            },
+            {
+                question: "19. ¿Qué documento establece las cláusulas administrativas que definen los derechos y obligaciones de las partes?",
+                options: ["El proyecto de obra", "El Pliego de Prescripciones Técnicas (PPT)", "El Pliego de Cláusulas Administrativas (PCA)", "El Documento Europeo Único de Contratación (DEUC)"],
+                answer: "El Pliego de Cláusulas Administrativas (PCA)"
+            },
+            {
+                question: "20. ¿Qué implica el principio de integridad en la contratación pública?",
+                options: ["Que los contratos deben dividirse en lotes", "Que se debe seleccionar la oferta más barata siempre", "La obligación de prevenir y luchar contra el fraude y la corrupción", "Que los contratos deben durar máximo 5 años"],
+                answer: "La obligación de prevenir y luchar contra el fraude y la corrupción"
+            },
+            {
+                question: "21. El arrendamiento de equipos informáticos para una AAPP es un contrato de:",
+                options: ["Servicios", "Obras", "Suministro", "Concesión de servicios"],
+                answer: "Suministro"
+            },
+             {
+                question: "22. ¿Es obligatorio incluir criterios sociales o ambientales en la adjudicación o ejecución de los contratos?",
+                options: ["No, es totalmente voluntario", "Sí, siempre que estén vinculados al objeto del contrato", "Solo en contratos SARA", "Solo en contratos de obras"],
+                answer: "Sí, siempre que estén vinculados al objeto del contrato"
+            },
+            {
+                question: "23. ¿Cuál es el plazo mínimo de garantía en un contrato de obras?",
+                options: ["6 meses", "1 año", "2 años", "No hay mínimo legal"],
+                answer: "1 año"
+            },
+             {
+                question: "24. Un contrato celebrado por una empresa pública (que no es poder adjudicador) para comprar material de oficina es:",
+                options: ["Un contrato administrativo SARA", "Un contrato administrativo no SARA", "Un contrato privado", "Un negocio jurídico excluido"],
+                answer: "Un contrato privado"
+            },
+             {
+                question: "25. La oferta económicamente más ventajosa se basa, como regla general, en:",
+                options: ["El precio más bajo exclusivamente", "La mejor relación calidad-precio", "La mayor experiencia del licitador", "El menor plazo de ejecución"],
+                answer: "La mejor relación calidad-precio"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('quiz-results');
+        let score = 0;
+        let answeredCount = 0;
+
+        function buildQuiz() {
+            quizData.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('quiz-question', 'p-4', 'border', 'border-gray-200', 'rounded-lg', 'bg-white', 'shadow-sm');
+                questionDiv.setAttribute('data-question-index', index);
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('mb-3', 'font-semibold', 'text-gray-700');
+                questionText.textContent = item.question;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('space-y-2');
+
+                item.options.forEach(option => {
+                    const optionButton = document.createElement('button');
+                    optionButton.classList.add('quiz-option', 'block', 'w-full', 'text-left', 'p-3', 'border', 'border-gray-300', 'rounded-md', 'hover:bg-gray-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-sky-300');
+                    optionButton.textContent = option;
+                    optionButton.setAttribute('data-correct', option === item.answer);
+                    optionButton.onclick = (event) => selectAnswer(event, index);
+                    optionsDiv.appendChild(optionButton);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+             updateResults(); // Initial result display
+        }
+
+        function selectAnswer(event, questionIndex) {
+            const selectedButton = event.target;
+            const questionDiv = selectedButton.closest('.quiz-question');
+
+             if (questionDiv.classList.contains('answered')) {
+                 return;
+             }
+             questionDiv.classList.add('answered');
+             answeredCount++;
+
+            const isCorrect = selectedButton.getAttribute('data-correct') === 'true';
+
+            const options = questionDiv.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null;
+                 if (opt.getAttribute('data-correct') === 'true') {
+                     opt.classList.add('correct-answer');
+                 }
+            });
+
+            selectedButton.classList.add('selected');
+
+            if (isCorrect) {
+                questionDiv.classList.add('correct');
+                score++;
+            } else {
+                questionDiv.classList.add('incorrect');
+            }
+
+            updateResults();
+        }
+
+         function updateResults() {
+            resultsContainer.textContent = `Progreso: ${answeredCount} de ${quizData.length} preguntas respondidas. Aciertos: ${score}.`;
+             if (answeredCount === quizData.length) {
+                 resultsContainer.textContent += ` ¡Test completado! Puntuación final: ${score} de ${quizData.length}.`;
+                 resultsContainer.classList.add('text-sky-700', 'font-bold');
+             }
+        }
+
+        buildQuiz();
+    </script>
+
+</body>
+</html>
