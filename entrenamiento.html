@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenamiento Test Oposición</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+         #controles-superiores {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             margin-bottom: 20px;
+             border-bottom: 1px solid #eee;
+             padding-bottom: 15px;
+         }
+          #controles-superiores h1 {
+              margin: 0;
+              flex-grow: 1; /* Permite que el título ocupe el espacio restante */
+              text-align: left; /* Alinea el título a la izquierda */
+          }
+         #reiniciar-btn {
+             padding: 8px 15px;
+             background-color: #ffc107;
+             color: #333;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             font-size: 0.9em;
+             transition: background-color 0.3s ease;
+         }
+         #reiniciar-btn:hover {
+             background-color: #e0a800;
+         }
+         #reiniciar-btn:active {
+             background-color: #c69500;
+         }
+
+
+        #pregunta-container {
+            margin-bottom: 20px;
+            /* border-bottom: 1px solid #eee; */ /* Eliminado para evitar doble línea */
+            padding-bottom: 20px;
+        }
+        #pregunta-texto {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+        .respuesta-opcion {
+            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            background-color: #f9f9f9;
+        }
+        .respuesta-opcion:hover:not(.deshabilitado) {
+            background-color: #e9e9e9;
+            border-color: #ccc;
+        }
+        .respuesta-opcion.correcta {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+            font-weight: bold;
+        }
+        .respuesta-opcion.incorrecta {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        #marcador {
+            margin-top: 20px;
+            font-size: 1.1em;
+            text-align: center;
+            color: #333;
+        }
+        #marcador span {
+            font-weight: bold;
+        }
+        #marcador #correctas-count {
+            color: #28a745;
+        }
+        #marcador #incorrectas-count {
+            color: #dc3545;
+        }
+        #feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none; /* Inicialmente oculto */
+            font-size: 1em;
+            line-height: 1.5;
+        }
+        #feedback.correcto {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            animation: flashCorrecto 0.8s ease; /* Animación más visible y un poco más larga */
+        }
+         #feedback.correcto::before {
+            content: " ¡Correcto!  "; /* Emoji para acierto */
+        }
+        #feedback.incorrecto {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        #feedback.incorrecto::before {
+            content: "❌ Incorrecto. "; /* Emoji para fallo */
+             font-weight: bold;
+        }
+        #feedback .explicacion {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #444;
+        }
+         #feedback.incorrecto .explicacion {
+             color: #721c24; /* Color de texto para explicación en fallo */
+         }
+
+        @keyframes flashCorrecto {
+            0% { opacity: 0.5; background-color: #c3e6cb; }
+            50% { opacity: 1; background-color: #d4edda; }
+            100% { opacity: 0.5; background-color: #c3e6cb; }
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover:not(.deshabilitado) {
+            background-color: #0056b3;
+        }
+         button:active:not(.deshabilitado) {
+            background-color: #004085;
+        }
+        .deshabilitado {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+         .hidden {
+             display: none;
+         }
+
+         .respuesta-opcion.deshabilitado {
+             pointer-events: none;
+             opacity: 0.8; /* Menos opacidad que el botón para que se vea el color */
+         }
+         .respuesta-opcion.deshabilitado:hover {
+              background-color: #f9f9f9; /* Evitar cambio de color al pasar el ratón */
+              border-color: #ddd;
+         }
+         .correcta-indicador {
+            font-weight: bold;
+            color: #155724; /* Color verde */
+         }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="controles-superiores">
+             <h1>Entrenamiento Test Oposición</h1>
+             <button id="reiniciar-btn">Reiniciar</button>
+         </div>
+
+        <div id="pregunta-container">
+            <p id="pregunta-texto">Cargando pregunta...</p>
+            <div id="opciones-respuesta">
+                </div>
+        </div>
+        <div id="feedback" class="hidden"></div>
+        <div id="marcador">
+            Correctas: <span id="correctas-count">0</span> | Incorrectas: <span id="incorrectas-count">0</span>
+        </div>
+        <button id="siguiente-btn" class="hidden">Siguiente Pregunta</button>
+         <p id="final-mensaje" class="hidden" style="text-align: center; font-size: 1.3em; margin-top: 20px;">¡Test Completado!</p>
+    </div>
+
+    <script>
+        // Array completo de preguntas (Añade aquí todas tus preguntas)
+        const todasLasPreguntas = [
+            // ** COMIENZO DE LAS PREGUNTAS (AÑADE AQUÍ LAS 200 PREGUNTAS) **
+             {
+                pregunta: "Según la Ley General de Sociedades Mercantiles, ¿cuál de las siguientes no es una clase de sociedad mercantil?",
+                opciones: ["Sociedad Anónima", "Sociedad Civil", "Sociedad de Responsabilidad Limitada", "Sociedad Comanditaria por Acciones"],
+                respuestaCorrecta: 1, // Índice de la respuesta correcta (0, 1, 2, 3)
+                explicacion: "La Sociedad Civil se rige por el Código Civil, no por la Ley General de Sociedades Mercantiles."
+            },
+             {
+                pregunta: "¿Cuál es la función principal del Registro Mercantil?",
+                opciones: ["Inscribir y dar publicidad a los actos relativos a los empresarios y sociedades mercantiles.", "Resolver conflictos entre socios de sociedades mercantiles.", "Aprobar las cuentas anuales de las sociedades.", "Conceder subvenciones a las empresas."],
+                respuestaCorrecta: 0,
+                explicacion: "El Registro Mercantil tiene como finalidad principal la publicidad formal de las situaciones jurídicas de los empresarios y sociedades."
+            },
+             {
+                pregunta: "En una Sociedad Anónima, ¿cuál es el órgano encargado de la gestión y representación de la sociedad?",
+                opciones: ["Junta General de Accionistas", "Consejo de Administración", "Auditores de Cuentas", "Comisión de Nombramientos"],
+                respuestaCorrecta: 1,
+                explicacion: "El Consejo de Administración (o Administrador Único/Solidario/Mancomunado) es el órgano de gestión y representación. La Junta General es el órgano supremo de la sociedad."
+            },
+             {
+                pregunta: "¿Qué documento es fundamental para la constitución de una Sociedad Anónima y contiene las normas de funcionamiento interno?",
+                opciones: ["Pacto de Socios", "Contrato Mercantil", "Escritura Pública de Constitución y Estatutos Sociales", "Libro de Actas"],
+                respuestaCorrecta: 2,
+                explicacion: "La constitución de una SA requiere escritura pública inscrita en el Registro Mercantil, y los Estatutos Sociales regulan su funcionamiento."
+            },
+             {
+                pregunta: "¿Qué característica define principalmente la responsabilidad de los socios en una Sociedad de Responsabilidad Limitada?",
+                opciones: ["Responden con todo su patrimonio personal.", "Responden hasta el límite del capital aportado.", "Responden de forma ilimitada y solidaria.", "No tienen ninguna responsabilidad."],
+                respuestaCorrecta: 1,
+                explicacion: "En la SRL, la responsabilidad de los socios está limitada al capital que han aportado o se han comprometido a aportar."
+            },
+            // TEMA 2: Contabilidad General
+            {
+                pregunta: "¿Qué son los Principios Contables?",
+                opciones: ["Normas legales que regulan la fiscalidad de las empresas.", "Criterios y reglas que guían la elaboración y presentación de la información financiera.", "Métodos para calcular los impuestos.", "Instrumentos para la gestión de inventarios."],
+                respuestaCorrecta: 1,
+                explicacion: "Los Principios Contables aseguran que la información financiera sea comparable, fiable y comprensible."
+            },
+            {
+                pregunta: "¿Qué elementos componen el Patrimonio de una empresa?",
+                opciones: ["Solo los bienes y derechos.", "Solo las obligaciones.", "Bienes, derechos y obligaciones.", "Únicamente el capital social."],
+                respuestaCorrecta: 2,
+                explicacion: "El Patrimonio es el conjunto de bienes, derechos y obligaciones que posee una empresa en un momento dado."
+            },
+            {
+                pregunta: "¿Cuál es la ecuación fundamental del patrimonio?",
+                opciones: ["Activo = Pasivo - Patrimonio Neto", "Pasivo = Activo + Patrimonio Neto", "Patrimonio Neto = Activo - Pasivo", "Activo + Pasivo = Patrimonio Neto"],
+                respuestaCorrecta: 2,
+                explicacion: "La ecuación fundamental es Activo = Pasivo + Patrimonio Neto, de donde se deriva Patrimonio Neto = Activo - Pasivo."
+            },
+            {
+                pregunta: "¿Qué documento contable muestra la situación financiera de una empresa en un momento determinado?",
+                opciones: ["La Cuenta de Pérdidas y Ganancias.", "El Balance de Situación.", "El Libro Diario.", "El Informe de Gestión."],
+                respuestaCorrecta: 1,
+                explicacion: "El Balance de Situación presenta el Activo (bienes y derechos), el Pasivo (obligaciones) y el Patrimonio Neto en una fecha concreta."
+            },
+            {
+                pregunta: "¿Qué muestra la Cuenta de Pérdidas y Ganancias?",
+                opciones: ["Los bienes y derechos de la empresa.", "Las obligaciones de la empresa.", "Los ingresos, gastos y el resultado (beneficio o pérdida) de un ejercicio económico.", "El flujo de efectivo de la empresa."],
+                respuestaCorrecta: 2,
+                explicacion: "La Cuenta de Pérdidas y Ganancias (o Cuenta de Resultados) resume los ingresos y gastos para determinar el resultado del ejercicio."
+            },
+             {
+                pregunta: "¿Qué es el ciclo contable?",
+                opciones: ["El proceso de producción de una empresa.", "El conjunto de fases por las que pasa la información contable desde que se produce un hecho económico hasta que se presenta en los estados financieros.", "El periodo fiscal de una empresa.", "El proceso de auditoría de las cuentas."],
+                respuestaCorrecta: 1,
+                explicacion: "El ciclo contable incluye la identificación, registro, clasificación, resumen y presentación de las transacciones financieras."
+            },
+             {
+                pregunta: "¿Qué norma contable es de aplicación general en España para la mayoría de las empresas?",
+                opciones: ["Las Normas Internacionales de Información Financiera (NIIF).", "El Plan General de Contabilidad (PGC).", "El Código de Comercio.", "La Ley de Sociedades de Capital."],
+                respuestaCorrecta: 1,
+                explicacion: "El Plan General de Contabilidad (PGC) es la normativa contable básica en España."
+            },
+             {
+                pregunta: "¿Qué son las existencias en contabilidad?",
+                opciones: ["El dinero en efectivo que tiene la empresa.", "Los bienes adquiridos por la empresa para su venta o transformación.", "Los edificios y terrenos de la empresa.", "Las deudas con proveedores."],
+                respuestaCorrecta: 1,
+                explicacion: "Las existencias son los activos poseídos para ser vendidos en el curso normal de la explotación, en proceso de producción o en forma de materiales o suministros para ser consumidos en el proceso productivo o en la prestación de servicios."
+            },
+             {
+                pregunta: "¿Cómo se registran contablemente los ingresos por ventas?",
+                opciones: ["Como un aumento del Pasivo.", "Como una disminución del Activo.", "Como un aumento del Patrimonio Neto (a través del resultado).", "Como una disminución del Patrimonio Neto."],
+                respuestaCorrecta: 2,
+                explicacion: "Los ingresos por ventas aumentan el resultado del ejercicio y, por tanto, el Patrimonio Neto."
+            },
+             {
+                pregunta: "¿Qué son los derechos de cobro originados por operaciones comerciales?",
+                opciones: ["Las deudas que la empresa tiene con sus proveedores.", "El dinero que la empresa debe a sus empleados.", "Las cantidades que los clientes deben a la empresa por la venta de bienes o servicios.", "Los préstamos bancarios recibidos."],
+                respuestaCorrecta: 2,
+                explicacion: "Estos derechos de cobro se registran típicamente en cuentas como 'Clientes'."
+            },
+             {
+                pregunta: "¿Qué es la periodificación contable?",
+                opciones: ["El registro de operaciones en el momento del pago.", "El registro de ingresos y gastos en el periodo contable al que se refieren, independientemente de cuándo se cobren o paguen.", "El cálculo de impuestos.", "La valoración de inventarios."],
+                respuestaCorrecta: 1, // Corregido a 1, ya que se refiere a imputar ingresos y gastos al periodo que corresponden.
+                explicacion: "La periodificación (o devengo) implica reconocer ingresos y gastos cuando se ganan o incurren, no cuando se recibe o paga el efectivo."
+            },
+             {
+                pregunta: "¿Qué se incluye en el inmovilizado de una empresa?",
+                opciones: ["El dinero en caja y bancos.", "Las existencias para la venta.", "Los bienes y derechos destinados a servir de forma duradera en la actividad de la empresa (terrenos, edificios, maquinaria, patentes...).", "Las deudas a corto plazo."],
+                respuestaCorrecta: 2,
+                explicacion: "El inmovilizado son activos no corrientes, es decir, que se espera utilizar durante más de un año."
+            },
+            {
+                pregunta: "¿Cuál es la diferencia principal entre Contabilidad Financiera y Contabilidad de Sociedades?",
+                opciones: ["No hay diferencia, son lo mismo.", "La Contabilidad Financiera se centra en la información para usuarios externos, mientras que la Contabilidad de Sociedades se enfoca en aspectos legales y registrales de las sociedades mercantiles.", "La Contabilidad Financiera es obligatoria y la de Sociedades no.", "La Contabilidad Financiera usa el PGC y la de Sociedades usa NIIF."],
+                respuestaCorrecta: 1,
+                explicacion: "La Contabilidad Financiera prepara estados para accionistas, acreedores, etc. La Contabilidad de Sociedades se ocupa de la aplicación de la normativa mercantil a las operaciones societarias (constitución, reparto de dividendos, etc.)."
+            },
+             {
+                pregunta: "¿Qué son los gastos en contabilidad?",
+                opciones: ["Incrementos del patrimonio neto por ingresos.", "Decrementos del patrimonio neto por salidas de recursos o aumentos de obligaciones.", "Las inversiones de la empresa.", "Las deudas a largo plazo."],
+                respuestaCorrecta: 1, // Corregido a 1, ya que los gastos son decrementos del patrimonio neto.
+                explicacion: "Los gastos son disminuciones en los beneficios económicos, producidas a lo largo del ejercicio, en forma de salidas o disminuciones del valor de los activos, o de nacimiento o aumento de los pasivos, que dan como resultado decrementos en el patrimonio neto."
+            },
+             {
+                pregunta: "¿Qué son los ingresos en contabilidad?",
+                opciones: ["Decrementos del patrimonio neto por gastos.", "Incrementos del patrimonio neto por entradas de recursos o aumentos del valor de los activos.", "Las deudas a corto plazo.", "Las compras de inmovilizado."],
+                respuestaCorrecta: 1, // Corregido a 1, ya que los ingresos son incrementos del patrimonio neto.
+                explicacion: "Los ingresos son incrementos en los beneficios económicos, producidos a lo largo del ejercicio, en forma de entradas o aumentos del valor de los activos, o bien de disminuciones de los pasivos, que dan como resultado aumentos del patrimonio neto."
+            },
+            // TEMA 3: Funcionamiento electrónico del sector público, Protección de Datos, Transparencia, PAC
+             {
+                pregunta: "¿Cuál es el objetivo principal de la Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas?",
+                opciones: ["Regular los contratos del sector público.", "Establecer las bases del régimen jurídico de las Administraciones Públicas y el procedimiento administrativo común.", "Regular la protección de datos personales.", "Establecer el régimen local."],
+                respuestaCorrecta: 1,
+                explicacion: "La Ley 39/2015 unifica y regula el procedimiento administrativo común a todas las Administraciones Públicas."
+            },
+             {
+                pregunta: "¿Qué principio fundamental rige el funcionamiento electrónico del sector público según la Ley 39/2015?",
+                opciones: ["Principio de jerarquía.", "Principio de territorialidad.", "Principio de eficacia en la gestión de los procedimientos.", "Principio de presunción de inocencia."],
+                respuestaCorrecta: 2,
+                explicacion: "La digitalización busca hacer los procedimientos más rápidos y eficientes."
+            },
+             {
+                pregunta: "¿Qué derecho fundamental protege la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales?",
+                opciones: ["El derecho a la propiedad.", "El derecho a la libertad de expresión.", "El derecho a la protección de datos personales.", "El derecho de reunión."],
+                respuestaCorrecta: 2,
+                explicacion: "Esta ley adapta la normativa española al Reglamento General de Protección de Datos (RGPD) europeo."
+            },
+             {
+                pregunta: "¿Qué es la transparencia de la actividad pública?",
+                opciones: ["La obligación de las Administraciones de ser claras en sus comunicaciones.", "El derecho de los ciudadanos a acceder a la información pública y la obligación de las Administraciones de publicarla activamente.", "La ausencia de corrupción en la gestión pública.", "La publicación de los resultados electorales."],
+                respuestaCorrecta: 1, // Corregido a 1, ya que la transparencia implica tanto la publicidad activa como el derecho de acceso.
+                explicacion: "La transparencia se articula en dos ejes: la publicidad activa (publicar información sin que se solicite) y el derecho de acceso a la información."
+            },
+             {
+                pregunta: "¿Qué es la publicidad activa en el ámbito de la transparencia?",
+                opciones: ["La difusión de campañas publicitarias institucionales.", "La obligación de las Administraciones Públicas de publicar determinada información de forma periódica y actualizada.", "La posibilidad de los ciudadanos de solicitar información.", "La publicidad de los actos privados de los empleados públicos."],
+                respuestaCorrecta: 1,
+                explicacion: "La publicidad activa implica que las Administraciones deben poner a disposición del público cierta información sin necesidad de solicitud previa."
+            },
+             {
+                pregunta: "¿Dónde se publica generalmente la información objeto de publicidad activa?",
+                opciones: ["En el Boletín Oficial del Estado (BOE).", "En el Portal de Transparencia de la Administración correspondiente.", "En los tablones de anuncios físicos.", "En las redes sociales institucionales."],
+                respuestaCorrecta: 1,
+                explicacion: "El Portal de Transparencia es la herramienta principal para cumplir con las obligaciones de publicidad activa."
+            },
+             {
+                pregunta: "¿Qué es el derecho de acceso a la información pública?",
+                opciones: ["El derecho a acceder a los archivos históricos.", "El derecho de los ciudadanos a solicitar y obtener información que obre en poder de las Administraciones Públicas.", "El derecho a acceder a los datos personales de terceros.", "El derecho a acceder a la sede física de las Administraciones."],
+                respuestaCorrecta: 1,
+                explicacion: "Este derecho permite a cualquier persona solicitar información específica que no esté publicada activamente."
+            },
+             {
+                pregunta: "¿Cuál es el plazo general para resolver y notificar un procedimiento administrativo iniciado de oficio?",
+                opciones: ["1 mes.", "3 meses.", "6 meses.", "1 año."],
+                respuestaCorrecta: 1, // Corregido a 1, el plazo general es 3 meses.
+                explicacion: "El plazo máximo legal para resolver y notificar es de tres meses, salvo que una norma con rango de Ley establezca otro plazo o así venga previsto en la normativa de la Unión Europea del procedimiento de que se trate."
+            },
+             {
+                pregunta: "¿Qué ocurre si la Administración no resuelve y notifica en plazo en un procedimiento iniciado a solicitud del interesado?",
+                opciones: ["El procedimiento caduca.", "Se entiende desestimado por silencio administrativo negativo.", "Se entiende estimado por silencio administrativo positivo.", "La Administración tiene un plazo adicional para resolver."],
+                respuestaCorrecta: 2,
+                explicacion: "En procedimientos iniciados a solicitud del interesado, el silencio administrativo es positivo, salvo excepciones legalmente establecidas."
+            },
+             {
+                pregunta: "¿Qué es un interesado en un procedimiento administrativo según la Ley 39/2015?",
+                opciones: ["Cualquier ciudadano.", "Solo las personas jurídicas.", "Aquellos que promuevan el procedimiento, tengan derechos o intereses legítimos que puedan resultar afectados, o representen a alguien con esos derechos.", "Únicamente los empleados públicos."],
+                respuestaCorrecta: 2,
+                explicacion: "La Ley define claramente quién tiene la condición de interesado en un procedimiento."
+            },
+            // TEMA 4: Ley de Contratos del Sector Público
+             {
+                pregunta: "¿Cuál es el objeto principal de la Ley 9/2017, de 8 de noviembre, de Contratos del Sector Público?",
+                opciones: ["Regular los contratos entre empresas privadas.", "Regular la contratación realizada por las entidades del sector público.", "Regular los contratos laborales.", "Regular los contratos de arrendamiento."],
+                respuestaCorrecta: 1,
+                explicacion: "La LCSP establece las normas para que las Administraciones y otras entidades del sector público contraten obras, suministros, servicios, etc."
+            },
+             {
+                pregunta: "¿Qué es un contrato sujeto a regulación armonizada (SARA)?",
+                opciones: ["Un contrato de escasa cuantía.", "Un contrato que, por su valor estimado o características, está sujeto a las normas de publicidad y procedimientos establecidos en la normativa europea.", "Un contrato entre dos países.", "Un contrato de servicios sociales."],
+                respuestaCorrecta: 1, // Corregido a 1, se refiere a contratos de mayor cuantía sujetos a normas europeas.
+                explicacion: "Los contratos SARA superan ciertos umbrales económicos y están sujetos a reglas más estrictas de publicidad y concurrencia para garantizar la libre competencia en la UE."
+            },
+             {
+                pregunta: "¿Cuál de los siguientes NO es un tipo de contrato del sector público regulado por la LCSP?",
+                opciones: ["Contrato de obra.", "Contrato de compraventa de bienes inmuebles entre particulares.", "Contrato de suministro.", "Contrato de servicios."],
+                respuestaCorrecta: 1,
+                explicacion: "La LCSP regula los contratos que celebra el sector público, no los contratos privados entre particulares."
+            },
+             {
+                pregunta: "¿Qué diferencia fundamental existe entre un contrato administrativo y un contrato privado del sector público?",
+                opciones: ["Los contratos administrativos solo los celebran las Administraciones Públicas y están sujetos a un régimen jurídico público; los privados los celebran otras entidades del sector público y se rigen por el derecho privado.", "Los contratos administrativos son siempre de mayor cuantía.", "Los contratos privados no requieren publicidad.", "No hay ninguna diferencia."],
+                respuestaCorrecta: 0,
+                explicacion: "La naturaleza (administrativa o privada) determina el régimen jurídico aplicable, incluyendo la jurisdicción competente en caso de litigio."
+            },
+             {
+                pregunta: "¿Qué es el objeto de un contrato del sector público?",
+                opciones: ["El precio del contrato.", "La prestación que el contratista se obliga a realizar y la Administración a pagar.", "El plazo de ejecución.", "Las garantías exigidas."],
+                respuestaCorrecta: 1,
+                explicacion: "El objeto define qué se contrata: una obra, un suministro, un servicio, etc."
+            },
+             {
+                pregunta: "¿En qué momento se perfecciona un contrato administrativo?",
+                opciones: ["Cuando se firma por las partes.", "Cuando se formaliza en documento administrativo.", "Cuando se publica en el perfil de contratante.", "Cuando se inicia su ejecución."],
+                respuestaCorrecta: 1,
+                explicacion: "La perfección suele coincidir con la formalización del contrato."
+            },
+             {
+                pregunta: "¿Qué es un contrato de suministro?",
+                opciones: ["Un contrato para la construcción de un edificio.", "Un contrato que tiene por objeto la adquisición, el arrendamiento financiero, o el arrendamiento, con o sin opción de compra, de productos o bienes muebles.", "Un contrato para la prestación de servicios de consultoría.", "Un contrato para la gestión de un servicio público."],
+                respuestaCorrecta: 1,
+                explicacion: "Los contratos de suministro se refieren a la compra o alquiler de bienes muebles."
+            },
+             {
+                pregunta: "¿Qué es un contrato de servicios?",
+                opciones: ["Un contrato para la compra de material de oficina.", "Un contrato cuyo objeto son prestaciones de hacer, distintas de las de obra o suministro.", "Un contrato para la venta de bienes del patrimonio público.", "Un contrato de concesión de obra pública."],
+                respuestaCorrecta: 1,
+                explicacion: "Los contratos de servicios cubren una amplia gama de prestaciones, como limpieza, seguridad, consultoría, mantenimiento, etc."
+            },
+             {
+                pregunta: "¿Qué es un contrato de obra?",
+                opciones: ["Un contrato para la reparación de equipos informáticos.", "Un contrato que tiene por objeto la realización de una obra o la ejecución de alguna de las operaciones inherentes a la realización de una obra.", "Un contrato para la vigilancia de un edificio.", "Un contrato para la redacción de un proyecto."],
+                respuestaCorrecta: 1,
+                explicacion: "El contrato de obra se centra en la construcción o modificación de una infraestructura o edificación."
+            },
+             {
+                pregunta: "¿Qué es el perfil de contratante?",
+                opciones: ["Un registro de empresas contratistas.", "La página web donde los órganos de contratación publican información sobre su actividad contractual.", "Un documento que describe las características de un contrato.", "La persona encargada de la contratación en una entidad."],
+                respuestaCorrecta: 1,
+                explicacion: "El perfil de contratante es un espacio virtual para dar publicidad a las licitaciones, adjudicaciones, etc."
+            },
+            // TEMA 5: Informática básica
+             {
+                pregunta: "¿Qué es un sistema operativo?",
+                opciones: ["Un programa para navegar por Internet.", "El software principal que gestiona los recursos de hardware y software de un ordenador.", "Un programa para editar textos.", "Un dispositivo físico de almacenamiento."],
+                respuestaCorrecta: 1,
+                explicacion: "El sistema operativo (como Windows, macOS, Linux) es esencial para que el ordenador funcione y los demás programas puedan ejecutarse."
+            },
+             {
+                pregunta: "¿Cuál de los siguientes es un ejemplo de sistema operativo?",
+                opciones: ["Microsoft Word.", "Google Chrome.", "Windows 11.", "Adobe Photoshop."],
+                respuestaCorrecta: 2,
+                explicacion: "Windows 11 es una versión del sistema operativo de Microsoft."
+            },
+             {
+                pregunta: "¿Qué es Internet?",
+                opciones: ["Una red local de ordenadores.", "Una red mundial de redes de ordenadores interconectadas.", "Un programa de correo electrónico.", "Un tipo de software de seguridad."],
+                respuestaCorrecta: 1,
+                explicacion: "Internet es una infraestructura global que permite la comunicación y el intercambio de información entre millones de dispositivos."
+            },
+             {
+                pregunta: "¿Qué es un navegador web?",
+                opciones: ["Un programa para crear páginas web.", "Un programa que permite acceder y visualizar páginas web en Internet.", "Un motor de búsqueda.", "Un programa de correo electrónico."],
+                respuestaCorrecta: 1,
+                explicacion: "Navegadores como Chrome, Firefox, Edge o Safari permiten interactuar con la World Wide Web."
+            },
+             {
+                pregunta: "¿Qué es Google Workspace (anteriormente G Suite)?",
+                opciones: ["Un sistema operativo.", "Un conjunto de herramientas de productividad y colaboración basadas en la nube ofrecidas por Google.", "Un motor de búsqueda.", "Una red social."],
+                respuestaCorrecta: 1,
+                explicacion: "Google Workspace incluye aplicaciones como Gmail, Google Drive, Google Docs, Sheets, Calendar, etc."
+            },
+             {
+                pregunta: "¿Qué herramienta de Google Workspace se utiliza principalmente para crear y editar documentos de texto de forma colaborativa?",
+                opciones: ["Google Sheets.", "Google Docs.", "Google Drive.", "Gmail."],
+                respuestaCorrecta: 1,
+                explicacion: "Google Docs es el equivalente en la nube de un procesador de texto como Microsoft Word."
+            },
+             {
+                pregunta: "¿Qué herramienta de Google Workspace se utiliza principalmente para crear y editar hojas de cálculo de forma colaborativa?",
+                opciones: ["Google Docs.", "Google Sheets.", "Google Slides.", "Google Forms."],
+                respuestaCorrecta: 1,
+                explicacion: "Google Sheets es el equivalente en la nube de una hoja de cálculo como Microsoft Excel."
+            },
+             {
+                pregunta: "¿Qué es el correo electrónico?",
+                opciones: ["Un servicio de mensajería instantánea.", "Un sistema para enviar y recibir mensajes digitales a través de una red informática.", "Un programa para hacer videollamadas.", "Un tipo de almacenamiento en la nube."],
+                respuestaCorrecta: 1,
+                explicacion: "El correo electrónico es una forma estándar de comunicación asíncrona por Internet."
+            },
+             {
+                pregunta: "¿Qué parte de una dirección de correo electrónico identifica al usuario?",
+                opciones: ["El símbolo '@'.", "El dominio (lo que va después de '@').", "El nombre de usuario (lo que va antes de '@').", "La extensión del dominio (.com, .org, etc.)."],
+                respuestaCorrecta: 2,
+                explicacion: "El nombre de usuario es único dentro de un dominio específico."
+            },
+             {
+                pregunta: "¿Qué significa CC en un correo electrónico?",
+                opciones: ["Copia Cerrada.", "Con Copia.", "Copia de Carbono (Carbon Copy).", "Correo Confirmado."],
+                respuestaCorrecta: 2,
+                explicacion: "CC se utiliza para enviar una copia del correo a personas que no son los destinatarios principales, pero que deben estar informadas."
+            },
+             {
+                pregunta: "¿Qué significa CCO (o BCC) en un correo electrónico?",
+                opciones: ["Con Copia Oculta (Blind Carbon Copy).", "Correo con Confirmación Obligatoria.", "Copia Completa Original.", "Campo de Contacto Obligatorio."],
+                respuestaCorrecta: 0,
+                explicacion: "CCO/BCC permite enviar una copia a destinatarios cuyas direcciones no serán visibles para los demás receptores del correo."
+            },
+             {
+                pregunta: "¿Qué es un archivo adjunto en un correo electrónico?",
+                opciones: ["El texto del mensaje principal.", "Un archivo (documento, imagen, etc.) que se envía junto con el mensaje de correo.", "La línea de asunto del correo.", "La dirección de correo del remitente."],
+                respuestaCorrecta: 1,
+                explicacion: "Los archivos adjuntos permiten compartir documentos y otros contenidos."
+            },
+             {
+                pregunta: "¿Qué es un motor de búsqueda (como Google, Bing)?",
+                opciones: ["Un programa para enviar correos electrónicos.", "Un sitio web o herramienta que permite a los usuarios buscar información en Internet.", "Un sistema operativo.", "Una red social."],
+                respuestaCorrecta: 1,
+                explicacion: "Los motores de búsqueda indexan contenido web y lo presentan en respuesta a las consultas de los usuarios."
+            },
+             {
+                pregunta: "¿Qué es una URL?",
+                opciones: ["Un tipo de archivo de imagen.", "La dirección única de un recurso (página web, imagen, etc.) en Internet.", "Un protocolo de seguridad.", "Un tipo de lenguaje de programación."],
+                respuestaCorrecta: 1,
+                explicacion: "URL significa Localizador Uniforme de Recursos (Uniform Resource Locator)."
+            },
+             {
+                pregunta: "¿Qué protocolo se utiliza habitualmente para la transferencia segura de información en la web?",
+                opciones: ["HTTP.", "FTP.", "SMTP.", "HTTPS."],
+                respuestaCorrecta: 3,
+                explicacion: "HTTPS (Hypertext Transfer Protocol Secure) es la versión segura de HTTP, utilizando cifrado."
+            },
+            // TEMA 6: Prevención de riesgos laborales con PVD
+             {
+                pregunta: "¿Qué significa PVD en el contexto de la prevención de riesgos laborales?",
+                opciones: ["Plan de Vigilancia de la Salud.", "Puesto de Vigilancia Digital.", "Pantalla de Visualización de Datos.", "Prevención de Vibraciones y Deslumbramientos."],
+                respuestaCorrecta: 2,
+                explicacion: "PVD se refiere a los equipos con pantallas (monitores) utilizados en el trabajo."
+            },
+             {
+                pregunta: "¿Cuál es uno de los principales riesgos asociados al trabajo con PVD?",
+                opciones: ["Exposición a sustancias químicas peligrosas.", "Riesgos ergonómicos y visuales.", "Riesgos de caídas a distinto nivel.", "Riesgos de incendio."],
+                respuestaCorrecta: 1,
+                explicacion: "Las posturas inadecuadas, los movimientos repetitivos y la fatiga visual son riesgos comunes del trabajo con PVD."
+            },
+             {
+                pregunta: "¿Qué medida preventiva es recomendable para evitar la fatiga visual al trabajar con PVD?",
+                opciones: ["Aumentar el brillo de la pantalla al máximo.", "Realizar pausas visuales periódicas y enfocar la vista en objetos lejanos.", "Trabajar en total oscuridad.", "Acercar la pantalla lo máximo posible a los ojos."],
+                respuestaCorrecta: 1,
+                explicacion: "Las pausas visuales ayudan a relajar los músculos oculares y reducir la sequedad."
+            },
+             {
+                pregunta: "¿Cuál es la postura correcta recomendada para sentarse frente a un PVD?",
+                opciones: ["Espalda encorvada y pies sin apoyar.", "Espalda recta y apoyada en el respaldo, pies apoyados en el suelo o reposapiés, brazos formando un ángulo de 90º con el teclado.", "Inclinado hacia adelante, muy cerca de la pantalla.", "Sentado de lado con respecto al monitor."],
+                respuestaCorrecta: 1,
+                explicacion: "Una postura ergonómica adecuada reduce la tensión en la espalda, cuello y hombros."
+            },
+             {
+                pregunta: "¿A qué altura debe estar la parte superior de la pantalla de visualización de datos?",
+                opciones: ["Por encima del nivel de los ojos.", "Al nivel de los ojos o ligeramente por debajo.", "Muy por debajo del nivel de los ojos.", "No importa la altura."],
+                respuestaCorrecta: 1,
+                explicacion: "Colocar la pantalla a la altura correcta evita la tensión en el cuello."
+            },
+             {
+                pregunta: "¿Qué tipo de iluminación puede provocar deslumbramientos al trabajar con PVD?",
+                opciones: ["Iluminación natural.", "Iluminación artificial.", "La combinación de iluminación natural y artificial mal gestionada.", "Todas las anteriores pueden provocar deslumbramientos si no están bien controladas."],
+                respuestaCorrecta: 3,
+                explicacion: "Tanto la luz natural (ventanas) como la artificial (lámparas) pueden causar deslumbramientos si su posición o intensidad son inadecuadas."
+            },
+             {
+                pregunta: "¿Qué se considera una \"pausa\" en el contexto de la prevención de riesgos en el trabajo con PVD?",
+                opciones: ["El tiempo dedicado a leer correos electrónicos personales.", "Un breve periodo de descanso activo o cambio de actividad para aliviar la tensión física y mental.", "El tiempo para comer en el puesto de trabajo.", "El tiempo dedicado a conversaciones informales con compañeros."],
+                respuestaCorrecta: 1,
+                explicacion: "Las pausas deben servir para recuperarse del esfuerzo físico y mental asociado al trabajo con PVD."
+            },
+             {
+                pregunta: "¿Cuál es la posición recomendable para el teclado al trabajar con PVD?",
+                opciones: ["Muy cerca del borde de la mesa.", "Separado del borde de la mesa para permitir el apoyo de las muñecas.", "En una posición elevada para forzar la extensión de las muñecas.", "De lado para facilitar el uso del ratón."],
+                respuestaCorrecta: 1,
+                explicacion: "Permitir el apoyo de las muñecas en la mesa o en un reposamuñecas ayuda a mantener una postura neutra."
+            },
+             {
+                pregunta: "¿Qué puede indicar la aparición de dolores en el cuello, hombros o espalda en un trabajador que utiliza PVD?",
+                opciones: ["Que está utilizando la silla de forma incorrecta.", "Que tiene una mala postura de trabajo.", "Que necesita ajustar la altura de la pantalla o la mesa.", "Todas las anteriores pueden ser posibles causas."],
+                respuestaCorrecta: 3,
+                explicacion: "Los dolores musculoesqueléticos suelen ser multifactoriales y pueden deberse a una combinación de factores ergonómicos inadecuados."
+            },
+             {
+                pregunta: "¿Qué es el \"síndrome del túnel carpiano\"?",
+                opciones: ["Un problema de visión relacionado con las PVD.", "Una afección nerviosa en la muñeca que puede causar dolor y entumecimiento.", "Un tipo de dolor de cabeza.", "Una enfermedad respiratoria."],
+                respuestaCorrecta: 1,
+                explicacion: "El síndrome del túnel carpiano es un riesgo ergonómico asociado a movimientos repetitivos y posturas inadecuadas de la muñeca, común en el trabajo con teclado y ratón."
+            },
+             {
+                pregunta: "¿Cuál es la finalidad de la evaluación de riesgos en los puestos de trabajo con PVD?",
+                opciones: ["Determinar si los trabajadores necesitan gafas.", "Identificar los posibles riesgos ergonómicos, visuales y de carga mental, y proponer medidas preventivas.", "Controlar la velocidad de tecleo de los trabajadores.", "Medir la radiación emitida por las pantallas."],
+                respuestaCorrecta: 1,
+                explicacion: "La evaluación de riesgos es el primer paso para implementar medidas que garanticen la seguridad y salud de los trabajadores."
+            },
+            // ** FIN DE LAS PREGUNTAS **
+             // Añade aquí hasta 200 preguntas siguiendo el mismo formato
+        ];
+
+        let preguntasJuego = []; // Array para las 20 preguntas del juego actual
+        const NUM_PREGUNTAS_POR_JUEGO = 20;
+
+        let preguntaActualIndex = 0;
+        let correctas = 0;
+        let incorrectas = 0;
+
+        const preguntaTexto = document.getElementById('pregunta-texto');
+        const opcionesRespuesta = document.getElementById('opciones-respuesta');
+        const correctasCount = document.getElementById('correctas-count');
+        const incorrectasCount = document.getElementById('incorrectas-count');
+        const feedbackDiv = document.getElementById('feedback');
+        const siguienteBtn = document.getElementById('siguiente-btn');
+        const finalMensaje = document.getElementById('final-mensaje');
+        const marcador = document.getElementById('marcador');
+        const reiniciarBtn = document.getElementById('reiniciar-btn');
+
+
+        // Función para barajar el array
+        function barajarArray(array) {
+            const arrayCopia = [...array]; // Crear una copia para no modificar el original
+            for (let i = arrayCopia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arrayCopia[i], arrayCopia[j]] = [arrayCopia[j], arrayCopia[i]]; // Intercambio
+            }
+            return arrayCopia;
+        }
+
+        // Función para seleccionar 20 preguntas al azar
+        function seleccionarPreguntasParaJuego() {
+             if (todasLasPreguntas.length < NUM_PREGUNTAS_POR_JUEGO) {
+                 console.error("No hay suficientes preguntas para un juego de 20.");
+                 // Opcional: Manejar este caso mostrando un mensaje al usuario
+                 return barajarArray(todasLasPreguntas); // Si no hay 20, usa todas las que haya
+             }
+            const preguntasBarajadas = barajarArray(todasLasPreguntas);
+            return preguntasBarajadas.slice(0, NUM_PREGUNTAS_POR_JUEGO);
+        }
+
+        function iniciarJuego() {
+             preguntasJuego = seleccionarPreguntasParaJuego(); // Seleccionar 20 preguntas al inicio
+             preguntaActualIndex = 0;
+             correctas = 0;
+             incorrectas = 0;
+
+             // Resetear la interfaz
+             correctasCount.textContent = correctas;
+             incorrectasCount.textContent = incorrectas;
+             finalMensaje.classList.add('hidden');
+             marcador.innerHTML = `Correctas: <span id="correctas-count">0</span> | Incorrectas: <span id="incorrectas-count">0</span>`;
+             marcador.querySelector('#correctas-count').style.color = '#28a745';
+             marcador.querySelector('#incorrectas-count').style.color = '#dc3545';
+             preguntaTexto.classList.remove('hidden');
+             opcionesRespuesta.classList.remove('hidden');
+             siguienteBtn.classList.add('hidden');
+             feedbackDiv.classList.add('hidden');
+             feedbackDiv.className = ''; // Limpiar clases
+
+             cargarPregunta();
+        }
+
+
+        function cargarPregunta() {
+            if (preguntaActualIndex < preguntasJuego.length) {
+                const pregunta = preguntasJuego[preguntaActualIndex];
+                preguntaTexto.textContent = `Pregunta ${preguntaActualIndex + 1} de ${preguntasJuego.length}: ${pregunta.pregunta}`;
+                opcionesRespuesta.innerHTML = ''; // Limpiar opciones anteriores
+                feedbackDiv.classList.add('hidden'); // Ocultar feedback
+                feedbackDiv.className = ''; // Limpiar clases de feedback (para eliminar correcto/incorrecto)
+                siguienteBtn.classList.add('hidden'); // Ocultar botón siguiente
+                // Asegurarse de que las opciones estén habilitadas para la nueva pregunta
+                opcionesRespuesta.querySelectorAll('.respuesta-opcion').forEach(div => div.classList.remove('deshabilitado'));
+
+
+                pregunta.opciones.forEach((opcion, index) => {
+                    const divOpcion = document.createElement('div');
+                    divOpcion.classList.add('respuesta-opcion');
+                    divOpcion.textContent = `${String.fromCharCode(65 + index)}) ${opcion}`;
+                    divOpcion.addEventListener('click', () => seleccionarRespuesta(index, divOpcion));
+                    opcionesRespuesta.appendChild(divOpcion);
+                });
+            } else {
+                mostrarResultadosFinales();
+            }
+        }
+
+        function seleccionarRespuesta(indiceRespuesta, divSeleccionado) {
+            const pregunta = preguntasJuego[preguntaActualIndex];
+            const opcionesDivs = opcionesRespuesta.querySelectorAll('.respuesta-opcion');
+
+            // Deshabilitar clic en todas las opciones una vez que se selecciona una
+            opcionesDivs.forEach(div => div.classList.add('deshabilitado'));
+
+            feedbackDiv.classList.remove('hidden'); // Mostrar el feedback div
+
+            if (indiceRespuesta === pregunta.respuestaCorrecta) {
+                correctas++;
+                divSeleccionado.classList.add('correcta');
+                feedbackDiv.className = 'correcto'; // Establecer clase para acierto
+                feedbackDiv.textContent = '¡Correcto!'; // Mensaje de acierto
+                 // La animación se maneja por CSS con la clase 'correcto'
+            } else {
+                incorrectas++;
+                divSeleccionado.classList.add('incorrecta');
+                feedbackDiv.className = 'incorrecto'; // Establecer clase para fallo
+
+                // Construir el mensaje de feedback para fallo
+                let feedbackTexto = `Incorrecto. La respuesta correcta es la <span class="correcta-indicador">${String.fromCharCode(65 + pregunta.respuestaCorrecta)}) ${pregunta.opciones[pregunta.respuestaCorrecta]}</span>.`;
+
+                 if (pregunta.explicacion) {
+                     feedbackTexto += `<div class="explicacion">Explicación: ${pregunta.explicacion}</div>`;
+                 }
+
+                 feedbackDiv.innerHTML = feedbackTexto;
+
+
+                // Resaltar la respuesta correcta
+                opcionesDivs.forEach((div, index) => {
+                    if (index === pregunta.respuestaCorrecta) {
+                        div.classList.add('correcta');
+                    }
+                });
+            }
+
+            correctasCount.textContent = correctas;
+            incorrectasCount.textContent = incorrectas;
+            siguienteBtn.classList.remove('hidden'); // Mostrar botón siguiente
+        }
+
+        function mostrarResultadosFinales() {
+            preguntaTexto.classList.add('hidden'); // Ocultar pregunta y opciones
+            opcionesRespuesta.classList.add('hidden');
+            feedbackDiv.classList.add('hidden'); // Ocultar feedback si está visible
+            siguienteBtn.classList.add('hidden'); // Ocultar botón siguiente
+            finalMensaje.classList.remove('hidden'); // Mostrar mensaje final
+            marcador.innerHTML = `¡Test Finalizado! Resultado: Correctas: <span id="correctas-count">${correctas}</span> | Incorrectas: <span id="incorrectas-count">${incorrectas}</span>`;
+             // Actualizar los spans dentro del marcador final
+             marcador.querySelector('#correctas-count').style.color = '#28a745';
+             marcador.querySelector('#incorrectas-count').style.color = '#dc3545';
+        }
+
+        siguienteBtn.addEventListener('click', () => {
+            preguntaActualIndex++;
+            cargarPregunta();
+        });
+
+         reiniciarBtn.addEventListener('click', () => {
+             iniciarJuego();
+         });
+
+
+        // Iniciar el primer juego al cargar la página
+        iniciarJuego();
+    </script>
+</body>
+</html>
