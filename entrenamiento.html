@@ -3,1921 +3,582 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrenamiento Test Oposición</title>
+    <title>Entrenamiento Oposición</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Estilos personalizados y animaciones */
         body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-            padding: 20px;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Gris claro de fondo */
         }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        /* Animación para respuesta correcta */
+        @keyframes correctAnswerAnimation {
+            0% { transform: scale(1); background-color: #d1fae5; } /* Verde claro */
+            50% { transform: scale(1.05); background-color: #a7f3d0; } /* Verde más intenso */
+            100% { transform: scale(1); background-color: #d1fae5; } /* Verde claro */
+        }
+        .correct-answer-animation {
+            animation: correctAnswerAnimation 0.5s ease-in-out;
+        }
+        /* Estilos para el contenedor de la explicación */
+        #explanation-box {
+            border-left: 4px solid #f87171; /* Borde rojo */
+            background-color: #fee2e2; /* Fondo rojo claro */
+            color: #b91c1c; /* Texto rojo oscuro */
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.375rem; /* Esquinas redondeadas */
+        }
+        /* Clases para ocultar/mostrar elementos */
+        .hidden {
+            display: none;
+        }
+        /* Estilos adicionales para mejorar la apariencia */
+        .quiz-container {
             max-width: 800px;
-            width: 100%;
-            box-sizing: border-box;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.75rem; /* Esquinas más redondeadas */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
+        .question-text {
+            font-size: 1.125rem; /* Tamaño de fuente ligeramente mayor */
+            font-weight: 600; /* Semi-negrita */
+            margin-bottom: 1.5rem;
+            color: #1f2937; /* Gris oscuro */
         }
-         #controles-superiores {
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-             margin-bottom: 20px;
-             border-bottom: 1px solid #eee;
-             padding-bottom: 15px;
-         }
-          #controles-superiores h1 {
-              margin: 0;
-              flex-grow: 1; /* Permite que el título ocupe el espacio restante */
-              text-align: left; /* Alinea el título a la izquierda */
-          }
-         #reiniciar-btn {
-             padding: 8px 15px;
-             background-color: #ffc107;
-             color: #333;
-             border: none;
-             border-radius: 5px;
-             cursor: pointer;
-             font-size: 0.9em;
-             transition: background-color 0.3s ease;
-         }
-         #reiniciar-btn:hover {
-             background-color: #e0a800;
-         }
-         #reiniciar-btn:active {
-             background-color: #c69500;
-         }
-
-
-        #pregunta-container {
-            margin-bottom: 20px;
-            /* border-bottom: 1px solid #eee; */ /* Eliminado para evitar doble línea */
-            padding-bottom: 20px;
-        }
-        #pregunta-texto {
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            font-weight: bold;
-            color: #555;
-        }
-        .respuesta-opcion {
-            margin-bottom: 10px;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            background-color: #f9f9f9;
-        }
-        .respuesta-opcion:hover:not(.deshabilitado) {
-            background-color: #e9e9e9;
-            border-color: #ccc;
-        }
-        .respuesta-opcion.correcta {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            color: #155724;
-            font-weight: bold;
-        }
-        .respuesta-opcion.incorrecta {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            color: #721c24;
-        }
-        #marcador {
-            margin-top: 20px;
-            font-size: 1.1em;
-            text-align: center;
-            color: #333;
-        }
-        #marcador span {
-            font-weight: bold;
-        }
-        #marcador #correctas-count {
-            color: #28a745;
-        }
-        #marcador #incorrectas-count {
-            color: #dc3545;
-        }
-        #feedback {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 5px;
-            display: none; /* Inicialmente oculto */
-            font-size: 1em;
-            line-height: 1.5;
-        }
-        #feedback.correcto {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            animation: flashCorrecto 0.8s ease; /* Animación más visible y un poco más larga */
-        }
-         #feedback.correcto::before {
-            content: " ¡Correcto!  "; /* Emoji para acierto */
-        }
-        #feedback.incorrecto {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        #feedback.incorrecto::before {
-            content: "❌ Incorrecto. "; /* Emoji para fallo */
-             font-weight: bold;
-        }
-        #feedback .explicacion {
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #444;
-        }
-         #feedback.incorrecto .explicacion {
-             color: #721c24; /* Color de texto para explicación en fallo */
-         }
-
-        @keyframes flashCorrecto {
-            0% { opacity: 0.5; background-color: #c3e6cb; }
-            50% { opacity: 1; background-color: #d4edda; }
-            100% { opacity: 0.5; background-color: #c3e6cb; }
-        }
-
-        button {
+        .answer-button {
             display: block;
             width: 100%;
-            padding: 12px;
-            background-color: #007bff;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid #d1d5db; /* Borde gris */
+            border-radius: 0.375rem;
+            background-color: #ffffff;
+            color: #374151; /* Gris medio */
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .answer-button:hover:not(:disabled) {
+            background-color: #f9fafb; /* Gris muy claro al pasar el ratón */
+            border-color: #9ca3af;
+        }
+        .answer-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .answer-button.correct {
+            background-color: #d1fae5; /* Verde claro */
+            border-color: #6ee7b7; /* Borde verde */
+            color: #065f46; /* Texto verde oscuro */
+            font-weight: 500;
+        }
+        .answer-button.incorrect {
+            background-color: #fee2e2; /* Rojo claro */
+            border-color: #fca5a5; /* Borde rojo */
+            color: #991b1b; /* Texto rojo oscuro */
+            font-weight: 500;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e5e7eb; /* Gris claro */
+            border-radius: 0.375rem;
+            font-weight: 500;
+        }
+        .next-button {
+            display: block;
+            width: auto;
+            margin-left: auto; /* Alinea a la derecha */
+            margin-top: 1.5rem;
+            padding: 0.6rem 1.5rem;
+            background-color: #3b82f6; /* Azul */
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 0.375rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 1.1em;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s ease;
         }
-        button:hover:not(.deshabilitado) {
-            background-color: #0056b3;
+        .next-button:hover {
+            background-color: #2563eb; /* Azul más oscuro */
         }
-         button:active:not(.deshabilitado) {
-            background-color: #004085;
+        .completion-message {
+             text-align: center;
+             font-size: 1.25rem;
+             font-weight: 600;
+             margin-top: 2rem;
+             color: #1f2937;
         }
-        .deshabilitado {
-            pointer-events: none;
-            opacity: 0.6;
-        }
-         .hidden {
-             display: none;
-         }
-
-         .respuesta-opcion.deshabilitado {
-             pointer-events: none;
-             opacity: 0.8; /* Menos opacidad que el botón para que se vea el color */
-         }
-         .respuesta-opcion.deshabilitado:hover {
-              background-color: #f9f9f9; /* Evitar cambio de color al pasar el ratón */
-              border-color: #ddd;
-         }
-         .correcta-indicador {
-            font-weight: bold;
-            color: #155724; /* Color verde */
-         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div id="controles-superiores">
-             <h1>Entrenamiento Test Oposición</h1>
-             <button id="reiniciar-btn">Reiniciar</button>
-         </div>
+<body class="bg-gray-100 p-4 md:p-8">
 
-        <div id="pregunta-container">
-            <p id="pregunta-texto">Cargando pregunta...</p>
-            <div id="opciones-respuesta">
+    <div id="quiz-container" class="quiz-container">
+        <h1 class="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800">Entrenamiento Oposición</h1>
+
+        <div id="question-area">
+            <p id="question-text" class="question-text">Cargando pregunta...</p>
+            <div id="answer-buttons" class="space-y-3">
                 </div>
         </div>
-        <div id="feedback" class="hidden"></div>
-        <div id="marcador">
-            Correctas: <span id="correctas-count">0</span> | Incorrectas: <span id="incorrectas-count">0</span>
+
+        <div id="feedback-area" class="mt-4">
+            <div id="explanation-box" class="hidden">
+                <p id="explanation-text"></p>
+            </div>
         </div>
-        <button id="siguiente-btn" class="hidden">Siguiente Pregunta</button>
-         <p id="final-mensaje" class="hidden" style="text-align: center; font-size: 1.3em; margin-top: 20px;">¡Test Completado!</p>
+
+        <button id="next-button" class="next-button hidden">Siguiente Pregunta</button>
+
+        <div id="scoreboard" class="scoreboard">
+            <div>Aciertos: <span id="correct-score">0</span></div>
+            <div>Fallos: <span id="incorrect-score">0</span></div>
+            <div>Pregunta: <span id="question-counter">0</span> / <span id="total-questions">0</span></div>
+        </div>
+
+         <div id="completion-message" class="completion-message hidden">
+            ¡Entrenamiento completado!
+        </div>
     </div>
 
     <script>
-        // Array completo de preguntas (Añade aquí todas tus preguntas)
-        const todasLasPreguntas = [
-            // ** COMIENZO DE LAS PREGUNTAS (AÑADE AQUÍ LAS 200 PREGUNTAS) **
-             {
-                pregunta: "Según la Ley General de Sociedades Mercantiles, ¿cuál de las siguientes no es una clase de sociedad mercantil?",
-                opciones: ["Sociedad Anónima", "Sociedad Civil", "Sociedad de Responsabilidad Limitada", "Sociedad Comanditaria por Acciones"],
-                respuestaCorrecta: 1, // Índice de la respuesta correcta (0, 1, 2, 3)
-                explicacion: "La Sociedad Civil se rige por el Código Civil, no por la Ley General de Sociedades Mercantiles."
-            },
-             {
-                pregunta: "¿Cuál es la función principal del Registro Mercantil?",
-                opciones: ["Inscribir y dar publicidad a los actos relativos a los empresarios y sociedades mercantiles.", "Resolver conflictos entre socios de sociedades mercantiles.", "Aprobar las cuentas anuales de las sociedades.", "Conceder subvenciones a las empresas."],
-                respuestaCorrecta: 0,
-                explicacion: "El Registro Mercantil tiene como finalidad principal la publicidad formal de las situaciones jurídicas de los empresarios y sociedades."
-            },
-             {
-                pregunta: "En una Sociedad Anónima, ¿cuál es el órgano encargado de la gestión y representación de la sociedad?",
-                opciones: ["Junta General de Accionistas", "Consejo de Administración", "Auditores de Cuentas", "Comisión de Nombramientos"],
-                respuestaCorrecta: 1,
-                explicacion: "El Consejo de Administración (o Administrador Único/Solidario/Mancomunado) es el órgano de gestión y representación. La Junta General es el órgano supremo de la sociedad."
-            },
-             {
-                pregunta: "¿Qué documento es fundamental para la constitución de una Sociedad Anónima y contiene las normas de funcionamiento interno?",
-                opciones: ["Pacto de Socios", "Contrato Mercantil", "Escritura Pública de Constitución y Estatutos Sociales", "Libro de Actas"],
-                respuestaCorrecta: 2,
-                explicacion: "La constitución de una SA requiere escritura pública inscrita en el Registro Mercantil, y los Estatutos Sociales regulan su funcionamiento."
-            },
-             {
-                pregunta: "¿Qué característica define principalmente la responsabilidad de los socios en una Sociedad de Responsabilidad Limitada?",
-                opciones: ["Responden con todo su patrimonio personal.", "Responden hasta el límite del capital aportado.", "Responden de forma ilimitada y solidaria.", "No tienen ninguna responsabilidad."],
-                respuestaCorrecta: 1,
-                explicacion: "En la SRL, la responsabilidad de los socios está limitada al capital que han aportado o se han comprometido a aportar."
-            },
-             {
-                 pregunta: "¿Cuál es el capital social mínimo para constituir una Sociedad Anónima en España?",
-                 opciones: ["1 euro", "3.000 euros", "60.000 euros", "120.000 euros"],
-                 respuestaCorrecta: 2,
-                 explicacion: "El capital social mínimo para una SA es de 60.000 euros, desembolsado al menos en un 25% en el momento de la constitución."
-             },
-             {
-                 pregunta: "¿Cuál es el capital social mínimo para constituir una Sociedad de Responsabilidad Limitada en España?",
-                 opciones: ["1 euro", "3.000 euros", "60.000 euros", "No hay mínimo"],
-                 respuestaCorrecta: 0,
-                 explicacion: "Desde la Ley 18/2022, de Creación y Crecimiento de Empresas, se permite constituir una SRL con un capital social de 1 euro, aunque con ciertas restricciones si es inferior a 3.000 euros."
-             },
-             {
-                 pregunta: "¿Qué tipo de sociedades mercantiles tienen su capital dividido en acciones?",
-                 opciones: ["Sociedad de Responsabilidad Limitada y Sociedad Colectiva", "Sociedad Anónima y Sociedad Comanditaria por Acciones", "Sociedad Cooperativa y Sociedad Civil", "Sociedad Laboral y Sociedad Profesional"],
-                 respuestaCorrecta: 1,
-                 explicacion: "Las acciones son la parte alícuota del capital social de las Sociedades Anónimas y Comanditarias por Acciones."
-             },
-             {
-                 pregunta: "¿Qué tipo de sociedades mercantiles tienen su capital dividido en participaciones?",
-                 opciones: ["Sociedad Anónima y Sociedad Comanditaria simple", "Sociedad de Responsabilidad Limitada y Sociedad Laboral", "Sociedad Colectiva y Sociedad Comanditaria por acciones", "Sociedad Civil y Sociedad Cooperativa"],
-                 respuestaCorrecta: 1,
-                 explicacion: "Las participaciones sociales son la parte alícuota del capital social de las Sociedades de Responsabilidad Limitada y Sociedades Laborales (aunque estas últimas tienen sus propias particularidades)."
-             },
-             {
-                 pregunta: "¿Qué órgano social de la Sociedad Anónima es competente para aprobar las cuentas anuales?",
-                 opciones: ["El Consejo de Administración", "El Auditor de Cuentas", "La Junta General de Accionistas", "El Registro Mercantil"],
-                 respuestaCorrecta: 2,
-                 explicacion: "La aprobación de las cuentas anuales es una competencia indelegable de la Junta General de Accionistas."
-             },
-             {
-                 pregunta: "¿Qué es la disolución de una sociedad mercantil?",
-                 opciones: ["El inicio de su actividad.", "El cambio de su objeto social.", "La extinción de su personalidad jurídica tras un proceso liquidatorio.", "La fusión con otra sociedad."],
-                 respuestaCorrecta: 2,
-                 explicacion: "La disolución es la primera fase del proceso que lleva a la extinción de la sociedad, seguida de la liquidación y la extinción registral."
-             },
-             {
-                 pregunta: "¿Cuál es una causa legal de disolución obligatoria para una Sociedad Anónima?",
-                 opciones: ["Obtención de beneficios elevados.", "Reducción del capital social por debajo del mínimo legal.", "Cambio de domicilio social.", "Nombramiento de nuevos administradores."],
-                 respuestaCorrecta: 1,
-                 explicacion: "La reducción del capital a una cifra inferior al mínimo legal es una causa de disolución de pleno derecho, salvo que se restablezca o se transforme la sociedad."
-             },
-             {
-                 pregunta: "¿Qué es una sociedad mercantil pública local?",
-                 opciones: ["Una sociedad mercantil cuyo capital pertenece íntegramente a particulares.", "Una sociedad mercantil participada mayoritariamente por una o varias entidades locales.", "Una sociedad civil con actividad en el ámbito local.", "Una asociación sin ánimo de lucro de ámbito municipal."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Son sociedades mercantiles cuyo capital social pertenece, en todo o en parte, a entidades locales, y que se rigen por su normativa específica y la legislación mercantil general."
-             },
-             {
-                 pregunta: "¿Qué documento contiene las normas de organización y funcionamiento de una Sociedad Anónima?",
-                 opciones: ["El Pacto de Socios", "El Libro de Actas", "Los Estatutos Sociales", "El Certificado de Denominación"],
-                 respuestaCorrecta: 2,
-                 explicacion: "Los Estatutos Sociales, que forman parte de la escritura de constitución, regulan aspectos como el objeto social, domicilio, capital, órganos de administración, etc."
-             },
-             {
-                 pregunta: "¿Qué es la escritura social de una sociedad mercantil?",
-                 opciones: ["El contrato por el que se constituye la sociedad, otorgado ante notario.", "El documento que recoge las deudas de la sociedad.", "El informe de gestión anual.", "El listado de socios de la sociedad."],
-                 respuestaCorrecta: 0,
-                 explicacion: "La escritura pública de constitución es el documento formal y necesario para la inscripción de la sociedad en el Registro Mercantil."
-             },
-            // TEMA 2: Contabilidad General (Adicionales)
-            {
-                pregunta: "¿Qué es el principio de empresa en funcionamiento?",
-                opciones: ["Que la empresa debe repartir beneficios anualmente.", "Que se considera que la empresa continuará su actividad en el futuro.", "Que la empresa debe estar siempre abierta al público.", "Que la empresa debe tener un mínimo de empleados."],
-                respuestaCorrecta: 1,
-                explicacion: "Este principio contable asume que la empresa no tiene intención ni necesidad de liquidar o reducir significativamente sus operaciones en el futuro previsible."
-            },
-            {
-                pregunta: "¿Qué es el principio de devengo?",
-                opciones: ["Registrar los ingresos y gastos cuando se cobra o se paga el efectivo.", "Registrar los ingresos y gastos en el periodo contable al que se refieren, independientemente del momento del cobro o pago.", "Registrar solo las operaciones de compraventa.", "Registrar solo las operaciones con bancos."],
-                respuestaCorrecta: 1,
-                explicacion: "El principio de devengo es fundamental en contabilidad y exige reconocer los hechos económicos cuando ocurren, no cuando hay movimiento de efectivo."
-            },
-            {
-                pregunta: "¿Qué es el Plan General de Contabilidad (PGC)?",
-                opciones: ["Un software de contabilidad.", "La norma contable principal en España que establece los criterios de registro y valoración de las operaciones económicas.", "Un plan de marketing para contables.", "Un documento que recoge los resultados fiscales de una empresa."],
-                respuestaCorrecta: 1,
-                explicacion: "El PGC es la referencia obligatoria para la contabilidad de la mayoría de las empresas españolas."
-            },
-            {
-                pregunta: "¿Qué son las cuentas anuales?",
-                opciones: ["Los libros contables de una empresa.", "El Balance de Situación, la Cuenta de Pérdidas y Ganancias, el Estado de Cambios en el Patrimonio Neto, el Estado de Flujos de Efectivo y la Memoria.", "Los extractos bancarios de la empresa.", "Los informes de auditoría."],
-                respuestaCorrecta: 1,
-                explicacion: "Las cuentas anuales forman un conjunto que debe reflejar la imagen fiel del patrimonio, de la situación financiera y de los resultados de la empresa."
-            },
-            {
-                pregunta: "¿Qué es la Memoria en las cuentas anuales?",
-                opciones: ["Un resumen de la actividad del año.", "Un documento que amplía y comenta la información contenida en el resto de los estados financieros.", "El listado de todos los clientes de la empresa.", "El registro de las operaciones diarias."],
-                respuestaCorrecta: 1,
-                explicacion: "La Memoria proporciona información cualitativa y explicaciones adicionales necesarias para comprender las cuentas anuales."
-            },
-            {
-                pregunta: "¿Qué es el activo no corriente (inmovilizado)?",
-                opciones: ["Los bienes y derechos que se espera convertir en efectivo en menos de un año.", "Los bienes y derechos destinados a servir de forma duradera en la actividad de la empresa.", "Las deudas a corto plazo de la empresa.", "El dinero en caja y bancos."],
-                respuestaCorrecta: 1,
-                explicacion: "El activo no corriente son inversiones a largo plazo, como terrenos, edificios, maquinaria, patentes, etc."
-            },
-            {
-                pregunta: "¿Qué es el activo corriente?",
-                opciones: ["Los bienes y derechos destinados a servir de forma duradera en la actividad de la empresa.", "Las deudas a largo plazo de la empresa.", "Los bienes y derechos que se espera convertir en efectivo en el ciclo normal de explotación o en menos de un año.", "El capital social de la empresa."],
-                respuestaCorrecta: 2,
-                explicacion: "El activo corriente incluye elementos como existencias, clientes, tesorería, etc."
-            },
-            {
-                pregunta: "¿Qué es el pasivo no corriente?",
-                opciones: ["Las deudas y obligaciones que vencen en menos de un año.", "Las deudas y obligaciones que vencen en más de un año.", "Los fondos propios de la empresa.", "Los ingresos pendientes de cobro."],
-                respuestaCorrecta: 1,
-                explicacion: "El pasivo no corriente son obligaciones a largo plazo, como préstamos a largo plazo, deudas con entidades de crédito a largo plazo, etc."
-            },
-            {
-                pregunta: "¿Qué es el pasivo corriente?",
-                opciones: ["Las deudas y obligaciones que vencen en más de un año.", "Los fondos propios de la empresa.", "Las deudas y obligaciones que vencen en el ciclo normal de explotación o en menos de un año.", "Los bienes y derechos de la empresa."],
-                respuestaCorrecta: 2,
-                explicacion: "El pasivo corriente incluye obligaciones a corto plazo, como deudas con proveedores, deudas con entidades de crédito a corto plazo, etc."
-            },
-            {
-                pregunta: "¿Qué es el Patrimonio Neto?",
-                opciones: ["El conjunto de deudas de la empresa.", "El valor de los bienes y derechos de la empresa.", "La parte residual de los activos de la empresa una vez deducidos todos sus pasivos.", "El total de ingresos de la empresa."],
-                respuestaCorrecta: 2,
-                explicacion: "Patrimonio Neto = Activo - Pasivo. Representa los fondos propios de la empresa, incluyendo capital, reservas, resultados, etc."
-            },
-            {
-                pregunta: "¿Qué es una cuenta contable?",
-                opciones: ["Un extracto bancario.", "Un registro donde se anotan de forma sistemática los aumentos y disminuciones de un elemento patrimonial o de resultado.", "Un documento fiscal.", "Un informe de gestión."],
-                respuestaCorrecta: 1,
-                explicacion: "La cuenta contable es la herramienta básica para registrar las transacciones económicas."
-            },
-            {
-                pregunta: "¿Qué es el Debe de una cuenta?",
-                opciones: ["El lado derecho de la cuenta.", "El lado izquierdo de la cuenta, donde se registran los aumentos de activo y gasto, y las disminuciones de pasivo e ingreso.", "El saldo de la cuenta.", "La suma de los movimientos de la cuenta."],
-                respuestaCorrecta: 1,
-                explicacion: "El Debe es el lado izquierdo de la cuenta (sistema de partida doble)."
-            },
-            {
-                pregunta: "¿Qué es el Haber de una cuenta?",
-                opciones: ["El lado izquierdo de la cuenta.", "El lado derecho de la cuenta, donde se registran las disminuciones de activo y gasto, y los aumentos de pasivo e ingreso.", "El saldo de la cuenta.", "La suma de los movimientos de la cuenta."],
-                respuestaCorrecta: 1,
-                explicacion: "El Haber es el lado derecho de la cuenta (sistema de partida doble)."
-            },
-            {
-                pregunta: "¿Qué es el saldo de una cuenta?",
-                opciones: ["La suma del Debe y el Haber.", "La diferencia entre la suma del Debe y la suma del Haber.", "El último movimiento registrado.", "El nombre de la cuenta."],
-                respuestaCorrecta: 1,
-                explicacion: "El saldo puede ser deudor (Debe > Haber), acreedor (Haber > Debe) o cero."
-            },
-            {
-                pregunta: "¿Qué es el Libro Diario?",
-                opciones: ["Un resumen de las operaciones del año.", "El libro contable donde se registran cronológicamente todas las operaciones de la empresa.", "Un registro de clientes y proveedores.", "El libro de actas de la empresa."],
-                respuestaCorrecta: 1,
-                explicacion: "El Libro Diario registra día a día las transacciones mediante asientos contables."
-            },
-            {
-                pregunta: "¿Qué es el Libro Mayor?",
-                opciones: ["Un libro donde se registran solo las operaciones importantes.", "Un libro que agrupa los movimientos de cada cuenta contable individualmente.", "El libro donde se registran los activos de la empresa.", "El libro donde se registran los pasivos de la empresa."],
-                respuestaCorrecta: 1,
-                explicacion: "El Libro Mayor desglosa la información del Libro Diario por cada cuenta."
-            },
-            {
-                pregunta: "¿Qué es un asiento contable?",
-                opciones: ["Una anotación en el Libro Mayor.", "El registro de una operación económica en el Libro Diario, respetando el principio de partida doble.", "Un resumen de las cuentas anuales.", "Un informe de auditoría."],
-                respuestaCorrecta: 1,
-                explicacion: "Cada asiento contable debe tener una partida doble: la suma de los importes anotados en el Debe debe ser igual a la suma de los importes anotados en el Haber."
-            },
-            {
-                pregunta: "¿Qué es la amortización contable?",
-                opciones: ["El pago de una deuda.", "La pérdida de valor de un activo inmovilizado por su uso, paso del tiempo u obsolescencia.", "El reparto de beneficios a los socios.", "El registro de un ingreso por ventas."],
-                respuestaCorrecta: 1,
-                explicacion: "La amortización refleja contablemente el desgaste o envejecimiento de los activos fijos."
-            },
-            {
-                pregunta: "¿Qué es una provisión?",
-                opciones: ["Un ingreso pendiente de cobro.", "Un gasto pagado por adelantado.", "Una obligación actual que surge a raíz de sucesos pasados, cuya cuantía o vencimiento es incierto.", "Un activo intangible."],
-                respuestaCorrecta: 2,
-                explicacion: "Las provisiones se constituyen para cubrir obligaciones probables, aunque la cuantía o el momento del pago no se conozcan con exactitud."
-            },
-            {
-                pregunta: "¿Qué son los ajustes por periodificación?",
-                opciones: ["Correcciones realizadas al final del ejercicio para imputar ingresos y gastos al periodo contable correcto.", "Ajustes por inflación.", "Correcciones por errores en los registros.", "Ajustes por diferencias de cambio."],
-                respuestaCorrecta: 0,
-                explicacion: "Estos ajustes aseguran que los ingresos y gastos se reconozcan en el periodo en que se devengan, no cuando se cobran o pagan."
-            },
-            // TEMA 3: Funcionamiento electrónico del sector público, Protección de Datos, Transparencia, PAC (Adicionales)
-            {
-                pregunta: "¿Qué principio de la Ley 39/2015 establece que las Administraciones deben utilizar medios electrónicos en su actividad?",
-                opciones: ["Principio de eficiencia.", "Principio de servicio a los ciudadanos.", "Principio de actuación y funcionamiento electrónico.", "Principio de buena fe."],
-                respuestaCorrecta: 2,
-                explicacion: "La Ley 39/2015 impulsa la administración electrónica como vía para mejorar la eficiencia y el acceso de los ciudadanos."
-            },
-            {
-                pregunta: "¿Qué es el Punto de Acceso General electrónico de la Administración?",
-                opciones: ["Un portal web para presentar quejas y sugerencias.", "Una dirección web que permite el acceso a la información y servicios electrónicos de la Administración.", "Un registro de empleados públicos.", "Un sistema de gestión documental."],
-                respuestaCorrecta: 1,
-                explicacion: "Es la puerta de entrada electrónica para interactuar con la Administración Pública."
-            },
-            {
-                pregunta: "¿Qué es una sede electrónica?",
-                opciones: ["La oficina física de una Administración.", "Una dirección electrónica disponible para los ciudadanos a través de redes de telecomunicaciones, cuya titularidad, gestión y administración corresponde a una Administración Pública.", "Un foro de debate online.", "Un sistema de videoconferencia."],
-                respuestaCorrecta: 1,
-                explicacion: "La sede electrónica es el espacio virtual seguro donde se realizan trámites y se accede a información oficial."
-            },
-            {
-                pregunta: "¿Qué es la identificación electrónica en el ámbito de la Administración?",
-                opciones: ["Reconocer la identidad de un funcionario.", "Acreditar la identidad de los interesados en el procedimiento administrativo mediante medios electrónicos (certificado electrónico, Cl@ve...).", "Identificar los equipos informáticos.", "Identificar los documentos electrónicos."],
-                respuestaCorrecta: 1,
-                explicacion: "La identificación electrónica es necesaria para garantizar la seguridad y validez de las actuaciones administrativas por medios electrónicos."
-            },
-            {
-                pregunta: "¿Qué es la firma electrónica en el ámbito de la Administración?",
-                opciones: ["La firma manuscrita escaneada.", "Un conjunto de datos en forma electrónica, consignados junto a otros o asociados con ellos, que pueden ser utilizados como medio de identificación del firmante.", "Un sello de goma.", "La rúbrica de un funcionario."],
-                respuestaCorrecta: 1,
-                explicacion: "La firma electrónica permite garantizar la autenticidad e integridad de los documentos electrónicos."
-            },
-            {
-                pregunta: "¿Qué es el registro electrónico general de apoderamientos?",
-                opciones: ["Un registro de empresas.", "Un registro donde se inscriben las representaciones que los interesados otorgan a terceros para actuar en su nombre ante las Administraciones Públicas.", "Un registro de funcionarios.", "Un registro de asociaciones."],
-                respuestaCorrecta: 1,
-                explicacion: "Facilita la gestión de las representaciones electrónicas."
-            },
-            {
-                pregunta: "¿Qué es una notificación electrónica?",
-                opciones: ["Un correo electrónico informativo.", "La puesta a disposición del interesado de un acto administrativo por medios electrónicos, con plenas garantías jurídicas.", "Un mensaje de texto.", "Una publicación en redes sociales."],
-                respuestaCorrecta: 1,
-                explicacion: "Las notificaciones electrónicas son obligatorias para ciertos sujetos y garantizan la constancia de la recepción."
-            },
-            {
-                pregunta: "¿Cuál es el plazo máximo para que el interesado acceda a una notificación electrónica puesta a su disposición?",
-                opciones: ["5 días naturales.", "10 días naturales.", "15 días naturales.", "30 días naturales."],
-                respuestaCorrecta: 1, // Corregido a 1, el plazo es 10 días naturales.
-                explicacion: "Si el interesado no accede a la notificación en el plazo de diez días naturales desde su puesta a disposición, se entenderá rechazada, salvo que de oficio o a instancia del interesado se compruebe la imposibilidad técnica o material del acceso."
-            },
-            {
-                pregunta: "¿Qué es el archivo electrónico único?",
-                opciones: ["Un disco duro externo.", "Un sistema de almacenamiento centralizado de documentos electrónicos de la Administración.", "Una base de datos de ciudadanos.", "Un programa de gestión de correo electrónico."],
-                respuestaCorrecta: 1,
-                explicacion: "Garantiza la conservación y acceso a los documentos electrónicos a lo largo del tiempo."
-            },
-            {
-                pregunta: "¿Qué es el principio de minimización de datos según el RGPD?",
-                opciones: ["Recopilar la máxima cantidad de datos posible.", "Recopilar solo los datos personales que sean adecuados, pertinentes y limitados a lo necesario para los fines del tratamiento.", "Conservar los datos indefinidamente.", "Compartir los datos con terceros sin consentimiento."],
-                respuestaCorrecta: 1,
-                explicacion: "Este principio exige que solo se traten los datos estrictamente necesarios para el fin específico."
-            },
-            {
-                pregunta: "¿Qué es el consentimiento del interesado según el RGPD?",
-                opciones: ["Cualquier manifestación de voluntad.", "Toda manifestación de voluntad libre, específica, informada e inequívoca por la que el interesado acepta, mediante una declaración o una clara acción afirmativa, el tratamiento de datos personales que le conciernen.", "El silencio del interesado.", "Una casilla premarcada en un formulario."],
-                respuestaCorrecta: 1,
-                explicacion: "El consentimiento debe ser activo y claro, no presumido."
-            },
-            {
-                pregunta: "¿Qué es el derecho de acceso a los datos personales?",
-                opciones: ["El derecho a modificar los datos incorrectos.", "El derecho a que el responsable del tratamiento confirme si está tratando o no datos personales que le conciernen y, en tal caso, derecho de acceso a dichos datos.", "El derecho a que se borren los datos.", "El derecho a recibir publicidad personalizada."],
-                respuestaCorrecta: 1,
-                explicacion: "Permite al interesado saber qué datos suyos se están tratando y con qué finalidad."
-            },
-            {
-                pregunta: "¿Qué es el derecho de rectificación de los datos personales?",
-                opciones: ["El derecho a oponerse al tratamiento.", "El derecho a obtener sin dilación indebida del responsable del tratamiento la rectificación de los datos personales inexactos que le conciernan.", "El derecho a que se borren los datos.", "El derecho a recibir una copia de los datos."],
-                respuestaCorrecta: 1,
-                explicacion: "Permite corregir datos incompletos o erróneos."
-            },
-            {
-                pregunta: "¿Qué es el derecho de supresión ('derecho al olvido')?",
-                opciones: ["El derecho a recibir una copia de los datos.", "El derecho a limitar el tratamiento.", "El derecho a obtener sin dilación indebida del responsable del tratamiento la supresión de los datos personales que le conciernan en ciertos supuestos.", "El derecho a la portabilidad de los datos."],
-                respuestaCorrecta: 2,
-                explicacion: "Permite solicitar la eliminación de datos personales bajo ciertas condiciones."
-            },
-            {
-                pregunta: "¿Qué es el derecho a la portabilidad de los datos?",
-                opciones: ["El derecho a que los datos sean transferidos a otro país.", "El derecho a recibir los datos personales que le incumban, que haya facilitado a un responsable del tratamiento, en un formato estructurado, de uso común y lectura mecánica, y a transmitirlos a otro responsable sin que lo impida el responsable al que se los hubiera facilitado.", "El derecho a oponerse al tratamiento.", "El derecho a que se borren los datos."],
-                respuestaCorrecta: 1,
-                explicacion: "Facilita el cambio de proveedor de servicios sin perder el control sobre los datos."
-            },
-            {
-                pregunta: "¿Qué es el derecho de oposición?",
-                opciones: ["El derecho a recibir información.", "El derecho a que se borren los datos.", "El derecho a oponerse en cualquier momento, por motivos relacionados con su situación particular, a que datos personales que le conciernan sean objeto de un tratamiento.", "El derecho a la rectificación."],
-                respuestaCorrecta: 2,
-                explicacion: "Permite al interesado oponerse al tratamiento de sus datos en ciertos casos."
-            },
-            {
-                pregunta: "¿Qué es el Delegado de Protección de Datos (DPD)?",
-                opciones: ["Un empleado público encargado de la seguridad informática.", "Una figura encargada de asesorar y supervisar el cumplimiento de la normativa de protección de datos en una organización.", "El responsable del fichero.", "El encargado del tratamiento."],
-                respuestaCorrecta: 1,
-                explicacion: "Es un experto en protección de datos que actúa como punto de contacto y asesor interno."
-            },
-            {
-                pregunta: "¿Qué es la Agencia Española de Protección de Datos (AEPD)?",
-                opciones: ["Un organismo internacional.", "La autoridad de control en España en materia de protección de datos.", "Una empresa de seguridad informática.", "Una asociación de profesionales de la protección de datos."],
-                respuestaCorrecta: 1,
-                explicacion: "Es el organismo público encargado de velar por el cumplimiento del RGPD y la LOPDGDD."
-            },
-            {
-                pregunta: "¿Qué es un procedimiento administrativo?",
-                opciones: ["Un conjunto de normas legales.", "La sucesión ordenada de trámites y actuaciones que deben seguir las Administraciones Públicas para dictar un acto administrativo o resolver un asunto.", "Un contrato público.", "Un proceso judicial."],
-                respuestaCorrecta: 1,
-                explicacion: "Es el cauce formal a través del cual actúa la Administración."
-            },
-            {
-                pregunta: "¿Cuál es una de las fases del procedimiento administrativo común?",
-                opciones: ["Fase judicial.", "Fase de investigación.", "Fase de iniciación.", "Fase de ejecución hipotecaria."],
-                respuestaCorrecta: 2,
-                explicacion: "Las fases principales son iniciación, ordenación, instrucción y finalización."
-            },
-            {
-                pregunta: "¿Qué es un acto administrativo?",
-                opciones: ["Un contrato firmado por la Administración.", "Una declaración de voluntad de la Administración Pública, con efectos jurídicos externos, dictada en ejercicio de una potestad administrativa.", "Una ley aprobada por el Parlamento.", "Una sentencia judicial."],
-                respuestaCorrecta: 1,
-                explicacion: "Es la manifestación unilateral de la voluntad de la Administración que crea, modifica o extingue derechos u obligaciones."
-            },
-            {
-                pregunta: "¿Qué es el silencio administrativo?",
-                opciones: ["La ausencia de respuesta de la Administración en un procedimiento.", "La comunicación explícita de la Administración.", "La publicación de un acto administrativo.", "La interposición de un recurso."],
-                respuestaCorrecta: 0,
-                explicacion: "Es la ficción jurídica que se produce cuando la Administración no resuelve y notifica en plazo."
-            },
-            {
-                pregunta: "¿Qué efecto tiene el silencio administrativo positivo en un procedimiento iniciado a solicitud del interesado?",
-                opciones: ["Se entiende desestimada la solicitud.", "Se entiende estimada la solicitud.", "El procedimiento caduca.", "La Administración tiene un plazo adicional para resolver."],
-                respuestaCorrecta: 1,
-                explicacion: "El silencio positivo implica que la falta de respuesta equivale a una resolución favorable."
-            },
-            {
-                pregunta: "¿Qué efecto tiene el silencio administrativo negativo en un procedimiento iniciado a solicitud del interesado?",
-                opciones: ["Se entiende estimada la solicitud.", "Se entiende desestimada la solicitud.", "El procedimiento caduca.", "La Administración tiene un plazo adicional para resolver."],
-                respuestaCorrecta: 1,
-                explicacion: "El silencio negativo implica que la falta de respuesta equivale a una resolución desfavorable, permitiendo al interesado interponer recursos."
-            },
-            {
-                pregunta: "¿Qué es la caducidad en un procedimiento administrativo?",
-                opciones: ["La finalización del procedimiento por resolución expresa.", "La terminación del procedimiento iniciado de oficio por la inactividad del interesado en cumplir un trámite en el plazo señalado.", "La estimación de la solicitud por silencio administrativo.", "La desestimación de la solicitud por silencio administrativo."],
-                respuestaCorrecta: 1,
-                explicacion: "La caducidad se produce por la paralización del procedimiento imputable al interesado."
-            },
-            {
-                pregunta: "¿Qué es un recurso administrativo?",
-                opciones: ["Una solicitud de información.", "Un medio que tienen los interesados para impugnar los actos administrativos ante la propia Administración.", "Una demanda judicial.", "Una queja formal."],
-                respuestaCorrecta: 1,
-                explicacion: "Permite a los ciudadanos solicitar a la Administración que revise y revoque o modifique sus propios actos."
-            },
-            {
-                pregunta: "¿Cuál es el plazo general para interponer un recurso de alzada contra un acto expreso?",
-                opciones: ["10 días hábiles.", "1 mes.", "3 meses.", "1 año."],
-                respuestaCorrecta: 1,
-                explicacion: "El plazo para interponer recurso de alzada contra actos expresos es de un mes."
-            },
-            {
-                pregunta: "¿Cuál es el plazo general para interponer un recurso de reposición contra un acto expreso?",
-                opciones: ["10 días hábiles.", "1 mes.", "3 meses.", "1 año."],
-                respuestaCorrecta: 1,
-                explicacion: "El plazo para interponer recurso de reposición contra actos expresos es de un mes."
-            },
-            {
-                pregunta: "¿Qué es la potestad sancionadora de la Administración?",
-                opciones: ["La capacidad de la Administración para firmar contratos.", "La capacidad de la Administración para imponer sanciones a los ciudadanos por incumplimiento de la normativa.", "La capacidad de la Administración para recaudar impuestos.", "La capacidad de la Administración para dictar leyes."],
-                respuestaCorrecta: 1,
-                explicacion: "Es una manifestación del ius puniendi del Estado, ejercida por la Administración en el ámbito administrativo."
-            },
-            {
-                pregunta: "¿Qué es el principio de legalidad en el ámbito sancionador?",
-                opciones: ["Que las sanciones deben ser proporcionales.", "Que solo pueden imponerse sanciones por conductas tipificadas previamente como infracción por una norma con rango de ley.", "Que las sanciones deben ser publicadas.", "Que las sanciones deben ser recurribles."],
-                respuestaCorrecta: 1,
-                explicacion: "Exige que las infracciones y sanciones estén establecidas en una norma con rango de ley."
-            },
-            {
-                pregunta: "¿Qué es el principio de tipicidad en el ámbito sancionador?",
-                opciones: ["Que las sanciones deben ser proporcionales.", "Que las conductas que constituyen infracción y las sanciones aplicables deben estar descritas de forma clara y precisa en la norma.", "Que solo se puede sancionar a personas físicas.", "Que las sanciones deben ser económicas."],
-                respuestaCorrecta: 1,
-                explicacion: "Exige una descripción precisa de las conductas prohibidas y sus consecuencias."
-            },
-             {
-                pregunta: "¿Qué es el principio de proporcionalidad en el ámbito sancionador?",
-                opciones: ["Que las sanciones deben ser las mismas para todas las infracciones.", "Que la sanción impuesta debe ser adecuada a la gravedad de la infracción cometida.", "Que las sanciones deben ser siempre pecuniarias.", "Que las sanciones deben ser impuestas por un juez."],
-                respuestaCorrecta: 1,
-                explicacion: "Exige una relación equilibrada entre la gravedad de la infracción y la sanción impuesta."
-            },
-            {
-                pregunta: "¿Qué es el principio non bis in idem?",
-                opciones: ["Que una misma conducta no puede ser sancionada dos veces si existe identidad de sujeto, hecho y fundamento.", "Que las sanciones deben ser proporcionales.", "Que las infracciones deben estar tipificadas.", "Que las sanciones deben ser recurribles."],
-                respuestaCorrecta: 0,
-                explicacion: "Impide la doble sanción por los mismos hechos."
-            },
-            // TEMA 4: Ley de Contratos del Sector Público (Adicionales)
-             {
-                 pregunta: "¿Cuál es el principio fundamental que rige la contratación del sector público?",
-                 opciones: ["Principio de libre mercado.", "Principio de igualdad, transparencia y libre competencia.", "Principio de máxima rentabilidad.", "Principio de discrecionalidad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Estos principios garantizan que la contratación pública sea justa y eficiente."
-             },
-             {
-                 pregunta: "¿Qué es el órgano de contratación?",
-                 opciones: ["La empresa que gana la licitación.", "El órgano de la Administración o entidad del sector público con competencia para celebrar contratos en su nombre.", "El comité de expertos que evalúa las ofertas.", "El Registro de Contratistas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es el órgano que ostenta la capacidad legal para contratar."
-             },
-             {
-                 pregunta: "¿Qué es el valor estimado de un contrato?",
-                 opciones: ["El precio final de adjudicación.", "La cuantía total del contrato, calculada conforme a las reglas de la LCSP, a efectos de determinar el procedimiento de adjudicación y la publicidad.", "El beneficio esperado por el contratista.", "El coste de la preparación de la oferta."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es un valor clave para aplicar las normas de la LCSP, especialmente los umbrales SARA."
-             },
-             {
-                 pregunta: "¿Qué es la solvencia económica y financiera de un licitador?",
-                 opciones: ["Su capacidad técnica para ejecutar el contrato.", "Su capacidad para hacer frente a las obligaciones económicas derivadas del contrato.", "Su experiencia previa en contratos similares.", "Su reputación en el mercado."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Se acredita mediante cifras de negocio, patrimonio neto, etc."
-             },
-             {
-                 pregunta: "¿Qué es la solvencia técnica o profesional de un licitador?",
-                 opciones: ["Su capacidad para hacer frente a las obligaciones económicas.", "Su experiencia, conocimientos y medios técnicos y personales para ejecutar el contrato correctamente.", "Su situación fiscal.", "Su capacidad legal para contratar."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Se acredita mediante trabajos realizados, personal técnico, medios materiales, etc."
-             },
-             {
-                 pregunta: "¿Qué es una garantía provisional en la contratación pública?",
-                 opciones: ["Una garantía que se exige al adjudicatario antes de la formalización del contrato.", "Una garantía que se exige a todos los licitadores para participar en el procedimiento.", "Una garantía que cubre la correcta ejecución del contrato.", "Una garantía que cubre los defectos ocultos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Garantiza la seriedad de las ofertas presentadas."
-             },
-             {
-                 pregunta: "¿Qué es una garantía definitiva en la contratación pública?",
-                 opciones: ["Una garantía que se exige a todos los licitadores.", "Una garantía que se exige al adjudicatario para responder de la correcta ejecución del contrato.", "Una garantía que cubre solo el plazo de garantía.", "Una garantía que cubre el pago de impuestos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Asegura que el contratista cumplirá todas las obligaciones del contrato."
-             },
-             {
-                 pregunta: "¿Qué es la clasificación de contratistas?",
-                 opciones: ["Un ranking de las mejores empresas.", "Un requisito para contratar con ciertas Administraciones en determinados tipos de contratos, que acredita la solvencia y capacidad del empresario.", "Un sistema para organizar los contratos.", "Un registro de contratos adjudicados."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es un sistema de habilitación previa para participar en ciertas licitaciones de obras y servicios de cuantía elevada."
-             },
-             {
-                 pregunta: "¿Qué es un procedimiento abierto de adjudicación?",
-                 opciones: ["Aquel en el que solo pueden participar empresas invitadas.", "Aquel en el que todo empresario interesado puede presentar una proposición.", "Aquel en el que la Administración negocia las condiciones del contrato.", "Aquel en el que solo se permite la participación de PYMES."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es el procedimiento más común y garantiza la máxima concurrencia."
-             },
-             {
-                 pregunta: "¿Qué es un procedimiento restringido de adjudicación?",
-                 opciones: ["Aquel en el que todo empresario puede presentar una proposición.", "Aquel en el que solo pueden presentar proposiciones aquellos empresarios que, previa solicitud, hayan sido seleccionados por la Administración.", "Aquel en el que la Administración negocia las condiciones.", "Aquel en el que solo se permite la participación de grandes empresas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "La participación está limitada a los candidatos seleccionados en una fase previa."
-             },
-             {
-                 pregunta: "¿Qué es un procedimiento negociado de adjudicación?",
-                 opciones: ["Aquel en el que la Administración negocia las condiciones del contrato con uno o varios candidatos.", "Aquel en el que todo empresario interesado puede presentar proposición.", "Aquel en el que solo pueden participar empresas seleccionadas.", "Aquel en el que la adjudicación se basa únicamente en el precio."],
-                 respuestaCorrecta: 0,
-                 explicacion: "Permite a la Administración negociar los términos del contrato, aunque su uso está limitado a supuestos tasados en la ley."
-             },
-             {
-                 pregunta: "¿Qué es el criterio de adjudicación basado en la mejor relación calidad-precio?",
-                 opciones: ["Aquel en el que solo se considera el precio.", "Aquel en el que se valoran tanto aspectos económicos (precio) como cualitativos (técnicos, sociales, medioambientales...).", "Aquel en el que solo se valoran aspectos técnicos.", "Aquel en el que la adjudicación es discrecional."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es el criterio preferente en la LCSP para obtener la oferta más ventajosa."
-             },
-             {
-                 pregunta: "¿Qué es el criterio de adjudicación basado únicamente en el precio?",
-                 opciones: ["Aquel en el que se valoran aspectos cualitativos.", "Aquel que solo se puede utilizar en contratos de servicios.", "Aquel que solo se puede utilizar si la adjudicación recae en la oferta de menor precio y no se valoran otros aspectos.", "Aquel que solo se utiliza en procedimientos negociados."],
-                 respuestaCorrecta: 2,
-                 explicacion: "Su uso está limitado a contratos cuyas prestaciones están perfectamente definidas y no requieren valoración cualitativa."
-             },
-             {
-                 pregunta: "¿Qué es el plazo de ejecución de un contrato?",
-                 opciones: ["El tiempo para presentar ofertas.", "El tiempo para formalizar el contrato.", "El tiempo establecido para que el contratista realice la prestación objeto del contrato.", "El plazo para interponer recursos."],
-                 respuestaCorrecta: 2,
-                 explicacion: "Es el periodo durante el cual el contratista debe cumplir con sus obligaciones contractuales."
-             },
-             {
-                 pregunta: "¿Qué son las modificaciones del contrato?",
-                 opciones: ["Cambios en el precio inicial.", "Alteraciones en el contenido del contrato durante su ejecución, permitidas en los supuestos y con los límites establecidos en la LCSP.", "La rescisión del contrato.", "La cesión del contrato a un tercero."],
-                 respuestaCorrecta: 1,
-                 explicacion: "La LCSP regula estrictamente las condiciones bajo las cuales se pueden modificar los contratos para garantizar la transparencia y evitar favoritismos."
-             },
-             {
-                 pregunta: "¿Qué es la resolución de un contrato del sector público?",
-                 opciones: ["La finalización normal del contrato por cumplimiento.", "La extinción anticipada del contrato por causas legalmente previstas (incumplimiento, mutuo acuerdo, etc.).", "La modificación del contrato.", "La prórroga del contrato."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es una forma anormal de terminación del contrato."
-             },
-             {
-                 pregunta: "¿Qué es el recurso especial en materia de contratación?",
-                 opciones: ["Un recurso judicial.", "Un recurso administrativo potestativo u obligatorio, según el caso, para impugnar ciertos actos del procedimiento de contratación antes de la formalización del contrato.", "Un recurso contencioso-administrativo.", "Un recurso de alzada."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es un recurso ágil para impugnar decisiones clave en procedimientos de cuantía elevada."
-             },
-             {
-                 pregunta: "¿Ante qué órgano se interpone el recurso especial en materia de contratación en la Administración General del Estado?",
-                 opciones: ["Ante el órgano de contratación.", "Ante la Junta Consultiva de Contratación Pública del Estado.", "Ante el Tribunal Administrativo Central de Recursos Contractuales (TACRC).", "Ante los Juzgados de lo Contencioso-Administrativo."],
-                 respuestaCorrecta: 2,
-                 explicacion: "El TACRC es el órgano especializado para resolver estos recursos en el ámbito estatal."
-             },
-             {
-                 pregunta: "¿Qué es el registro oficial de licitadores y empresas clasificadas (ROLECE)?",
-                 opciones: ["Un registro de contratos adjudicados.", "Un registro público donde se inscriben los datos de los empresarios que desean contratar con el sector público, acreditando su personalidad, capacidad de obrar, representación, solvencia y clasificación.", "Un registro de precios de contratos.", "Un registro de empleados públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Facilita a los empresarios y a los órganos de contratación la acreditación de requisitos."
-             },
-             {
-                 pregunta: "¿Qué es la subcontratación en la contratación pública?",
-                 opciones: ["La cesión total del contrato a otra empresa.", "La parte de la prestación objeto del contrato que el contratista principal encarga a un tercero.", "La unión temporal de empresas.", "La modificación del contrato."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Está permitida bajo ciertas condiciones y con límites para garantizar la responsabilidad del contratista principal."
-             },
-             {
-                 pregunta: "¿Qué es un contrato menor?",
-                 opciones: ["Un contrato de gran cuantía.", "Un contrato de valor estimado inferior a ciertos umbrales, que se tramita de forma más simplificada.", "Un contrato de servicios sociales.", "Un contrato entre Administraciones Públicas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Tiene límites económicos específicos y un procedimiento de adjudicación más ágil."
-             },
-             {
-                 pregunta: "¿Cuál es el límite de valor estimado para un contrato menor de obras?",
-                 opciones: ["15.000 euros.", "40.000 euros.", "100.000 euros.", "200.000 euros."],
-                 respuestaCorrecta: 1,
-                 explicacion: "El límite para contratos menores de obras es de 40.000 euros (IVA excluido)."
-             },
-             {
-                 pregunta: "¿Cuál es el límite de valor estimado para un contrato menor de suministros o servicios?",
-                 opciones: ["15.000 euros.", "40.000 euros.", "100.000 euros.", "200.000 euros."],
-                 respuestaCorrecta: 0,
-                 explicacion: "El límite para contratos menores de suministros y servicios es de 15.000 euros (IVA excluido)."
-             },
-             {
-                 pregunta: "¿Qué es el Documento Europeo Único de Contratación (DEUC)?",
-                 opciones: ["Un contrato tipo para toda Europa.", "Una declaración responsable preliminar que sustituye a los certificados expedidos por autoridades públicas o terceros, confirmando que el operador económico cumple las condiciones para participar en un procedimiento.", "Un registro de empresas europeas.", "Un informe de evaluación de ofertas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Facilita la participación transfronteriza en licitaciones europeas."
-             },
-             {
-                 pregunta: "¿Qué es la mesa de contratación?",
-                 opciones: ["El lugar físico donde se firman los contratos.", "Un órgano colegiado encargado de la valoración de las ofertas y la propuesta de adjudicación en los procedimientos abiertos y restringidos.", "Un registro de licitadores.", "El órgano de contratación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es un órgano de apoyo al órgano de contratación en la fase de evaluación de las ofertas."
-             },
-             {
-                 pregunta: "¿Qué es la oferta económicamente más ventajosa?",
-                 opciones: ["La oferta con el precio más bajo.", "La oferta que obtiene la mejor puntuación global al aplicar los criterios de adjudicación (precio y/o criterios cualitativos).", "La oferta que presenta el mayor número de mejoras.", "La oferta que se presenta primero."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es el objetivo de la evaluación de las ofertas."
-             },
-             {
-                 pregunta: "¿Qué es el plazo de garantía en un contrato de obras?",
-                 opciones: ["El tiempo para presentar la oferta.", "El tiempo durante el cual el contratista responde de los vicios o defectos ocultos de la obra.", "El tiempo para ejecutar la obra.", "El tiempo para formalizar el contrato."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Comienza tras la recepción de la obra y durante él, el contratista debe reparar los defectos que aparezcan."
-             },
-             {
-                 pregunta: "¿Qué es la recepción de un contrato?",
-                 opciones: ["El momento en que se presenta la oferta.", "El acto formal por el que la Administración verifica que la prestación ejecutada por el contratista se ajusta a lo pactado.", "El pago del precio del contrato.", "La firma del contrato."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es un hito importante que marca el fin de la fase de ejecución y el inicio, en su caso, del plazo de garantía."
-             },
-             {
-                 pregunta: "¿Qué es la cesión de un contrato del sector público?",
-                 opciones: ["La modificación del contrato.", "La transmisión de los derechos y obligaciones del contratista a un tercero.", "La subcontratación de una parte de la prestación.", "La resolución del contrato."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Está permitida bajo ciertas condiciones y con autorización previa de la Administración."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de concesión de obra pública?",
-                 opciones: ["Un contrato para la construcción de una obra.", "Un contrato en el que la contraprestación a favor del contratista consiste, únicamente, en el derecho a explotar la obra o en dicho derecho acompañado del de percibir un precio.", "Un contrato de servicios.", "Un contrato de suministro."],
-                 respuestaCorrecta: 1,
-                 explicacion: "El contratista asume el riesgo de la explotación de la infraestructura construida."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de concesión de servicios?",
-                 opciones: ["Un contrato de suministro.", "Un contrato en el que la Administración encomienda a un tercero la gestión de un servicio cuya prestación es de su competencia, y la contraprestación consiste en el derecho a explotar el servicio o en dicho derecho acompañado del de percibir un precio.", "Un contrato de obra.", "Un contrato de consultoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "El concesionario asume el riesgo operacional en la gestión del servicio."
-             },
-             {
-                 pregunta: "¿Qué es el procedimiento de diálogo competitivo?",
-                 opciones: ["Un procedimiento en el que la Administración negocia directamente con un único proveedor.", "Un procedimiento utilizado para contratos complejos en el que la Administración dialoga con los candidatos seleccionados para definir la solución y luego les invita a presentar ofertas.", "Un procedimiento abierto con negociación.", "Un procedimiento restringido sin negociación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Se utiliza cuando el órgano de contratación no puede definir por sí mismo los medios técnicos o financieros adecuados para satisfacer sus necesidades."
-             },
-             {
-                 pregunta: "¿Qué es el procedimiento de asociación para la innovación?",
-                 opciones: ["Un procedimiento para comprar productos innovadores ya existentes.", "Un procedimiento para desarrollar productos, servicios o sistemas innovadores y adquirir posteriormente los resultados de la innovación.", "Un procedimiento para financiar proyectos de I+D.", "Un procedimiento para contratar servicios de consultoría en innovación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Permite a la Administración establecer una asociación a largo plazo con uno o varios socios para desarrollar soluciones innovadoras."
-             },
-             {
-                 pregunta: "¿Qué es el precio del contrato?",
-                 opciones: ["El valor estimado del contrato.", "La retribución que la Administración se obliga a pagar al contratista por la ejecución de la prestación.", "El coste de la preparación de la oferta.", "El beneficio del contratista."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es el importe que la Administración abona al contratista, que puede ser fijo o variable."
-             },
-             {
-                 pregunta: "¿Qué son los pliegos de cláusulas administrativas particulares (PCAP)?",
-                 opciones: ["Documentos técnicos que describen la prestación.", "Documentos que contienen las condiciones jurídicas, económicas y administrativas específicas que rigen un contrato determinado.", "Documentos que recogen las ofertas de los licitadores.", "Documentos que acreditan la solvencia."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Son parte fundamental de la documentación de la licitación y detallan las reglas del juego."
-             },
-             {
-                 pregunta: "¿Qué son los pliegos de prescripciones técnicas (PPT)?",
-                 opciones: ["Documentos que contienen las condiciones jurídicas y económicas.", "Documentos que describen las características técnicas de la prestación objeto del contrato, su calidad, especificaciones, etc.", "Documentos que recogen las ofertas.", "Documentos que acreditan la solvencia."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Definen qué es exactamente lo que la Administración quiere contratar desde un punto de vista técnico."
-             },
-             {
-                 pregunta: "¿Qué es el anuncio de licitación?",
-                 opciones: ["La publicación de la adjudicación de un contrato.", "La publicación en el perfil de contratante y, en su caso, en diarios oficiales, informando sobre la apertura de un procedimiento de contratación e invitando a los empresarios a participar.", "Un anuncio publicitario de la Administración.", "Un informe sobre la ejecución del contrato."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es el acto que da inicio formal al procedimiento de contratación, garantizando la publicidad."
-             },
-             {
-                 pregunta: "¿Qué es la adjudicación de un contrato?",
-                 opciones: ["La firma del contrato.", "El acto por el que el órgano de contratación elige la oferta más ventajosa y decide contratar con un determinado licitador.", "La publicación del anuncio de licitación.", "La presentación de ofertas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es la decisión administrativa que pone fin al procedimiento de selección del contratista."
-             },
-             {
-                 pregunta: "¿Qué es la formalización del contrato?",
-                 opciones: ["La presentación de ofertas.", "La adjudicación del contrato.", "El acto por el que el contrato se documenta formalmente, generalmente en documento administrativo o escritura pública.", "El inicio de la ejecución del contrato."],
-                 respuestaCorrecta: 2,
-                 explicacion: "Es el paso posterior a la adjudicación y previo al inicio de la ejecución, que le otorga plena validez y eficacia jurídica."
-             },
-             {
-                 pregunta: "¿Qué es el contrato basado en un acuerdo marco?",
-                 opciones: ["Un contrato individual derivado de un acuerdo previo entre una o varias Administraciones y uno o varios empresarios, que establece las condiciones generales de futuros contratos.", "Un contrato menor.", "Un contrato de concesión.", "Un contrato de obra."],
-                 respuestaCorrecta: 0,
-                 explicacion: "Los acuerdos marco simplifican la adjudicación de contratos posteriores al establecer previamente las condiciones."
-             },
-             {
-                 pregunta: "¿Qué es un sistema dinámico de adquisición (SDA)?",
-                 opciones: ["Un sistema para comprar productos de forma puntual.", "Un procedimiento de adquisición totalmente electrónico para compras de uso corriente, cuyas características, generalmente disponibles en el mercado, satisfacen las necesidades del órgano de contratación.", "Un sistema para gestionar inventarios.", "Un sistema de licitación tradicional."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es una herramienta ágil para la compra electrónica de bienes y servicios estandarizados."
-             },
-             {
-                 pregunta: "¿Qué es el principio de integridad en la contratación pública?",
-                 opciones: ["Que los contratos deben ser completos.", "Que la contratación debe realizarse de forma ética, evitando la corrupción y el fraude.", "Que solo pueden participar empresas solventes.", "Que los contratos deben tener un precio fijo."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es un principio transversal que busca garantizar la honestidad y la buena gestión en los procesos de contratación."
-             },
-             {
-                 pregunta: "¿Qué es el Registro Público de Contratos?",
-                 opciones: ["Un registro de licitadores.", "Un registro donde se inscriben los datos esenciales de los contratos adjudicados por las entidades del sector público.", "Un registro de empresas.", "Un registro de empleados públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Permite conocer la actividad contractual del sector público."
-             },
-             {
-                 pregunta: "¿Qué es la revisión de precios en los contratos del sector público?",
-                 opciones: ["La modificación del precio inicial por acuerdo de las partes.", "La actualización del precio del contrato durante su ejecución, en los supuestos y con los límites legalmente previstos, para compensar las variaciones de costes.", "La rebaja del precio por incumplimiento.", "El aumento del precio por mejoras."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Busca mantener el equilibrio económico del contrato ante variaciones significativas de costes, pero su aplicación está muy restringida en la LCSP actual."
-             },
-             {
-                 pregunta: "¿Qué es la cesión de créditos dimanantes de contratos del sector público?",
-                 opciones: ["La cesión del contrato a un tercero.", "La transmisión por el contratista de los derechos de cobro que tiene frente a la Administración a un tercero (por ejemplo, una entidad financiera).", "El pago anticipado por la Administración.", "La renuncia al cobro."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Permite al contratista obtener financiación cediendo sus facturas pendientes de cobro."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de carácter social?",
-                 opciones: ["Un contrato de limpieza.", "Un tipo de contrato de servicios con un régimen especial en la LCSP, dada su naturaleza y finalidad.", "Un contrato de seguridad.", "Un contrato de consultoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "La LCSP establece reglas específicas para la adjudicación de estos contratos, priorizando la calidad y continuidad."
-             },
-             {
-                 pregunta: "¿Qué es la división en lotes de un contrato?",
-                 opciones: ["Dividir el contrato en fases.", "Dividir el objeto de un contrato en partes diferenciadas para que puedan ser licitadas y adjudicadas por separado.", "Dividir el precio del contrato.", "Dividir la ejecución entre varios subcontratistas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Favorece la participación de PYMES al permitirles licitar a partes más pequeñas del contrato."
-             },
-             {
-                 pregunta: "¿Qué es el principio de igualdad de trato entre los licitadores?",
-                 opciones: ["Que todos los licitadores deben presentar la misma oferta.", "Que todos los licitadores deben ser tratados de la misma manera durante todo el procedimiento de contratación.", "Que solo pueden participar licitadores nacionales.", "Que los licitadores deben tener la misma solvencia."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Garantiza que no haya discriminación ni favoritismos entre los participantes."
-             },
-             {
-                 pregunta: "¿Qué es el principio de transparencia en la contratación pública?",
-                 opciones: ["Que los contratos deben ser secretos.", "Que el procedimiento de contratación debe ser público y accesible, permitiendo el conocimiento de sus distintas fases y decisiones.", "Que solo se publican las adjudicaciones.", "Que solo se publica el precio."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Se garantiza mediante la publicidad de anuncios, pliegos, adjudicaciones, etc."
-             },
-             {
-                 pregunta: "¿Qué es el principio de libre competencia en la contratación pública?",
-                 opciones: ["Que solo puede haber un único licitador.", "Que debe permitirse la participación del mayor número posible de empresarios interesados, evitando restricciones injustificadas.", "Que los licitadores pueden fijar libremente el precio.", "Que la Administración puede elegir libremente al contratista."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Busca que las Administraciones obtengan la mejor oferta posible al fomentar la concurrencia."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de arquitectura e ingeniería?",
-                 opciones: ["Un contrato de obra.", "Un tipo de contrato de servicios regulado específicamente en la LCSP.", "Un contrato de suministro.", "Un contrato menor."],
-                 respuestaCorrecta: 1,
-                 explicacion: "La LCSP establece reglas particulares para la selección de estos servicios, a menudo priorizando la calidad sobre el precio."
-             },
-             {
-                 pregunta: "¿Qué es el informe de justificación en un contrato menor?",
-                 opciones: ["Un informe sobre la ejecución del contrato.", "Un documento que debe elaborar el órgano de contratación justificando la necesidad del contrato y que no se está alterando su objeto para evitar la aplicación de las reglas generales de contratación.", "Un informe sobre la solvencia del contratista.", "Un informe sobre el precio del contrato."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Es un requisito para garantizar el uso adecuado de la figura del contrato menor."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de consultoría y asistencia?",
-                 opciones: ["Un contrato de obra.", "Un tipo de contrato de servicios que tiene por objeto la realización de estudios, informes, dictámenes, asesoramiento técnico, etc.", "Un contrato de suministro.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de asesoramiento especializado."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de mantenimiento y reparación?",
-                 opciones: ["Un contrato de suministro.", "Un tipo de contrato de servicios que tiene por objeto el mantenimiento, la reparación o la conservación de bienes o instalaciones.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios necesarios para el buen estado y funcionamiento de activos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de seguridad y vigilancia?",
-                 opciones: ["Un contrato de suministro.", "Un tipo de contrato de servicios que tiene por objeto la prestación de servicios de seguridad, vigilancia y protección de bienes, personas o instalaciones.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de protección y seguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de limpieza?",
-                 opciones: ["Un contrato de suministro.", "Un tipo de contrato de servicios que tiene por objeto la limpieza y desinfección de edificios, locales, instalaciones, etc.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de higiene y mantenimiento de espacios."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de tecnologías de la información y las comunicaciones (TIC)?",
-                 opciones: ["Un contrato de suministro de equipos informáticos.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo, mantenimiento, soporte o gestión de sistemas, aplicaciones o infraestructuras tecnológicas.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre una amplia gama de servicios relacionados con la informática y las comunicaciones."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de transporte?",
-                 opciones: ["Un contrato de suministro de vehículos.", "Un tipo de contrato de servicios que tiene por objeto el traslado de personas o bienes.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de movilidad y logística."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de publicidad?",
-                 opciones: ["Un contrato de suministro de material publicitario.", "Un tipo de contrato de servicios que tiene por objeto la creación, planificación o difusión de campañas publicitarias.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la comunicación y promoción institucional."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de seguros?",
-                 opciones: ["Un contrato de suministro de pólizas.", "Un tipo de contrato de servicios que tiene por objeto la cobertura de riesgos mediante una póliza de seguro.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la contratación de pólizas para proteger los intereses de la Administración."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de investigación y desarrollo (I+D)?",
-                 opciones: ["Un contrato de suministro de materiales de laboratorio.", "Un tipo de contrato de servicios que tiene por objeto la realización de actividades de investigación o desarrollo experimental.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre actividades destinadas a generar nuevos conocimientos o mejorar los existentes."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de enseñanza y formación?",
-                 opciones: ["Un contrato de suministro de material didáctico.", "Un tipo de contrato de servicios que tiene por objeto la impartición de cursos, talleres o programas formativos.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios educativos y de capacitación."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de hostelería?",
-                 opciones: ["Un contrato de suministro de alimentos.", "Un tipo de contrato de servicios que tiene por objeto la prestación de servicios de alojamiento, restauración o catering.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de hospedaje y alimentación."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de edición y artes gráficas?",
-                 opciones: ["Un contrato de suministro de papel.", "Un tipo de contrato de servicios que tiene por objeto la edición, impresión o diseño de publicaciones y materiales gráficos.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la producción de materiales impresos y digitales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de eventos?",
-                 opciones: ["Un contrato de suministro de mobiliario para eventos.", "Un tipo de contrato de servicios que tiene por objeto la organización y gestión de congresos, jornadas, ferias, etc.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de planificación y ejecución de eventos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de traducción e interpretación?",
-                 opciones: ["Un contrato de suministro de diccionarios.", "Un tipo de contrato de servicios que tiene por objeto la traducción de textos o la interpretación oral de idiomas.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios lingüísticos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de recogida y tratamiento de residuos?",
-                 opciones: ["Un contrato de suministro de contenedores.", "Un tipo de contrato de servicios que tiene por objeto la recogida, transporte o tratamiento de residuos urbanos o industriales.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la gestión de desechos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de mantenimiento de zonas verdes?",
-                 opciones: ["Un contrato de suministro de plantas.", "Un tipo de contrato de servicios que tiene por objeto el mantenimiento de parques, jardines y otras áreas verdes.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de jardinería y conservación de espacios verdes."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de control de plagas?",
-                 opciones: ["Un contrato de suministro de insecticidas.", "Un tipo de contrato de servicios que tiene por objeto la prevención y control de plagas en edificios o espacios públicos.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de desinsectación, desratización, etc."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de atención al público?",
-                 opciones: ["Un contrato de suministro de material de oficina.", "Un tipo de contrato de servicios que tiene por objeto la gestión de oficinas de información, call centers o servicios de atención ciudadana.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de información y asistencia a los ciudadanos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de archivo y gestión documental?",
-                 opciones: ["Un contrato de suministro de archivadores.", "Un tipo de contrato de servicios que tiene por objeto la organización, clasificación, conservación o digitalización de documentos.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la gestión de la documentación administrativa."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de auditoría de cuentas?",
-                 opciones: ["Un contrato de suministro de calculadoras.", "Un tipo de contrato de servicios que tiene por objeto la revisión y verificación de las cuentas anuales de una entidad.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de revisión contable externa."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de asesoramiento jurídico?",
-                 opciones: ["Un contrato de suministro de códigos legales.", "Un tipo de contrato de servicios que tiene por objeto la prestación de asesoramiento en materia legal.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de consultoría legal."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de diseño gráfico?",
-                 opciones: ["Un contrato de suministro de software de diseño.", "Un tipo de contrato de servicios que tiene por objeto la creación de elementos visuales, logotipos, maquetación, etc.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de creación de identidad visual y materiales gráficos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de fotografía y vídeo?",
-                 opciones: ["Un contrato de suministro de cámaras.", "Un tipo de contrato de servicios que tiene por objeto la realización de reportajes fotográficos o grabaciones audiovisuales.", "Un contrato de obra.", "Un contrato de gestión de servicios públicos."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de producción de contenido visual."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de traducción jurada?",
-                 opciones: ["Un contrato de traducción normal.", "Un tipo de contrato de servicios que tiene por objeto la traducción de documentos por un traductor habilitado por el Ministerio de Asuntos Exteriores.", "Un contrato de interpretación.", "Un contrato de servicios de edición."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Requiere un traductor oficial para tener validez legal."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de peritaje?",
-                 opciones: ["Un contrato de servicios de consultoría.", "Un tipo de contrato de servicios que tiene por objeto la emisión de informes técnicos o valoraciones por parte de un experto.", "Un contrato de auditoría.", "Un contrato de asesoramiento jurídico."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de evaluación técnica o especializada."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de mantenimiento de software?",
-                 opciones: ["Un contrato de suministro de software.", "Un tipo de contrato de servicios que tiene por objeto la actualización, corrección de errores o soporte técnico de programas informáticos.", "Un contrato de desarrollo de software.", "Un contrato de alojamiento web."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre los servicios necesarios para que el software funcione correctamente."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de alojamiento web (hosting)?",
-                 opciones: ["Un contrato de suministro de servidores.", "Un tipo de contrato de servicios que tiene por objeto el almacenamiento de archivos y datos de una página web en un servidor conectado a Internet.", "Un contrato de desarrollo web.", "Un contrato de mantenimiento de software."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre el servicio de poner una web accesible en Internet."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de desarrollo web?",
-                 opciones: ["Un contrato de suministro de ordenadores.", "Un tipo de contrato de servicios que tiene por objeto la creación o modificación de una página web o aplicación web.", "Un contrato de alojamiento web.", "Un contrato de mantenimiento de software."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la programación y diseño de sitios web."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de marketing digital?",
-                 opciones: ["Un contrato de suministro de material publicitario.", "Un tipo de contrato de servicios que tiene por objeto la realización de acciones de marketing a través de canales digitales (SEO, SEM, redes sociales...).", "Un contrato de publicidad tradicional.", "Un contrato de diseño gráfico."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de promoción online."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de redes sociales?",
-                 opciones: ["Un contrato de suministro de ordenadores.", "Un tipo de contrato de servicios que tiene por objeto la gestión de perfiles institucionales en redes sociales.", "Un contrato de publicidad tradicional.", "Un contrato de diseño gráfico."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la creación y gestión de contenido en plataformas sociales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de formación online (e-learning)?",
-                 opciones: ["Un contrato de suministro de plataformas educativas.", "Un tipo de contrato de servicios que tiene por objeto la impartición de formación a través de plataformas digitales.", "Un contrato de formación presencial.", "Un contrato de desarrollo de software."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios educativos a distancia mediante tecnología."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de nóminas?",
-                 opciones: ["Un contrato de suministro de calculadoras.", "Un tipo de contrato de servicios que tiene por objeto la elaboración y gestión de las nóminas de los empleados.", "Un contrato de asesoramiento laboral.", "Un contrato de auditoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de administración de personal relacionados con los salarios."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de prevención de riesgos laborales?",
-                 opciones: ["Un contrato de suministro de equipos de protección individual.", "Un tipo de contrato de servicios que tiene por objeto la realización de actividades de prevención y protección de la salud y seguridad de los trabajadores.", "Un contrato de seguridad y vigilancia.", "Un contrato de formación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre los servicios técnicos necesarios para cumplir la normativa de PRL."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de traducción automática?",
-                 opciones: ["Un contrato de traducción manual.", "Un contrato de suministro de software de traducción.", "Un tipo de contrato de servicios que utiliza software para traducir textos sin intervención humana directa.", "Un contrato de interpretación."],
-                 respuestaCorrecta: 2,
-                 explicacion: "Se basa en el uso de herramientas informáticas para la traducción."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de transcripción?",
-                 opciones: ["Un contrato de traducción.", "Un tipo de contrato de servicios que tiene por objeto convertir audio o vídeo a texto escrito.", "Un contrato de interpretación.", "Un contrato de edición."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la conversión de contenido hablado a formato escrito."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de subtitulación?",
-                 opciones: ["Un contrato de traducción.", "Un tipo de contrato de servicios que tiene por objeto añadir texto a contenido audiovisual, generalmente traduciendo los diálogos.", "Un contrato de doblaje.", "Un contrato de transcripción."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la creación de subtítulos para vídeos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de doblaje?",
-                 opciones: ["Un contrato de traducción.", "Un tipo de contrato de servicios que tiene por objeto sustituir las voces originales de un contenido audiovisual por otras en un idioma diferente.", "Un contrato de subtitulación.", "Un contrato de interpretación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la regrabación de diálogos en otro idioma."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de consultoría estratégica?",
-                 opciones: ["Un contrato de servicios de limpieza.", "Un tipo de contrato de servicios que tiene por objeto asesorar a la Administración en la definición de sus objetivos y planes a largo plazo.", "Un contrato de asesoramiento jurídico.", "Un contrato de auditoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de alto nivel para la planificación y toma de decisiones."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de evaluación de políticas públicas?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto analizar los resultados e impactos de las políticas y programas implementados por la Administración.", "Un contrato de consultoría estratégica.", "Un contrato de investigación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre el análisis del desempeño de las acciones gubernamentales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de proyectos?",
-                 opciones: ["Un contrato de servicios de consultoría.", "Un tipo de contrato de servicios que tiene por objeto la planificación, ejecución y control de proyectos para asegurar su cumplimiento en tiempo, coste y alcance.", "Un contrato de dirección de obra.", "Un contrato de supervisión."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de coordinación y seguimiento de iniciativas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de diseño de procesos?",
-                 opciones: ["Un contrato de servicios de consultoría.", "Un tipo de contrato de servicios que tiene por objeto el análisis y rediseño de los procedimientos internos de la Administración para mejorar su eficiencia.", "Un contrato de gestión documental.", "Un contrato de auditoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para optimizar las operaciones administrativas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de la calidad?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto la implementación y seguimiento de sistemas de gestión de la calidad en la Administración.", "Un contrato de consultoría.", "Un contrato de formación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para mejorar la calidad de los servicios públicos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de certificación?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto la emisión de certificados que acreditan el cumplimiento de normas o requisitos por parte de la Administración o terceros.", "Un contrato de peritaje.", "Un contrato de inspección."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de acreditación externa."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de inspección?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto la verificación del cumplimiento de normativas o condiciones técnicas.", "Un contrato de peritaje.", "Un contrato de certificación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de control y supervisión."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de ensayos de laboratorio?",
-                 opciones: ["Un contrato de suministro de materiales de laboratorio.", "Un tipo de contrato de servicios que tiene por objeto la realización de pruebas y análisis en un laboratorio.", "Un contrato de investigación.", "Un contrato de peritaje."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de análisis técnicos y científicos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de calibración?",
-                 opciones: ["Un contrato de suministro de instrumentos de medida.", "Un tipo de contrato de servicios que tiene por objeto verificar la precisión de los instrumentos de medida.", "Un contrato de ensayo.", "Un contrato de mantenimiento."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para asegurar la exactitud de los equipos de medición."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de diseño industrial?",
-                 opciones: ["Un contrato de servicios de arquitectura.", "Un tipo de contrato de servicios que tiene por objeto la creación de diseños para productos industriales.", "Un contrato de diseño gráfico.", "Un contrato de ingeniería."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de diseño de productos manufacturados."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de diseño de interiores?",
-                 opciones: ["Un contrato de servicios de arquitectura.", "Un tipo de contrato de servicios que tiene por objeto la planificación y diseño de espacios interiores.", "Un contrato de diseño gráfico.", "Un contrato de obra."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de decoración y distribución de espacios interiores."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de paisajismo?",
-                 opciones: ["Un contrato de servicios de jardinería.", "Un tipo de contrato de servicios que tiene por objeto el diseño y planificación de espacios exteriores, parques y jardines.", "Un contrato de obra.", "Un contrato de mantenimiento de zonas verdes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de diseño de exteriores a gran escala."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de topografía?",
-                 opciones: ["Un contrato de servicios de arquitectura.", "Un tipo de contrato de servicios que tiene por objeto la medición y representación gráfica del terreno.", "Un contrato de ingeniería.", "Un contrato de obra."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de medición y cartografía del terreno."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de geología?",
-                 opciones: ["Un contrato de servicios de topografía.", "Un tipo de contrato de servicios que tiene por objeto el estudio del terreno y sus características geológicas.", "Un contrato de ingeniería.", "Un contrato de investigación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de análisis del subsuelo."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de medio ambiente?",
-                 opciones: ["Un contrato de servicios de limpieza.", "Un tipo de contrato de servicios que tiene por objeto la realización de estudios, informes o asesoramiento en materia medioambiental.", "Un contrato de gestión de residuos.", "Un contrato de control de plagas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la protección y gestión del medio ambiente."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de la energía?",
-                 opciones: ["Un contrato de suministro de energía.", "Un tipo de contrato de servicios que tiene por objeto el asesoramiento o la gestión para optimizar el consumo energético.", "Un contrato de mantenimiento de instalaciones.", "Un contrato de auditoría energética."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para mejorar la eficiencia energética."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de seguridad de la información?",
-                 opciones: ["Un contrato de suministro de software antivirus.", "Un tipo de contrato de servicios que tiene por objeto la protección de los sistemas y datos frente a amenazas cibernéticas.", "Un contrato de mantenimiento de sistemas.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para proteger la información y los sistemas informáticos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de desarrollo de aplicaciones móviles?",
-                 opciones: ["Un contrato de suministro de dispositivos móviles.", "Un tipo de contrato de servicios que tiene por objeto la creación o modificación de aplicaciones para teléfonos o tabletas.", "Un contrato de desarrollo web.", "Un contrato de mantenimiento de software."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la programación y diseño de apps."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de inteligencia artificial?",
-                 opciones: ["Un contrato de suministro de hardware.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de soluciones basadas en inteligencia artificial.", "Un contrato de desarrollo de software.", "Un contrato de investigación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con IA y aprendizaje automático."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de blockchain?",
-                 opciones: ["Un contrato de suministro de criptomonedas.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de soluciones basadas en tecnología blockchain.", "Un contrato de desarrollo de software.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la tecnología de cadena de bloques."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de computación en la nube (cloud computing)?",
-                 opciones: ["Un contrato de suministro de servidores.", "Un tipo de contrato de servicios que tiene por objeto el acceso y uso de recursos informáticos (almacenamiento, procesamiento, software) a través de Internet.", "Un contrato de alojamiento web.", "Un contrato de mantenimiento de sistemas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de infraestructura y software a través de la red."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de big data?",
-                 opciones: ["Un contrato de suministro de bases de datos.", "Un tipo de contrato de servicios que tiene por objeto el análisis y gestión de grandes volúmenes de datos para extraer información útil.", "Un contrato de investigación.", "Un contrato de consultoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con el procesamiento y análisis de macrodatos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de internet de las cosas (IoT)?",
-                 opciones: ["Un contrato de suministro de dispositivos IoT.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de soluciones basadas en la interconexión de objetos cotidianos con Internet.", "Un contrato de desarrollo de software.", "Un contrato de consultoría tecnológica."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la conexión y gestión de dispositivos inteligentes."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de realidad virtual o aumentada?",
-                 opciones: ["Un contrato de suministro de gafas VR/AR.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de experiencias inmersivas mediante realidad virtual o aumentada.", "Un contrato de desarrollo de software.", "Un contrato de diseño gráfico."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de creación de entornos virtuales o superpuestos al mundo real."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gemelos digitales?",
-                 opciones: ["Un contrato de suministro de hardware.", "Un tipo de contrato de servicios que tiene por objeto la creación de réplicas virtuales de objetos o sistemas físicos para simulación y análisis.", "Un contrato de desarrollo de software.", "Un contrato de consultoría tecnológica."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de modelado y simulación virtual de entidades reales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de ciberseguridad?",
-                 opciones: ["Un contrato de suministro de antivirus.", "Un tipo de contrato de servicios que tiene por objeto la protección de los sistemas informáticos y la información frente a ataques cibernéticos.", "Un contrato de seguridad de la información.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios especializados en la defensa contra amenazas digitales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de respuesta a incidentes de seguridad?",
-                 opciones: ["Un contrato de servicios de prevención.", "Un tipo de contrato de servicios que tiene por objeto la actuación ante un incidente de seguridad informática (ataque, brecha de datos...) para contenerlo y recuperarse.", "Un contrato de auditoría de seguridad.", "Un contrato de consultoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para gestionar y mitigar los efectos de un incidente de seguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de identidades y accesos?",
-                 opciones: ["Un contrato de suministro de credenciales.", "Un tipo de contrato de servicios que tiene por objeto la administración de las identidades digitales de los usuarios y sus permisos de acceso a los sistemas.", "Un contrato de seguridad de la información.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para controlar quién accede a qué recursos digitales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de cifrado de datos?",
-                 opciones: ["Un contrato de suministro de software de cifrado.", "Un tipo de contrato de servicios que tiene por objeto la aplicación de técnicas criptográficas para proteger la confidencialidad de la información.", "Un contrato de seguridad de la información.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para hacer los datos ilegibles sin la clave adecuada."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de backup y recuperación de datos?",
-                 opciones: ["Un contrato de suministro de discos duros.", "Un tipo de contrato de servicios que tiene por objeto la realización de copias de seguridad de la información y la restauración de los datos en caso de pérdida.", "Un contrato de almacenamiento en la nube.", "Un contrato de mantenimiento de sistemas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para proteger la información contra pérdidas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de monitorización de seguridad?",
-                 opciones: ["Un contrato de suministro de cámaras de seguridad.", "Un tipo de contrato de servicios que tiene por objeto la vigilancia continua de los sistemas informáticos para detectar actividades sospechosas o incidentes de seguridad.", "Un contrato de auditoría de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de supervisión constante de la seguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de test de penetración?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que consiste en simular ataques cibernéticos controlados para identificar vulnerabilidades en los sistemas.", "Un contrato de monitorización de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para evaluar la resistencia de los sistemas a los ataques."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de análisis forense digital?",
-                 opciones: ["Un contrato de servicios de investigación.", "Un tipo de contrato de servicios que tiene por objeto la recopilación, preservación y análisis de evidencia digital en caso de incidentes de seguridad o delitos informáticos.", "Un contrato de auditoría de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para investigar incidentes de seguridad y obtener pruebas digitales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de formación en ciberseguridad?",
-                 opciones: ["Un contrato de suministro de material didáctico.", "Un tipo de contrato de servicios que tiene por objeto capacitar al personal en materia de seguridad informática.", "Un contrato de formación general.", "Un contrato de consultoría en seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para aumentar la concienciación y habilidades del personal en ciberseguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de vulnerabilidades?",
-                 opciones: ["Un contrato de servicios de test de penetración.", "Un tipo de contrato de servicios que tiene por objeto identificar, evaluar y mitigar las debilidades de seguridad en los sistemas.", "Un contrato de monitorización de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para encontrar y corregir fallos de seguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de seguridad física?",
-                 opciones: ["Un contrato de suministro de cámaras de seguridad.", "Un tipo de contrato de servicios que tiene por objeto la protección de las instalaciones y activos físicos mediante medidas de seguridad (vigilancia, control de accesos...).", "Un contrato de ciberseguridad.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para proteger los bienes materiales y las personas en el entorno físico."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de videovigilancia?",
-                 opciones: ["Un contrato de suministro de cámaras.", "Un tipo de contrato de servicios que tiene por objeto la instalación, mantenimiento o monitorización de sistemas de cámaras de seguridad.", "Un contrato de seguridad física.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con sistemas de grabación y supervisión visual."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de control de accesos?",
-                 opciones: ["Un contrato de suministro de tarjetas de acceso.", "Un tipo de contrato de servicios que tiene por objeto la gestión de quién puede entrar a determinadas áreas o instalaciones.", "Un contrato de seguridad física.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para restringir la entrada a zonas protegidas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de alarmas?",
-                 opciones: ["Un contrato de suministro de sistemas de alarma.", "Un tipo de contrato de servicios que tiene por objeto la monitorización y respuesta ante la activación de sistemas de alarma.", "Un contrato de seguridad física.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de respuesta a señales de alarma."
-             },
-             {
-                pregunta: "¿Qué es la publicidad en la contratación pública?",
-                opciones: ["La difusión de anuncios comerciales.", "La obligación de dar a conocer la existencia de los procedimientos de contratación y sus actos principales para garantizar la transparencia y la concurrencia.", "La promoción de los servicios públicos.", "La difusión de informes anuales."],
-                respuestaCorrecta: 1,
-                explicacion: "La publicidad es esencial para que los empresarios conozcan las oportunidades de contratación y puedan competir."
-            },
-            {
-                pregunta: "¿Qué es el principio de concurrencia en la contratación pública?",
-                opciones: ["Que solo un empresario puede presentar oferta.", "Que debe promoverse la participación del mayor número posible de empresarios en los procedimientos de contratación.", "Que la Administración puede elegir libremente al contratista.", "Que los licitadores deben ser de la misma nacionalidad."],
-                respuestaCorrecta: 1,
-                explicacion: "La concurrencia es fundamental para obtener la mejor oferta posible y garantizar la eficiencia en el gasto público."
-            },
-            {
-                pregunta: "¿Qué es el expediente de contratación?",
-                opciones: ["El contrato firmado.", "El conjunto ordenado de documentos que reflejan todas las actuaciones administrativas relativas a la preparación, adjudicación y ejecución de un contrato.", "El registro de licitadores.", "El pliego de cláusulas administrativas."],
-                respuestaCorrecta: 1,
-                explicacion: "Es el documento que contiene toda la trazabilidad del procedimiento de contratación."
-            },
-            {
-                pregunta: "¿Qué es la preparación del contrato?",
-                opciones: ["La fase de ejecución del contrato.", "La fase previa a la licitación, en la que el órgano de contratación define la necesidad a satisfacer, el objeto del contrato, el presupuesto, los pliegos, etc.", "La fase de adjudicación.", "La fase de formalización."],
-                respuestaCorrecta: 1,
-                explicacion: "Es una fase crucial para el éxito del contrato, donde se definen sus elementos esenciales."
-            },
-            {
-                pregunta: "¿Qué es la licitación?",
-                opciones: ["La fase de ejecución del contrato.", "El procedimiento por el que la Administración invita a los empresarios a presentar ofertas para la adjudicación de un contrato.", "La fase de preparación del contrato.", "La fase de formalización."],
-                respuestaCorrecta: 1,
-                explicacion: "Es la fase en la que los empresarios presentan sus propuestas."
-            },
-            {
-                pregunta: "¿Qué es la oferta en un procedimiento de contratación?",
-                opciones: ["La invitación a participar.", "La propuesta que presenta un empresario para ejecutar el contrato, incluyendo aspectos técnicos y económicos.", "El precio máximo del contrato.", "El pliego de cláusulas administrativas."],
-                respuestaCorrecta: 1,
-                explicacion: "Es la propuesta vinculante del empresario para la Administración."
-            },
-            {
-                pregunta: "¿Qué es la evaluación de las ofertas?",
-                opciones: ["La presentación de las ofertas.", "El análisis y valoración de las ofertas presentadas por los licitadores, aplicando los criterios de adjudicación establecidos en los pliegos.", "La firma del contrato.", "La ejecución del contrato."],
-                respuestaCorrecta: 1,
-                explicacion: "Es la fase en la que la Administración compara las propuestas para elegir la más ventajosa."
-            },
-            {
-                pregunta: "¿Qué es la mesa de contratación?",
-                opciones: ["Un registro de licitadores.", "Un órgano colegiado encargado de la apertura y valoración de las ofertas en los procedimientos abiertos y restringidos.", "El órgano de contratación.", "La entidad que financia el contrato."],
-                respuestaCorrecta: 1,
-                explicacion: "Asiste al órgano de contratación en la evaluación de las ofertas."
-            },
-            {
-                pregunta: "¿Qué es la propuesta de adjudicación?",
-                opciones: ["La oferta presentada por un licitador.", "El documento elaborado por la mesa de contratación o el órgano técnico, proponiendo al órgano de contratación la adjudicación del contrato al licitador cuya oferta ha sido considerada la más ventajosa.", "La decisión final de adjudicación.", "El contrato firmado."],
-                respuestaCorrecta: 1,
-                explicacion: "Es la recomendación al órgano de contratación sobre quién debe ganar la licitación."
-            },
-            {
-                pregunta: "¿Qué es la formalización del contrato?",
-                opciones: ["La presentación de ofertas.", "La adjudicación del contrato.", "El acto por el que el contrato se documenta formalmente, adquiriendo plena eficacia.", "El inicio de la ejecución."],
-                respuestaCorrecta: 2,
-                explicacion: "Es el paso que da validez legal al acuerdo alcanzado."
-            },
-            {
-                pregunta: "¿Qué es el plazo de ejecución del contrato?",
-                opciones: ["El tiempo para presentar ofertas.", "El tiempo para formalizar el contrato.", "El periodo durante el cual el contratista debe realizar la prestación objeto del contrato.", "El plazo para interponer recursos."],
-                respuestaCorrecta: 2,
-                explicacion: "Es el tiempo para cumplir con las obligaciones contractuales."
-            },
-            {
-                pregunta: "¿Qué son las penalidades en la contratación pública?",
-                opciones: ["Premios por buena ejecución.", "Cantidades que la Administración puede imponer al contratista por incumplimientos parciales o defectuosos de sus obligaciones.", "Garantías exigidas al contratista.", "Intereses de demora."],
-                respuestaCorrecta: 1,
-                explicacion: "Son medidas coercitivas para asegurar el correcto cumplimiento del contrato."
-            },
-            {
-                pregunta: "¿Qué es la resolución del contrato por mutuo acuerdo?",
-                opciones: ["La finalización del contrato por incumplimiento.", "La extinción del contrato por acuerdo entre la Administración y el contratista.", "La modificación del contrato.", "La cesión del contrato."],
-                respuestaCorrecta: 1,
-                explicacion: "Es una forma de terminación del contrato basada en el consentimiento de ambas partes."
-            },
-            {
-                pregunta: "¿Qué es la suspensión del contrato?",
-                opciones: ["La finalización del contrato.", "La paralización temporal de la ejecución del contrato por causas legalmente previstas.", "La modificación del contrato.", "La cesión del contrato."],
-                respuestaCorrecta: 1,
-                explicacion: "Implica una interrupción temporal de la ejecución del contrato."
-            },
-            {
-                pregunta: "¿Qué es el contrato de servicios de gestión de redes sociales?",
-                opciones: ["Un contrato de suministro de ordenadores.", "Un tipo de contrato de servicios que tiene por objeto la gestión de perfiles institucionales en redes sociales.", "Un contrato de publicidad tradicional.", "Un contrato de diseño gráfico."],
-                respuestaCorrecta: 1,
-                explicacion: "Cubre la creación y gestión de contenido en plataformas sociales."
-            },
-            {
-                 pregunta: "¿Qué es el contrato de servicios de formación online (e-learning)?",
-                 opciones: ["Un contrato de suministro de plataformas educativas.", "Un tipo de contrato de servicios que tiene por objeto la impartición de formación a través de plataformas digitales.", "Un contrato de formación presencial.", "Un contrato de desarrollo de software."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios educativos a distancia mediante tecnología."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de nóminas?",
-                 opciones: ["Un contrato de suministro de calculadoras.", "Un tipo de contrato de servicios que tiene por objeto la elaboración y gestión de las nóminas de los empleados.", "Un contrato de asesoramiento laboral.", "Un contrato de auditoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de administración de personal relacionados con los salarios."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de prevención de riesgos laborales?",
-                 opciones: ["Un contrato de suministro de equipos de protección individual.", "Un tipo de contrato de servicios que tiene por objeto la realización de actividades de prevención y protección de la salud y seguridad de los trabajadores.", "Un contrato de seguridad y vigilancia.", "Un contrato de formación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre los servicios técnicos necesarios para cumplir la normativa de PRL."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de traducción automática?",
-                 opciones: ["Un contrato de traducción manual.", "Un contrato de suministro de software de traducción.", "Un tipo de contrato de servicios que utiliza software para traducir textos sin intervención humana directa.", "Un contrato de interpretación."],
-                 respuestaCorrecta: 2,
-                 explicacion: "Se basa en el uso de herramientas informáticas para la traducción."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de transcripción?",
-                 opciones: ["Un contrato de traducción.", "Un tipo de contrato de servicios que tiene por objeto convertir audio o vídeo a texto escrito.", "Un contrato de interpretación.", "Un contrato de edición."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la conversión de contenido hablado a formato escrito."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de subtitulación?",
-                 opciones: ["Un contrato de traducción.", "Un tipo de contrato de servicios que tiene por objeto añadir texto a contenido audiovisual, generalmente traduciendo los diálogos.", "Un contrato de doblaje.", "Un contrato de transcripción."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la creación de subtítulos para vídeos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de doblaje?",
-                 opciones: ["Un contrato de traducción.", "Un tipo de contrato de servicios que tiene por objeto sustituir las voces originales de un contenido audiovisual por otras en un idioma diferente.", "Un contrato de subtitulación.", "Un contrato de interpretación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la regrabación de diálogos en otro idioma."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de consultoría estratégica?",
-                 opciones: ["Un contrato de servicios de limpieza.", "Un tipo de contrato de servicios que tiene por objeto asesorar a la Administración en la definición de sus objetivos y planes a largo plazo.", "Un contrato de asesoramiento jurídico.", "Un contrato de auditoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de alto nivel para la planificación y toma de decisiones."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de evaluación de políticas públicas?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto analizar los resultados e impactos de las políticas y programas implementados por la Administración.", "Un contrato de consultoría estratégica.", "Un contrato de investigación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre el análisis del desempeño de las acciones gubernamentales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de proyectos?",
-                 opciones: ["Un contrato de servicios de consultoría.", "Un tipo de contrato de servicios que tiene por objeto la planificación, ejecución y control de proyectos para asegurar su cumplimiento en tiempo, coste y alcance.", "Un contrato de dirección de obra.", "Un contrato de supervisión."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de coordinación y seguimiento de iniciativas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de diseño de procesos?",
-                 opciones: ["Un contrato de servicios de consultoría.", "Un tipo de contrato de servicios que tiene por objeto el análisis y rediseño de los procedimientos internos de la Administración para mejorar su eficiencia.", "Un contrato de gestión documental.", "Un contrato de auditoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para optimizar las operaciones administrativas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de la calidad?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto la implementación y seguimiento de sistemas de gestión de la calidad en la Administración.", "Un contrato de consultoría.", "Un contrato de formación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para mejorar la calidad de los servicios públicos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de certificación?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto la emisión de certificados que acreditan el cumplimiento de normas o requisitos por parte de la Administración o terceros.", "Un contrato de peritaje.", "Un contrato de inspección."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de acreditación externa."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de inspección?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que tiene por objeto la verificación del cumplimiento de normativas o condiciones técnicas.", "Un contrato de peritaje.", "Un contrato de certificación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de control y supervisión."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de ensayos de laboratorio?",
-                 opciones: ["Un contrato de suministro de materiales de laboratorio.", "Un tipo de contrato de servicios que tiene por objeto la realización de pruebas y análisis en un laboratorio.", "Un contrato de investigación.", "Un contrato de peritaje."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de análisis técnicos y científicos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de calibración?",
-                 opciones: ["Un contrato de suministro de instrumentos de medida.", "Un tipo de contrato de servicios que tiene por objeto verificar la precisión de los instrumentos de medida.", "Un contrato de ensayo.", "Un contrato de mantenimiento."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para asegurar la exactitud de los equipos de medición."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de diseño industrial?",
-                 opciones: ["Un contrato de servicios de arquitectura.", "Un tipo de contrato de servicios que tiene por objeto la creación de diseños para productos industriales.", "Un contrato de diseño gráfico.", "Un contrato de ingeniería."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de diseño de productos manufacturados."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de diseño de interiores?",
-                 opciones: ["Un contrato de servicios de arquitectura.", "Un tipo de contrato de servicios que tiene por objeto la planificación y diseño de espacios interiores.", "Un contrato de diseño gráfico.", "Un contrato de obra."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de decoración y distribución de espacios interiores."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de paisajismo?",
-                 opciones: ["Un contrato de servicios de jardinería.", "Un tipo de contrato de servicios que tiene por objeto el diseño y planificación de espacios exteriores, parques y jardines.", "Un contrato de obra.", "Un contrato de mantenimiento de zonas verdes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de diseño de exteriores a gran escala."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de topografía?",
-                 opciones: ["Un contrato de servicios de arquitectura.", "Un tipo de contrato de servicios que tiene por objeto la medición y representación gráfica del terreno.", "Un contrato de ingeniería.", "Un contrato de obra."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de medición y cartografía del terreno."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de geología?",
-                 opciones: ["Un contrato de servicios de topografía.", "Un tipo de contrato de servicios que tiene por objeto el estudio del terreno y sus características geológicas.", "Un contrato de ingeniería.", "Un contrato de investigación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de análisis del subsuelo."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de medio ambiente?",
-                 opciones: ["Un contrato de servicios de limpieza.", "Un tipo de contrato de servicios que tiene por objeto la realización de estudios, informes o asesoramiento en materia medioambiental.", "Un contrato de gestión de residuos.", "Un contrato de control de plagas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la protección y gestión del medio ambiente."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de la energía?",
-                 opciones: ["Un contrato de suministro de energía.", "Un tipo de contrato de servicios que tiene por objeto el asesoramiento o la gestión para optimizar el consumo energético.", "Un contrato de mantenimiento de instalaciones.", "Un contrato de auditoría energética."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para mejorar la eficiencia energética."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de seguridad de la información?",
-                 opciones: ["Un contrato de suministro de software antivirus.", "Un tipo de contrato de servicios que tiene por objeto la protección de los sistemas y datos frente a amenazas cibernéticas.", "Un contrato de mantenimiento de sistemas.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para proteger la información y los sistemas informáticos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de desarrollo de aplicaciones móviles?",
-                 opciones: ["Un contrato de suministro de dispositivos móviles.", "Un tipo de contrato de servicios que tiene por objeto la creación o modificación de aplicaciones para teléfonos o tabletas.", "Un contrato de desarrollo web.", "Un contrato de mantenimiento de software."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre la programación y diseño de apps."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de inteligencia artificial?",
-                 opciones: ["Un contrato de suministro de hardware.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de soluciones basadas en inteligencia artificial.", "Un contrato de desarrollo de software.", "Un contrato de investigación."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con IA y aprendizaje automático."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de blockchain?",
-                 opciones: ["Un contrato de suministro de criptomonedas.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de soluciones basadas en tecnología blockchain.", "Un contrato de desarrollo de software.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la tecnología de cadena de bloques."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de computación en la nube (cloud computing)?",
-                 opciones: ["Un contrato de suministro de servidores.", "Un tipo de contrato de servicios que tiene por objeto el acceso y uso de recursos informáticos (almacenamiento, procesamiento, software) a través de Internet.", "Un contrato de alojamiento web.", "Un contrato de mantenimiento de sistemas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de infraestructura y software a través de la red."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de big data?",
-                 opciones: ["Un contrato de suministro de bases de datos.", "Un tipo de contrato de servicios que tiene por objeto el análisis y gestión de grandes volúmenes de datos para extraer información útil.", "Un contrato de investigación.", "Un contrato de consultoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con el procesamiento y análisis de macrodatos."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de internet de las cosas (IoT)?",
-                 opciones: ["Un contrato de suministro de dispositivos IoT.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de soluciones basadas en la interconexión de objetos cotidianos con Internet.", "Un contrato de desarrollo de software.", "Un contrato de consultoría tecnológica."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con la conexión y gestión de dispositivos inteligentes."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de realidad virtual o aumentada?",
-                 opciones: ["Un contrato de suministro de gafas VR/AR.", "Un tipo de contrato de servicios que tiene por objeto el desarrollo o implementación de experiencias inmersivas mediante realidad virtual o aumentada.", "Un contrato de desarrollo de software.", "Un contrato de diseño gráfico."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de creación de entornos virtuales o superpuestos al mundo real."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gemelos digitales?",
-                 opciones: ["Un contrato de suministro de hardware.", "Un tipo de contrato de servicios que tiene por objeto la creación de réplicas virtuales de objetos o sistemas físicos para simulación y análisis.", "Un contrato de desarrollo de software.", "Un contrato de consultoría tecnológica."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de modelado y simulación virtual de entidades reales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de ciberseguridad?",
-                 opciones: ["Un contrato de suministro de antivirus.", "Un tipo de contrato de servicios que tiene por objeto la protección de los sistemas informáticos y la información frente a ataques cibernéticos.", "Un contrato de seguridad de la información.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios especializados en la defensa contra amenazas digitales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de respuesta a incidentes de seguridad?",
-                 opciones: ["Un contrato de servicios de prevención.", "Un tipo de contrato de servicios que tiene por objeto la actuación ante un incidente de seguridad informática (ataque, brecha de datos...) para contenerlo y recuperarse.", "Un contrato de auditoría de seguridad.", "Un contrato de consultoría."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para gestionar y mitigar los efectos de un incidente de seguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de identidades y accesos?",
-                 opciones: ["Un contrato de suministro de credenciales.", "Un tipo de contrato de servicios que tiene por objeto la administración de las identidades digitales de los usuarios y sus permisos de acceso a los sistemas.", "Un contrato de seguridad de la información.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para controlar quién accede a qué recursos digitales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de cifrado de datos?",
-                 opciones: ["Un contrato de suministro de software de cifrado.", "Un tipo de contrato de servicios que tiene por objeto la aplicación de técnicas criptográficas para proteger la confidencialidad de la información.", "Un contrato de seguridad de la información.", "Un contrato de auditoría de seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para hacer los datos ilegibles sin la clave adecuada."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de backup y recuperación de datos?",
-                 opciones: ["Un contrato de suministro de discos duros.", "Un tipo de contrato de servicios que tiene por objeto la realización de copias de seguridad de la información y la restauración de los datos en caso de pérdida.", "Un contrato de almacenamiento en la nube.", "Un contrato de mantenimiento de sistemas."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para proteger la información contra pérdidas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de monitorización de seguridad?",
-                 opciones: ["Un contrato de suministro de cámaras de seguridad.", "Un tipo de contrato de servicios que tiene por objeto la vigilancia continua de los sistemas informáticos para detectar actividades sospechosas o incidentes de seguridad.", "Un contrato de auditoría de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de supervisión constante de la seguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de test de penetración?",
-                 opciones: ["Un contrato de servicios de auditoría.", "Un tipo de contrato de servicios que consiste en simular ataques cibernéticos controlados para identificar vulnerabilidades en los sistemas.", "Un contrato de monitorización de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para evaluar la resistencia de los sistemas a los ataques."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de análisis forense digital?",
-                 opciones: ["Un contrato de servicios de investigación.", "Un tipo de contrato de servicios que tiene por objeto la recopilación, preservación y análisis de evidencia digital en caso de incidentes de seguridad o delitos informáticos.", "Un contrato de auditoría de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para investigar incidentes de seguridad y obtener pruebas digitales."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de formación en ciberseguridad?",
-                 opciones: ["Un contrato de suministro de material didáctico.", "Un tipo de contrato de servicios que tiene por objeto capacitar al personal en materia de seguridad informática.", "Un contrato de formación general.", "Un contrato de consultoría en seguridad."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para aumentar la concienciación y habilidades del personal en ciberseguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de vulnerabilidades?",
-                 opciones: ["Un contrato de servicios de test de penetración.", "Un tipo de contrato de servicios que tiene por objeto identificar, evaluar y mitigar las debilidades de seguridad en los sistemas.", "Un contrato de monitorización de seguridad.", "Un contrato de respuesta a incidentes."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para encontrar y corregir fallos de seguridad."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de seguridad física?",
-                 opciones: ["Un contrato de suministro de cámaras de seguridad.", "Un tipo de contrato de servicios que tiene por objeto la protección de las instalaciones y activos físicos mediante medidas de seguridad (vigilancia, control de accesos...).", "Un contrato de ciberseguridad.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para proteger los bienes materiales y las personas en el entorno físico."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de videovigilancia?",
-                 opciones: ["Un contrato de suministro de cámaras.", "Un tipo de contrato de servicios que tiene por objeto la instalación, mantenimiento o monitorización de sistemas de cámaras de seguridad.", "Un contrato de seguridad física.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios relacionados con sistemas de grabación y supervisión visual."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de control de accesos?",
-                 opciones: ["Un contrato de suministro de tarjetas de acceso.", "Un tipo de contrato de servicios que tiene por objeto la gestión de quién puede entrar a determinadas áreas o instalaciones.", "Un contrato de seguridad física.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios para restringir la entrada a zonas protegidas."
-             },
-             {
-                 pregunta: "¿Qué es el contrato de servicios de gestión de alarmas?",
-                 opciones: ["Un contrato de suministro de sistemas de alarma.", "Un tipo de contrato de servicios que tiene por objeto la monitorización y respuesta ante la activación de sistemas de alarma.", "Un contrato de seguridad física.", "Un contrato de seguridad de la información."],
-                 respuestaCorrecta: 1,
-                 explicacion: "Cubre servicios de respuesta a señales de alarma."
-             },
-            // ** FIN DE LAS PREGUNTAS **
-             // Asegúrate de que hay al menos 20 preguntas en total.
+        // --- Preguntas del Test ---
+        // Añade aquí más preguntas siguiendo el mismo formato.
+        // Cada objeto representa una pregunta con:
+        // - q: El texto de la pregunta
+        // - o: Un array de strings con las opciones de respuesta
+        // - a: El índice (0, 1, 2, 3) de la respuesta correcta en el array 'o'
+        // - e: La explicación que se mostrará si se falla la pregunta
+        const questions = [
+            // --- TEMA 1: Sociedades Mercantiles ---
+            {
+                q: "¿Cuál de las siguientes NO es una característica fundamental de la Sociedad Anónima (SA)?",
+                o: [
+                    "Capital dividido en acciones",
+                    "Responsabilidad de los socios limitada al capital aportado",
+                    "Carácter personalista basado en la confianza entre socios",
+                    "Sociedad de naturaleza mercantil, cualquiera que sea su objeto"
+                ],
+                a: 2,
+                e: "La Sociedad Anónima es una sociedad capitalista por excelencia, donde lo relevante es la aportación de capital, no las características personales de los socios. El carácter personalista es típico de sociedades como la colectiva."
+            },
+            {
+                q: "La inscripción en el Registro Mercantil para las sociedades mercantiles es, por regla general:",
+                o: [
+                    "Potestativa",
+                    "Obligatoria y constitutiva",
+                    "Obligatoria pero no constitutiva",
+                    "Necesaria solo para sociedades cotizadas"
+                ],
+                a: 1,
+                e: "La inscripción en el Registro Mercantil es obligatoria para adquirir la personalidad jurídica como sociedad anónima o de responsabilidad limitada (carácter constitutivo), según la Ley General de Sociedades Mercantiles."
+            },
+             {
+                q: "¿Qué órgano social es el encargado de la gestión y representación de una Sociedad Anónima?",
+                o: [
+                    "La Junta General de Accionistas",
+                    "El Consejo de Administración (o Administrador Único/Solidarios/Mancomunados)",
+                    "Los Auditores de Cuentas",
+                    "El Comité de Empresa"
+                ],
+                a: 1,
+                e: "La Junta General es el órgano de deliberación y decisión de los socios, pero la gestión diaria y la representación frente a terceros corresponde a los administradores (Consejo, Administrador Único, etc.)."
+            },
+             {
+                q: "En una Sociedad de Responsabilidad Limitada (SL), ¿cómo está dividido el capital social?",
+                o: [
+                    "En acciones",
+                    "En participaciones sociales",
+                    "En cuotas partes",
+                    "No se divide, es un capital único"
+                ],
+                a: 1,
+                e: "El capital social de la SL se divide en participaciones sociales, que son acumulables e indivisibles y no pueden incorporarse a títulos negociables ni denominarse acciones."
+            },
+            // --- TEMA 2: Contabilidad General ---
+            {
+                q: "Según el Plan General de Contabilidad, ¿qué principio contable establece que se deberá imputar al ejercicio al que las cuentas anuales se refieran, los gastos y los ingresos que afecten al mismo, con independencia de la fecha de su pago o de su cobro?",
+                o: [
+                    "Principio de prudencia",
+                    "Principio de empresa en funcionamiento",
+                    "Principio de devengo",
+                    "Principio de importancia relativa"
+                ],
+                a: 2,
+                e: "El principio de devengo exige registrar las transacciones y otros eventos económicos cuando ocurren, independientemente de cuándo se produzca el flujo monetario asociado."
+            },
+            {
+                q: "El Balance de Situación representa:",
+                o: [
+                    "Los ingresos y gastos de la empresa en un periodo",
+                    "El patrimonio de la empresa en un momento determinado",
+                    "Los flujos de efectivo de la empresa",
+                    "El resultado del ejercicio económico"
+                ],
+                a: 1,
+                e: "El Balance de Situación es un estado contable que refleja la situación patrimonial (Activo, Pasivo y Patrimonio Neto) de una empresa en una fecha concreta."
+            },
+            {
+                q: "¿Qué grupo del Plan General de Contabilidad recoge las cuentas de 'Existencias'?",
+                o: [
+                    "Grupo 1: Financiación Básica",
+                    "Grupo 2: Activo No Corriente",
+                    "Grupo 3: Existencias",
+                    "Grupo 6: Compras y Gastos"
+                ],
+                a: 2,
+                e: "El Grupo 3 del PGC está específicamente dedicado a las cuentas de Existencias (mercaderías, materias primas, productos terminados, etc.)."
+            },
+             {
+                q: "La Cuenta de Pérdidas y Ganancias informa sobre:",
+                o: [
+                    "La liquidez de la empresa",
+                    "La estructura financiera de la empresa",
+                    "El resultado (beneficio o pérdida) obtenido por la empresa durante un ejercicio económico",
+                    "Los bienes y derechos de la empresa"
+                ],
+                a: 2,
+                e: "La Cuenta de Pérdidas y Ganancias detalla los ingresos y gastos de la empresa durante un periodo (generalmente un año) y calcula la diferencia entre ellos para determinar el resultado."
+            },
+             {
+                q: "La periodificación contable se aplica para:",
+                o: [
+                    "Ajustar el valor de las existencias al final del ejercicio.",
+                    "Imputar correctamente ingresos y gastos al ejercicio que les corresponde, según el principio de devengo.",
+                    "Registrar la amortización del inmovilizado.",
+                    "Distribuir el resultado del ejercicio."
+                ],
+                a: 1,
+                e: "La periodificación (ajustes por periodificación) busca asegurar que los ingresos y gastos se registren en el ejercicio en que se devengan, independientemente de cuándo se cobren o paguen, ajustando gastos pagados por anticipado o ingresos cobrados por anticipado, etc."
+            },
+            // --- TEMA 3: Sector Público Electrónico y Normativa ---
+            {
+                q: "Según la Ley 39/2015, ¿cuál es el plazo general para que la Administración resuelva y notifique una resolución expresa en un procedimiento iniciado a solicitud del interesado?",
+                o: [
+                    "Un mes",
+                    "Tres meses",
+                    "Seis meses",
+                    "El que fije la normativa reguladora del procedimiento, sin exceder seis meses salvo ley"
+                ],
+                a: 3,
+                e: "La Ley 39/2015 establece que el plazo máximo para resolver y notificar es el fijado por la norma reguladora del procedimiento, que no podrá exceder de seis meses, salvo que una norma con rango de Ley establezca uno mayor o así venga previsto en el Derecho de la UE. Si la norma no fija plazo, será de tres meses."
+            },
+            {
+                q: "El derecho de acceso a la información pública, regulado en la Ley de Transparencia, tiene como límite principal:",
+                o: [
+                    "La protección de datos personales",
+                    "Los secretos comerciales o industriales",
+                    "La seguridad nacional",
+                    "Todos los anteriores son límites potenciales"
+                ],
+                a: 3,
+                e: "La Ley 19/2013 de Transparencia establece varios límites al derecho de acceso, incluyendo la seguridad nacional, defensa, política económica, secretos comerciales, y la protección de datos personales, entre otros."
+            },
+            {
+                q: "La Ley Orgánica de Protección de Datos Personales y garantía de derechos digitales (LOPDGDD) adapta el ordenamiento español a:",
+                o: [
+                    "La Directiva de Servicios de Comunicación Audiovisual",
+                    "El Reglamento General de Protección de Datos (RGPD) de la UE",
+                    "La Ley de Servicios de la Sociedad de la Información",
+                    "La Carta de Derechos Fundamentales de la UE"
+                ],
+                a: 1,
+                e: "La LOPDGDD (Ley Orgánica 3/2018) tiene como objetivo principal adaptar la legislación española al Reglamento (UE) 2016/679, conocido como RGPD."
+            },
+             {
+                q: "Según la Ley 39/2015, ¿qué se entiende por 'sede electrónica'?",
+                o: [
+                    "La dirección física de una oficina de registro.",
+                    "El portal de internet de una Administración Pública.",
+                    "Aquella dirección electrónica disponible para los ciudadanos a través de redes de telecomunicaciones cuya titularidad corresponde a una Administración Pública.",
+                    "Un sistema de archivo de documentos electrónicos."
+                ],
+                a: 2,
+                e: "La Ley 39/2015 define la sede electrónica como la dirección electrónica disponible cuya titularidad, gestión y administración corresponde a una Administración Pública, órgano o entidad administrativa en el ejercicio de sus competencias."
+            },
+             {
+                q: "El Portal de Transparencia es el instrumento principal para cumplir con las obligaciones de:",
+                o: [
+                    "Registro electrónico",
+                    "Notificación electrónica",
+                    "Publicidad activa",
+                    "Identificación y firma electrónica"
+                ],
+                a: 2,
+                e: "El Portal de Transparencia es la plataforma electrónica prevista en la Ley 19/2013 donde las Administraciones Públicas publican de forma periódica y actualizada la información relevante para garantizar la transparencia de su actividad (publicidad activa)."
+            },
+            // --- TEMA 4: Contratos del Sector Público ---
+            {
+                q: "¿Cuál es el objeto principal de la Ley de Contratos del Sector Público (LCSP)?",
+                o: [
+                    "Regular las subvenciones públicas",
+                    "Regular la contratación del sector público para garantizar la transparencia y la eficiencia",
+                    "Establecer el régimen jurídico de los funcionarios públicos",
+                    "Regular el procedimiento administrativo común"
+                ],
+                a: 1,
+                e: "La LCSP (Ley 9/2017) regula los procedimientos de contratación de las entidades del sector público para asegurar que se respetan los principios de libertad de acceso, publicidad, transparencia, no discriminación e igualdad de trato, y se logra una eficiente utilización de los fondos públicos."
+            },
+            {
+                q: "Un contrato celebrado por una Administración Pública cuyo objeto es la adquisición de equipamiento informático se considera un contrato de:",
+                o: [
+                    "Obras",
+                    "Servicios",
+                    "Suministro",
+                    "Concesión de servicios"
+                ],
+                a: 2,
+                e: "Los contratos de suministro tienen por objeto la adquisición, el arrendamiento financiero, o el arrendamiento, con o sin opción de compra, de productos o bienes muebles, como el equipamiento informático."
+            },
+            {
+                q: "Los contratos sujetos a Regulación Armonizada (SARA) son aquellos que, por su tipo y cuantía, están sometidos a:",
+                o: [
+                    "Normativa autonómica específica",
+                    "Publicidad obligatoria en el BOE",
+                    "Las directivas europeas de contratación pública y publicidad en el DOUE",
+                    "Un régimen simplificado de adjudicación"
+                ],
+                a: 2,
+                e: "Los contratos SARA superan ciertos umbrales económicos establecidos en las directivas europeas y deben seguir procedimientos más estrictos, incluyendo la publicación de anuncios en el Diario Oficial de la Unión Europea (DOUE)."
+            },
+             {
+                q: "En la Ley de Contratos del Sector Público, ¿qué tipo de contrato tiene por objeto la realización de una actividad cuya titularidad corresponde a la Administración, siendo el contratista retribuido directamente por los usuarios?",
+                o: [
+                    "Contrato de servicios",
+                    "Contrato de suministro",
+                    "Contrato de concesión de servicios",
+                    "Contrato de obras"
+                ],
+                a: 2,
+                e: "En la concesión de servicios, la Administración encomienda a un tercero la gestión de un servicio de su competencia. La contraprestación para el concesionario consiste en el derecho a explotar el servicio, asumiendo un riesgo operacional, pudiendo complementarse con un precio."
+            },
+             {
+                q: "¿Qué diferencia principal existe entre un contrato administrativo y un contrato privado celebrado por una Administración Pública?",
+                o: [
+                    "Los contratos privados no requieren publicidad.",
+                    "Los contratos administrativos se rigen íntegramente por la LCSP y el derecho administrativo; los privados tienen fases regidas por el derecho privado.",
+                    "Solo los contratos administrativos pueden ser SARA.",
+                    "Los contratos privados solo pueden ser de suministro."
+                ],
+                a: 1,
+                e: "Los contratos administrativos (típicos como obras, concesiones, servicios, suministro) se rigen en todas sus fases por la LCSP y sus normas de desarrollo, aplicándose supletoriamente el resto del derecho administrativo y, en último término, el derecho privado. Los contratos privados de la Administración tienen su preparación y adjudicación regidas por la LCSP, pero sus efectos y extinción se rigen por el derecho privado."
+            },
+            // --- TEMA 5: Informática Básica ---
+             {
+                q: "¿Qué herramienta de Google Workspace se utiliza principalmente para la creación y edición de documentos de texto de forma colaborativa?",
+                o: [
+                    "Google Sheets (Hojas de cálculo)",
+                    "Google Slides (Presentaciones)",
+                    "Google Docs (Documentos)",
+                    "Google Forms (Formularios)"
+                ],
+                a: 2,
+                e: "Google Docs es el procesador de textos en línea de Google Workspace, diseñado para la creación, edición y colaboración en documentos."
+            },
+             {
+                q: "En el contexto de Internet, ¿qué significa 'URL'?",
+                o: [
+                    "Unidad de Red Local",
+                    "Uniform Resource Locator (Localizador Uniforme de Recursos)",
+                    "Usuario Registrado Legalmente",
+                    "Unión de Redes Libres"
+                ],
+                a: 1,
+                e: "URL significa Uniform Resource Locator. Es la dirección única que identifica a un recurso (como una página web, una imagen, un vídeo) en Internet."
+            },
+             {
+                q: "En Windows 10/11, ¿qué función principal tiene el 'Explorador de archivos'?",
+                o: [
+                    "Navegar por Internet",
+                    "Gestionar y organizar archivos y carpetas en el disco duro y otras unidades",
+                    "Configurar la conexión de red",
+                    "Ejecutar programas de línea de comandos"
+                ],
+                a: 1,
+                e: "El Explorador de archivos es la herramienta fundamental de Windows para visualizar, acceder, organizar, copiar, mover y eliminar archivos y carpetas almacenados en el ordenador."
+            },
+            // --- TEMA 6: Prevención de Riesgos Laborales ---
+             {
+                q: "Trabajar con Pantallas de Visualización de Datos (PVD) puede ocasionar principalmente riesgos ergonómicos relacionados con:",
+                o: [
+                    "Exposición a radiaciones ionizantes",
+                    "Carga física estática y fatiga visual",
+                    "Riesgo de incendio",
+                    "Exposición a agentes químicos"
+                ],
+                a: 1,
+                e: "El trabajo prolongado con PVD se asocia principalmente a riesgos ergonómicos como trastornos musculoesqueléticos (por posturas estáticas) y fatiga visual (por esfuerzo acomodativo, deslumbramientos, etc.)."
+            },
+             {
+                q: "Una medida preventiva básica para reducir la fatiga visual en el trabajo con PVD es:",
+                o: [
+                    "Aumentar el brillo de la pantalla al máximo",
+                    "Realizar pausas periódicas y apartar la vista de la pantalla",
+                    "Utilizar siempre el tamaño de letra más pequeño posible",
+                    "Colocar la pantalla lo más cerca posible de los ojos"
+                ],
+                a: 1,
+                e: "Realizar pausas cortas y frecuentes, mirando a puntos lejanos para relajar la musculatura ocular, es una recomendación ergonómica fundamental para prevenir la fatiga visual."
+            }
+            // ... Puedes añadir hasta 200 preguntas aquí
         ];
 
-        let preguntasJuego = []; // Array para las 20 preguntas del juego actual
-        const NUM_PREGUNTAS_POR_JUEGO = 20;
-
-        let preguntaActualIndex = 0;
-        let correctas = 0;
-        let incorrectas = 0;
-
-        const preguntaTexto = document.getElementById('pregunta-texto');
-        const opcionesRespuesta = document.getElementById('opciones-respuesta');
-        const correctasCount = document.getElementById('correctas-count');
-        const incorrectasCount = document.getElementById('incorrectas-count');
-        const feedbackDiv = document.getElementById('feedback');
-        const siguienteBtn = document.getElementById('siguiente-btn');
-        const finalMensaje = document.getElementById('final-mensaje');
-        const marcador = document.getElementById('marcador');
-        const reiniciarBtn = document.getElementById('reiniciar-btn');
+        // --- Elementos del DOM ---
+        const questionContainer = document.getElementById('question-area');
+        const questionTextElement = document.getElementById('question-text');
+        const answerButtonsElement = document.getElementById('answer-buttons');
+        const feedbackArea = document.getElementById('feedback-area');
+        const explanationBox = document.getElementById('explanation-box');
+        const explanationTextElement = document.getElementById('explanation-text');
+        const nextButton = document.getElementById('next-button');
+        const correctScoreElement = document.getElementById('correct-score');
+        const incorrectScoreElement = document.getElementById('incorrect-score');
+        const questionCounterElement = document.getElementById('question-counter');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const completionMessageElement = document.getElementById('completion-message');
 
 
-        // Función para barajar el array
-        function barajarArray(array) {
-            const arrayCopia = [...array]; // Crear una copia para no modificar el original
-            for (let i = arrayCopia.length - 1; i > 0; i--) {
+        // --- Estado del Juego ---
+        let currentQuestionIndex = 0;
+        let scoreCorrect = 0;
+        let scoreIncorrect = 0;
+        let questionsShuffled = []; // Para mostrar preguntas en orden aleatorio
+
+        // --- Funciones ---
+
+        // Barajar las preguntas (Algoritmo Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [arrayCopia[i], arrayCopia[j]] = [arrayCopia[j], arrayCopia[i]]; // Intercambio
+                [array[i], array[j]] = [array[j], array[i]]; // Intercambio de elementos
             }
-            return arrayCopia;
+            return array;
         }
 
-        // Función para seleccionar 20 preguntas al azar
-        function seleccionarPreguntasParaJuego() {
-             if (todasLasPreguntas.length < NUM_PREGUNTAS_POR_JUEGO) {
-                 console.error("No hay suficientes preguntas para un juego de 20.");
-                 // Opcional: Manejar este caso mostrando un mensaje al usuario
-                 return barajarArray(todasLasPreguntas); // Si no hay 20, usa todas las que haya
-             }
-            const preguntasBarajadas = barajarArray(todasLasPreguntas);
-            return preguntasBarajadas.slice(0, NUM_PREGUNTAS_POR_GAME); // Usa la constante
+        // Iniciar el Quiz
+        function startQuiz() {
+            questionsShuffled = shuffleArray([...questions]); // Copia y baraja
+            currentQuestionIndex = 0;
+            scoreCorrect = 0;
+            scoreIncorrect = 0;
+            totalQuestionsElement.textContent = questionsShuffled.length;
+            completionMessageElement.classList.add('hidden');
+            questionContainer.classList.remove('hidden');
+            nextButton.classList.add('hidden'); // Ocultar botón next al inicio
+            updateScoreboard();
+            showQuestion();
         }
 
-        function iniciarJuego() {
-             preguntasJuego = seleccionarPreguntasParaJuego(); // Seleccionar 20 preguntas al inicio
-             preguntaActualIndex = 0;
-             correctas = 0;
-             incorrectas = 0;
+        // Mostrar la pregunta actual
+        function showQuestion() {
+            resetState(); // Limpia el estado anterior
+            if (currentQuestionIndex >= questionsShuffled.length) {
+                endQuiz();
+                return;
+            }
 
-             // Resetear la interfaz
-             correctasCount.textContent = correctas;
-             incorrectasCount.textContent = incorrectas;
-             finalMensaje.classList.add('hidden');
-             marcador.innerHTML = `Correctas: <span id="correctas-count">0</span> | Incorrectas: <span id="incorrectas-count">0</span>`;
-             marcador.querySelector('#correctas-count').style.color = '#28a745';
-             marcador.querySelector('#incorrectas-count').style.color = '#dc3545';
-             preguntaTexto.classList.remove('hidden');
-             opcionesRespuesta.classList.remove('hidden');
-             siguienteBtn.classList.add('hidden');
-             feedbackDiv.classList.add('hidden');
-             feedbackDiv.className = ''; // Limpiar clases
+            const currentQuestion = questionsShuffled[currentQuestionIndex];
+            questionTextElement.textContent = currentQuestion.q;
+            questionCounterElement.textContent = currentQuestionIndex + 1;
 
-             cargarPregunta();
+            // Crear botones de respuesta
+            currentQuestion.o.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-button');
+                button.dataset.optionIndex = index; // Guardar índice para comprobación
+                button.addEventListener('click', selectAnswer);
+                answerButtonsElement.appendChild(button);
+            });
         }
 
+        // Limpiar estado entre preguntas
+        function resetState() {
+            explanationBox.classList.add('hidden'); // Ocultar explicación
+            explanationTextElement.textContent = '';
+            nextButton.classList.add('hidden'); // Ocultar botón siguiente
+            feedbackArea.classList.remove('correct-answer-animation'); // Quitar animación
 
-        function cargarPregunta() {
-            if (preguntaActualIndex < preguntasJuego.length) {
-                const pregunta = preguntasJuego[preguntaActualIndex];
-                preguntaTexto.textContent = `Pregunta ${preguntaActualIndex + 1} de ${preguntasJuego.length}: ${pregunta.pregunta}`;
-                opcionesRespuesta.innerHTML = ''; // Limpiar opciones anteriores
-                feedbackDiv.classList.add('hidden'); // Ocultar feedback
-                feedbackDiv.className = ''; // Limpiar clases de feedback (para eliminar correcto/incorrecto)
-                siguienteBtn.classList.add('hidden'); // Ocultar botón siguiente
-                // Asegurarse de que las opciones estén habilitadas para la nueva pregunta
-                opcionesRespuesta.querySelectorAll('.respuesta-opcion').forEach(div => div.classList.remove('deshabilitado'));
+            // Limpiar botones antiguos
+            while (answerButtonsElement.firstChild) {
+                answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+            }
+        }
 
+        // Manejar la selección de una respuesta
+        function selectAnswer(e) {
+            const selectedButton = e.target;
+            const selectedOptionIndex = parseInt(selectedButton.dataset.optionIndex);
+            const correctOptionIndex = questionsShuffled[currentQuestionIndex].a;
 
-                pregunta.opciones.forEach((opcion, index) => {
-                    const divOpcion = document.createElement('div');
-                    divOpcion.classList.add('respuesta-opcion');
-                    divOpcion.textContent = `${String.fromCharCode(65 + index)}) ${opcion}`;
-                    divOpcion.addEventListener('click', () => seleccionarRespuesta(index, divOpcion));
-                    opcionesRespuesta.appendChild(divOpcion);
-                });
+            // Deshabilitar todos los botones después de seleccionar uno
+            Array.from(answerButtonsElement.children).forEach(button => {
+                button.disabled = true;
+                 // Marcar visualmente la correcta y la incorrecta (si se falla)
+                const optionIndex = parseInt(button.dataset.optionIndex);
+                if (optionIndex === correctOptionIndex) {
+                    button.classList.add('correct');
+                } else if (optionIndex === selectedOptionIndex) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            // Comprobar si la respuesta es correcta
+            if (selectedOptionIndex === correctOptionIndex) {
+                scoreCorrect++;
+                feedbackArea.classList.add('correct-answer-animation'); // Añadir animación
             } else {
-                mostrarResultadosFinales();
-            }
-        }
-
-        function seleccionarRespuesta(indiceRespuesta, divSeleccionado) {
-            const pregunta = preguntasJuego[preguntaActualIndex];
-            const opcionesDivs = opcionesRespuesta.querySelectorAll('.respuesta-opcion');
-
-            // Deshabilitar clic en todas las opciones una vez que se selecciona una
-            opcionesDivs.forEach(div => div.classList.add('deshabilitado'));
-
-            feedbackDiv.classList.remove('hidden'); // Mostrar el feedback div
-
-            if (indiceRespuesta === pregunta.respuestaCorrecta) {
-                correctas++;
-                divSeleccionado.classList.add('correcta');
-                feedbackDiv.className = 'correcto'; // Establecer clase para acierto
-                feedbackDiv.textContent = '¡Correcto!'; // Mensaje de acierto
-                 // La animación se maneja por CSS con la clase 'correcto'
-            } else {
-                incorrectas++;
-                divSeleccionado.classList.add('incorrecta');
-                feedbackDiv.className = 'incorrecto'; // Establecer clase para fallo
-
-                // Construir el mensaje de feedback para fallo
-                let feedbackTexto = `Incorrecto. La respuesta correcta es la <span class="correcta-indicador">${String.fromCharCode(65 + pregunta.respuestaCorrecta)}) ${pregunta.opciones[pregunta.respuestaCorrecta]}</span>.`;
-
-                 if (pregunta.explicacion) {
-                     feedbackTexto += `<div class="explicacion">Explicación: ${pregunta.explicacion}</div>`;
-                 }
-
-                 feedbackDiv.innerHTML = feedbackTexto;
-
-
-                // Resaltar la respuesta correcta
-                opcionesDivs.forEach((div, index) => {
-                    if (index === pregunta.respuestaCorrecta) {
-                        div.classList.add('correcta');
-                    }
-                });
+                scoreIncorrect++;
+                explanationTextElement.textContent = `Respuesta incorrecta. La correcta era: "${questionsShuffled[currentQuestionIndex].o[correctOptionIndex]}". \n\nExplicación: ${questionsShuffled[currentQuestionIndex].e}`;
+                explanationBox.classList.remove('hidden'); // Mostrar explicación
             }
 
-            correctasCount.textContent = correctas;
-            incorrectasCount.textContent = incorrectas;
-            siguienteBtn.classList.remove('hidden'); // Mostrar botón siguiente
+            updateScoreboard();
+            nextButton.classList.remove('hidden'); // Mostrar botón siguiente
         }
 
-        function mostrarResultadosFinales() {
-            preguntaTexto.classList.add('hidden'); // Ocultar pregunta y opciones
-            opcionesRespuesta.classList.add('hidden');
-            feedbackDiv.classList.add('hidden'); // Ocultar feedback si está visible
-            siguienteBtn.classList.add('hidden'); // Ocultar botón siguiente
-            finalMensaje.classList.remove('hidden'); // Mostrar mensaje final
-            marcador.innerHTML = `¡Test Finalizado! Resultado: Correctas: <span id="correctas-count">${correctas}</span> | Incorrectas: <span id="incorrectas-count">${incorrectas}</span>`;
-             // Actualizar los spans dentro del marcador final
-             marcador.querySelector('#correctas-count').style.color = '#28a745';
-             marcador.querySelector('#incorrectas-count').style.color = '#dc3545';
+        // Actualizar el marcador
+        function updateScoreboard() {
+            correctScoreElement.textContent = scoreCorrect;
+            incorrectScoreElement.textContent = scoreIncorrect;
         }
 
-        siguienteBtn.addEventListener('click', () => {
-            preguntaActualIndex++;
-            cargarPregunta();
-        });
+        // Pasar a la siguiente pregunta
+        function handleNextButton() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
 
-         reiniciarBtn.addEventListener('click', () => {
-             iniciarJuego();
-         });
+         // Finalizar el quiz
+        function endQuiz() {
+            questionContainer.classList.add('hidden'); // Ocultar preguntas
+            nextButton.classList.add('hidden'); // Ocultar botón siguiente
+            explanationBox.classList.add('hidden'); // Ocultar explicación si estuviera visible
+            completionMessageElement.textContent = `¡Entrenamiento completado! Aciertos: ${scoreCorrect}, Fallos: ${scoreIncorrect}.`;
+            completionMessageElement.classList.remove('hidden'); // Mostrar mensaje final
+             // Opcional: Añadir un botón para reiniciar
+            const restartButton = document.createElement('button');
+            restartButton.textContent = 'Reiniciar Entrenamiento';
+            restartButton.classList.add('next-button', 'mx-auto', 'mt-4'); // Reutilizar estilos y centrar
+            restartButton.onclick = startQuiz; // Llama a startQuiz al hacer clic
+            completionMessageElement.appendChild(restartButton);
+        }
 
 
-        // Iniciar el primer juego al cargar la página
-        iniciarJuego();
+        // --- Event Listeners ---
+        nextButton.addEventListener('click', handleNextButton);
+
+        // --- Inicio del Quiz al cargar la página ---
+        document.addEventListener('DOMContentLoaded', startQuiz);
+
     </script>
+
 </body>
 </html>
