@@ -57,12 +57,120 @@
             color: white !important;
             border: 1px solid #15803d;
         }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark-mode h1 {
+            color: #e2e8f0;
+        }
+        .dark-mode .link-box a { /* Assuming other pages might use .link-box style */
+            background-color: #2d3748;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .dark-mode .link-box a:hover {
+            background-color: #4a5568;
+            color: #ffffff;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+        }
+        .dark-mode .link-box i { /* Assuming other pages might use .link-box style */
+            color: #63b3ed;
+        }
+        .dark-mode #darkModeToggle {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border: 1px solid #e2e8f0;
+        }
+        .dark-mode #darkModeToggle:hover {
+            background-color: #2d3748;
+        }
+        /* Add any other generic dark mode styles needed for content elements like paragraphs, links etc. */
+        .dark-mode body, .dark-mode div, .dark-mode p, .dark-mode span, .dark-mode li, .dark-mode section /* General text elements */ {
+            color: #e2e8f0; /* Default light text for dark mode */
+        }
+        .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
+             color: #e2e8f0; /* Headings in dark mode */
+        }
+        .dark-mode a { /* General links - ensure this doesn't override quiz options if they are <a> tags */
+            color: #63b3ed; 
+        }
+        .dark-mode a:hover {
+            color: #90cdf4;
+        }
+        /* Style for other common elements if they exist, e.g., tables, forms */
+        .dark-mode table, .dark-mode th, .dark-mode td {
+            border-color: #4a5568;
+        }
+        .dark-mode th, .dark-mode td {
+            color: #e2e8f0;
+        }
+        .dark-mode pre { /* For code blocks if any */
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border: 1px solid #4a5568;
+        }
+
+        /* Specific overrides for Tema_2_contablidad_general.html elements */
+        .dark-mode .max-w-4xl.mx-auto.bg-white.p-6.md\:p-10.rounded-lg.shadow-md {
+             background-color: #2d3748 !important; /* Main content container */
+        }
+        .dark-mode .bg-gray-50 { background-color: #1a202c !important; } /* Body background */
+        .dark-mode .text-gray-800 { color: #e2e8f0 !important; } /* Body text */
+        
+        /* Heading colors */
+        .dark-mode h1.text-emerald-700 { color: #6ee7b7 !important; } /* emerald-300 for visibility */
+        .dark-mode h2.text-emerald-600 { color: #a7f3d0 !important; } /* emerald-200 */
+        .dark-mode h3.text-emerald-500 { color: #d1fae5 !important; } /* emerald-100 */
+        .dark-mode h3.text-blue-700 { color: #93c5fd !important; } /* blue-300 */
+        .dark-mode h3.text-red-700 { color: #fca5a5 !important; } /* red-300 */
+
+        .dark-mode .border-emerald-200 { border-color: #34d399 !important; } /* emerald-400 */
+        
+        .dark-mode .bg-emerald-50 { background-color: #064e3b !important; } /* emerald-800 or similar dark green */
+        .dark-mode .bg-blue-50 { background-color: #1e3a8a !important; } /* blue-800 or similar dark blue */
+        .dark-mode .bg-red-50 { background-color: #7f1d1d !important; } /* red-800 or similar dark red */
+        
+        .dark-mode .border-blue-200 { border-color: #1d4ed8 !important; } /* blue-600 */
+        .dark-mode .border-red-200 { border-color: #b91c1c !important; } /* red-600 */
+
+        /* Table styles */
+        .dark-mode table.border-gray-300, .dark-mode table.border-gray-300 th, .dark-mode table.border-gray-300 td {
+            border-color: #4a5568 !important;
+        }
+        .dark-mode tr.bg-gray-100 { background-color: #374151 !important; } /* gray-700 */
+        .dark-mode tr.bg-gray-50 { background-color: #1f2937 !important; } /* gray-800 */
+
+        /* Quiz styles (assuming similar structure to previous file) */
+        .dark-mode .quiz-question { background-color: #2d3748 !important; border-color: #4a5568 !important; }
+        .dark-mode .quiz-option { border-color: #4a5568 !important; color: #e2e8f0 !important; }
+        .dark-mode .quiz-option:hover { background-color: #4a5568 !important; }
+        .dark-mode .quiz-question.correct .selected { background-color: #22c55e !important; color: white !important; }
+        .dark-mode .quiz-question.incorrect .selected { background-color: #ef4444 !important; color: white !important; }
+        .dark-mode .quiz-question .correct-answer { background-color: #a3e635 !important; border-color: #4d7c0f !important; color: #1a2e05 !important; }
+        .dark-mode .quiz-question.incorrect .quiz-option[data-correct="true"] { background-color: #a3e635 !important; color: #1a2e05 !important; border-color: #4d7c0f !important; }
+        .dark-mode .quiz-question.incorrect .quiz-option.selected { background-color: #ef4444 !important; color: white !important; border-color: #b91c1c !important;}
+        .dark-mode .quiz-question.correct .quiz-option.selected { background-color: #22c55e !important; color: white !important; border-color: #15803d !important;}
+        .dark-mode .text-gray-700 { color: #d1d5db !important; } /* gray-300 for quiz question text */
+        .dark-mode .bg-lime-50 { background-color: #365314 !important; border-color: #4d7c0f !important;} /* Trucos nemotécnicos box */
+        .dark-mode .border-lime-200 { border-color: #4d7c0f !important; }
+
+
+        .dark-mode img { opacity: 0.85; }
+        .dark-mode .quiz-option.disabled { opacity: 0.6; }
+        .dark-mode #quiz-results { color: #e2e8f0 !important; }
+        .dark-mode #quiz-results.text-emerald-700 { color: #6ee7b7 !important; }
+        .dark-mode ul, .dark-mode ol { color: #e2e8f0; }
+        .dark-mode strong { color: #e2e8f0; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 p-4 md:p-8">
     <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-md">
 
         <h1 class="text-3xl md:text-4xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">Tema 2: Contabilidad General</h1>
+        <button id="darkModeToggle" class="mb-4 px-4 py-2 bg-blue-500 text-white rounded">Toggle Dark Mode</button>
 
         <section class="mb-8">
             <h2 class="text-2xl font-bold text-emerald-600 mb-4">Introducción a la Contabilidad</h2>
@@ -127,7 +235,7 @@
                      <ul class="list-disc list-inside pl-4 space-y-1">
                         <li><strong>A) PATRIMONIO NETO</strong> (Fondos Propios)
                             <ul class="list-circle list-inside pl-6">
-                                <li>Capital / Fondos sociales</li>
+                                <li>Capital / Fondos sociais</li>
                                 <li>Reservas (Legal, estatutarias, voluntarias...)</li>
                                 <li>Resultados de ejercicios anteriores</li>
                                 <li>Resultado del Ejercicio (Beneficio o Pérdida)</li>
@@ -147,7 +255,7 @@
                                 <li>Provisiones a Corto Plazo</li>
                                 <li>Deudas a Corto Plazo</li>
                                 <li>Deudas con Empresas Grupo/Asociadas C/P</li>
-                                <li>Acreedores Comerciales y Otras Cuentas a Pagar (Proveedores...)</li>
+                                <li>Acreedores Comerciais y Otras Cuentas a Pagar (Proveedores...)</li>
                                 <li>Periodificaciones a Corto Plazo (Ingresos anticipados)</li>
                             </ul>
                         </li>
@@ -663,6 +771,6 @@
         buildQuiz();
 
     </script>
-
+    <script src="dark-mode.js" defer></script>
 </body>
 </html>
