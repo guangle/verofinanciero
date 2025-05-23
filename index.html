@@ -45,12 +45,43 @@
             font-size: 1.1rem; /* Tamaño del texto del tema */
             font-weight: 600; /* Texto en negrita */
         }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark-mode h1 {
+            color: #e2e8f0; /* Tailwind's text-gray-800 is dark, so we override for dark mode */
+        }
+        .dark-mode .link-box a {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark background */
+        }
+        .dark-mode .link-box a:hover {
+            background-color: #4a5568; /* Slightly lighter on hover for dark mode */
+            color: #ffffff;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+        }
+        .dark-mode .link-box i {
+            color: #63b3ed; /* A lighter blue for icons in dark mode */
+        }
+        .dark-mode #darkModeToggle {
+            background-color: #4a5568; /* Darker button background */
+            color: #e2e8f0; /* Light text */
+            border: 1px solid #e2e8f0; /* Optional: add a border */
+        }
+        .dark-mode #darkModeToggle:hover {
+            background-color: #2d3748; /* Even darker on hover */
+        }
     </style>
 </head>
 <body>
 
     <div class="container mx-auto p-4">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Plaza de Vero: temas de estudio</h1>
+        <button id="darkModeToggle" class="mb-4 px-4 py-2 bg-blue-500 text-white rounded">Toggle Dark Mode</button>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
@@ -105,6 +136,6 @@
 
         </div>
     </div>
-
+    <script src="dark-mode.js" defer></script>
 </body>
 </html>

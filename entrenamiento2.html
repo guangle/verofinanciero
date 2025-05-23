@@ -51,11 +51,113 @@
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark-mode h1 {
+            color: #e2e8f0;
+        }
+        .dark-mode .link-box a { /* Assuming other pages might use .link-box style */
+            background-color: #2d3748;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .dark-mode .link-box a:hover {
+            background-color: #4a5568;
+            color: #ffffff;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+        }
+        .dark-mode .link-box i { /* Assuming other pages might use .link-box style */
+            color: #63b3ed;
+        }
+        .dark-mode #darkModeToggle {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border: 1px solid #e2e8f0;
+        }
+        .dark-mode #darkModeToggle:hover {
+            background-color: #2d3748;
+        }
+        /* Add any other generic dark mode styles needed for content elements like paragraphs, links etc. */
+        .dark-mode body, .dark-mode div, .dark-mode p, .dark-mode span, .dark-mode li, .dark-mode a /* General text elements */ {
+            color: #e2e8f0; /* Default light text for dark mode */
+        }
+        .dark-mode a {
+            color: #63b3ed; /* Lighter links for dark mode */
+        }
+        .dark-mode a:hover {
+            color: #90cdf4; /* Even lighter on hover */
+        }
+        /* Style for other common elements if they exist, e.g., tables, forms */
+        .dark-mode table, .dark-mode th, .dark-mode td {
+            border-color: #4a5568;
+        }
+        .dark-mode th, .dark-mode td {
+            color: #e2e8f0;
+        }
+        .dark-mode pre { /* For code blocks if any */
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border: 1px solid #4a5568;
+        }
+
+        /* Specific overrides for entrenamiento2.html elements */
+        .dark-mode .bg-white { background-color: #2d3748 !important; } /* Main content container */
+        .dark-mode .bg-gray-100 { background-color: #1a202c !important; } /* Body background */
+        .dark-mode .text-gray-800 { color: #e2e8f0 !important; } /* Main heading */
+        .dark-mode .text-gray-700 { color: #d1d5db !important; } /* Question text */
+        .dark-mode .text-green-600 { color: #6ee7b7 !important; } /* Correct score text */
+        .dark-mode .text-red-600 { color: #fca5a5 !important; } /* Incorrect score text */
+        .dark-mode .text-blue-600 { color: #93c5fd !important; } /* Question counter text */
+        
+        .dark-mode .answer-button { 
+            background-color: #374151 !important; /* gray-700 */
+            border-color: #4b5563 !important; /* gray-600 */
+            color: #e2e8f0 !important;
+        }
+        .dark-mode .answer-button:hover:not(:disabled) {
+            background-color: #4b5563 !important; /* gray-600 */
+        }
+        .dark-mode .answer-button.correct-highlight {
+            border: 2px solid #10b981 !important; /* emerald-500 */
+            background-color: #059669 !important; /* emerald-600 */
+            color: white !important;
+        }
+        .dark-mode .answer-button.incorrect-highlight {
+            border: 2px solid #ef4444 !important; /* red-500 */
+            background-color: #b91c1c !important; /* red-700 */
+            color: white !important;
+        }
+        .dark-mode button:disabled {
+            opacity: 0.5 !important;
+        }
+        .dark-mode .bg-green-100 { background-color: #047857 !important; } /* emerald-700 for feedback correct */
+        .dark-mode .text-green-700 { color: #a7f3d0 !important; } /* emerald-200 for feedback correct text */
+        .dark-mode .bg-red-100 { background-color: #991b1b !important; } /* red-700 for feedback incorrect */
+        .dark-mode .text-red-700 { color: #fecaca !important; } /* red-200 for feedback incorrect text */
+        .dark-mode .bg-gray-100#explanation-text { background-color: #1f2937 !important; } /* gray-800 for explanation box */
+        .dark-mode .text-gray-600 { color: #9ca3af !important; } /* gray-400 for explanation text */
+        
+        .dark-mode .bg-blue-100 { background-color: #1e3a8a !important; } /* blue-800 for final score */
+        .dark-mode .text-blue-700 { color: #bfdbfe !important; } /* blue-200 for final score text */
+
+        .dark-mode .bg-blue-500 { background-color: #2563eb !important; }
+        .dark-mode .bg-blue-500:hover { background-color: #1d4ed8 !important; }
+        .dark-mode .bg-gray-500 { background-color: #4b5563 !important; }
+        .dark-mode .bg-gray-500:hover { background-color: #374151 !important; }
+        
+        .dark-mode img { opacity: 0.85; }
+        .dark-mode strong { color: #e2e8f0; }
+
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
     <div class="bg-white p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-2xl">
         <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">Entrenamiento Oposición Test</h1>
+        <button id="darkModeToggle" class="mb-4 px-4 py-2 bg-blue-500 text-white rounded">Toggle Dark Mode</button>
 
         <div class="flex justify-around mb-6 text-center">
             <div>
@@ -482,5 +584,6 @@
         window.onload = initializeQuiz;
 
     </script>
+    <script src="dark-mode.js" defer></script>
 </body>
 </html>
